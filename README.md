@@ -11,7 +11,7 @@ cd Jo-Tests
 ```
 
 ```
-git pull https://github.com/andreybyrsa/Jo-Tests.git
+git clone https://github.com/andreybyrsa/Jo-Tests.git
 ```
 
 ```
