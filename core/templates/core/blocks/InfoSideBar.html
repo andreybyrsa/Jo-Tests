@@ -1,7 +1,7 @@
 <div class="info-side-bar">
   <div class="info-side-bar__header">
     <span class="info-side-bar__title"></span>
-    <span class="info-side-bar__description"></span>
+    <span class="info-side-bat__text info-side-bat__text--lighted"></span>
   </div>
 
   <div class="info-side-bar__content">
@@ -19,26 +19,16 @@
       <span class="info-side-bat__text"></span>
     </div>
 
-    <div class="info-side-bar__buttons">
-      <a href="{% url '' %}">
-        <i class="bi bi-check info-side-bar__button-icon"></i>
-        <span>Опубликовать курс</span>
+    <div class="info-side-bar__buttons"></div>
+      {% for button in buttons %}
+      <a
+        class="info-side-bar__button info-side-bar__button--{{ button.color }}"
+        href="{% url button.url %}"
+      >
+        <i class="{{ button.icon }} info-side-bar__button-icon"></i>
+        <span>{{ button.text }}</span>
       </a>
-
-      <a href="{% url '' %}">
-        <i class="bi bi-eye info-side-bar__button-icon"></i>
-        <span>Просмотреть курс</span>
-      </a>
-
-      <a href="{% url '' %}">
-        <i class="bi bi-pencil-square info-side-bar__button-icon"></i>
-        <span>Редактировать курс</span>
-      </a>
-
-      <a href="{% url '' %}">
-        <i class="bi bi-trash3 info-side-bar__button-icon"></i>
-        <span>Удалить курс</span>
-      </a>
+      {% endfor %}
     </div>
   </div>
 

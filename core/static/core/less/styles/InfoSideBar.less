@@ -20,17 +20,34 @@
     font-size: 25px;
   }
 
-  &__description {
-    color: @lighted-color;
-    font-size: 20px;
-  }
-
   &__text {
     color: @black-color;
     font-size: 20px;
 
     &--lighted {
       color: @lighted-color;
+    }
+  }
+
+  &__buttons {
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+  }
+
+  &__button {
+    font-size: 20px;
+
+    .flexible(flex-start, flex-start, @gap: 8px);
+
+    &--primary {
+      color: @primary-color;
+    }
+
+    &--success {
+      color: @success-color;
+    }
+
+    &--danger {
+      color: @danger-color;
     }
   }
 
