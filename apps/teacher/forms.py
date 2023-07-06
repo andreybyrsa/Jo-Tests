@@ -1,8 +1,7 @@
-from django.contrib.auth import get_teacher_model
+from models import Teacher
 from core.utils.get_field_widgets import get_field_widgets
 from django import forms
 
-Teacher = get_teacher_model()
 profile_field_class = "bottom-side-bar__input"
 
 
