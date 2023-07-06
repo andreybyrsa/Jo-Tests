@@ -1,0 +1,50 @@
+<div class="info-side-bar">
+  <div class="info-side-bar__header">
+    <span class="info-side-bar__title"></span>
+    <span class="info-side-bar__description"></span>
+  </div>
+
+  <div class="info-side-bar__content">
+    <div class="info-side-bar__time-created">
+      <span class="info-side-bat__text info-side-bat__text--lighted">
+        Дата создания
+      </span>
+      <span class="info-side-bat__text"></span>
+    </div>
+
+    <div class="info-side-bar__time-updated">
+      <span class="info-side-bat__text info-side-bat__text--lighted">
+        Дата редактирования
+      </span>
+      <span class="info-side-bat__text"></span>
+    </div>
+
+    <div class="info-side-bar__buttons">
+      <a href="{% url '' %}">
+        <i class="bi bi-check info-side-bar__button-icon"></i>
+        <span>Опубликовать курс</span>
+      </a>
+
+      <a href="{% url '' %}">
+        <i class="bi bi-eye info-side-bar__button-icon"></i>
+        <span>Просмотреть курс</span>
+      </a>
+
+      <a href="{% url '' %}">
+        <i class="bi bi-pencil-square info-side-bar__button-icon"></i>
+        <span>Редактировать курс</span>
+      </a>
+
+      <a href="{% url '' %}">
+        <i class="bi bi-trash3 info-side-bar__button-icon"></i>
+        <span>Удалить курс</span>
+      </a>
+    </div>
+  </div>
+
+  <img
+    class="info-side-bar__defult-image"
+    src="{% static 'core/images/sideBarImage.webp' %}"
+    alt="side bar image"
+  />
+</div>
