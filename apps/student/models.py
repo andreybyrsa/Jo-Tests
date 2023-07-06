@@ -9,5 +9,15 @@ class Student(AbstractUser):
     def __str__(self):
         return self.username
 
+class StudentResult(models.Model):
+    student = models.ForeignKey('Student', on_delete = models.CASCADE)
+    test = models.ForeignKey('authorApp.Test', on_delete = models.CASCADE)
+    result = models.FloatField()
 
 
+
+class Choice(models.Model):
+    question = models.ForeignKey('authorApp.Question', on_delete = models.CASCADE)
+    student = models.ForeignKey('Student', on_delete = models.CASCADE)
+    answer = models.ForeignKey('authorApp.Answer', on_delete = models.CASCADE)
+    is_selected = models.BooleanField(default=False)
