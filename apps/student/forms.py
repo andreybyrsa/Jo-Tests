@@ -1,8 +1,7 @@
-from django.contrib.auth import get_student_model
 from core.utils.get_field_widgets import get_field_widgets
 from django import forms
+from models import Student
 
-Student = get_student_model()
 profile_field_class = "bottom-side-bar__input"
 
 
