@@ -9,8 +9,7 @@
    &__toogle {
       .position(absolute, @top: -50px, @right: -50px);
 
-      width: 140px;
-      height: 140px;
+      padding: 40px;
       background-color: @primary-color;
       border-radius: 40px;
 
@@ -30,26 +29,26 @@
       .position(relative);
 
       width: 100%;
-      max-width: 500px;
+      max-width: 450px;
 
       background-color: @white-color;
-      padding: 60px;
+      padding: 40px;
       border-radius: 40px;
       box-shadow: 1px 1px 40px @lighted-color;
 
-      .flexible(@flex-direction: column, @gap: 30px);
+      .flexible(@flex-direction: column, @gap: 20px);
 
       &-title {
-         font-size: 35px;
+         font-size: 30px;
          font-weight: bold;
       }
 
       &-input {
          width: 100%;
 
-         font-size: 20px;
+         font-size: 18px;
 
-         .flexible(@flex-direction: column, @gap: 10px);
+         .flexible(@flex-direction: column, @gap: 5px);
 
          &-title {
             font-weight: bold;
@@ -58,7 +57,7 @@
          &-data {
             width: 100%;
             .border(solid, @lighted-color, 2px, 12px);
-            padding: 16px 20px;
+            padding: 13px 20px;
 
             &::placeholder {
                color: @lighted-color;
@@ -90,12 +89,142 @@
          }
 
          &-link {
-            width: 124px;
+            width: 112px;
             background-color: transparent;
 
             font-size: 18px;
             text-decoration: underline;
          }
       }
+   }
+}
+
+
+.reg-page__form {
+   .position(absolute,0,0,0,0,1);
+
+   .flexible(center, center);
+
+   display: none;
+
+   &--open {
+   display: flex;
+   animation: reg-page__open @default-animation-settings;
+   }
+
+   &--close {
+      animation: reg-page__close @default-animation-settings;
+   }
+
+   &-content{
+      .flexible(none, none, column, @gap: 20px);
+
+      width: 100%;
+      max-width: 450px;
+      height: min-content;
+
+      padding: 40px;
+      background-color: @primary-color;
+      border-radius: 40px;
+
+      box-shadow: 1px 1px 40px @lighted-color;
+   
+      &-header {
+         .flexible(center, space-between);
+
+         &-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: @white-color;
+         }
+
+         &-icon {
+            color: @white-color;
+            font-size: 30px;
+         }
+      }
+
+      &-input {
+         width: 100%;
+
+         font-size: 18px;
+
+         .flexible(@flex-direction: column, @gap: 5px);
+
+         &-title {
+            color: @white-color;
+            font-weight: bold;
+         }
+
+         &-data {
+            width: 100%;
+            .border(solid, @white-color, 2px, 12px);
+            background-color: @primary-color;
+            padding: 13px 20px;
+            color: @white-color;
+
+            &::placeholder {
+               color: @white-color;
+               font-weight: 300;
+            }
+         }
+      }
+
+      &-links {
+         width: 100%;
+
+         .flexible(center, center, column, @gap: 5px);
+
+         &-button {
+            width: 100%;
+            padding: 15px;
+            background-color: @secondary-color;
+            .border(solid, transparent, 2px, 12px);
+
+            color: @white-color;
+            font-size: 20px;
+
+            transition: all @default-transition-settings;
+         }
+
+         &-button:active {
+            background-color: @white-color;
+            color: @black-color;
+         }
+
+         &-link {
+            width: 112px;
+            background-color: transparent;
+            color: @white-color;
+            background-color: @primary-color;
+            
+
+
+            font-size: 18px;
+            text-decoration: underline;
+         }
+      }
+   }
+}
+
+@keyframes reg-page__open{
+   0% {
+      transform: scale(0.9);
+      opacity: 0;
+   }
+   100% {
+      transform: scale(1.0);
+      opacity: 1;
+   }
+}
+
+@keyframes reg-page__close{
+   0% {   
+      transform: scale(1.0);
+      opacity: 1;
+   }
+   100% {
+      transform: scale(0.9);
+      opacity: 0;
    }
 }

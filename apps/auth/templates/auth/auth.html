@@ -6,8 +6,65 @@
 {% endblock %}
 
 {% block content %}
+
+   <div class="reg-page__form" id='modal'>
+      <div class="reg-page__form-content">
+
+         <div class="reg-page__form-content-header">
+            <h1 class="reg-page__form-content-header-title">Авторизация</h1>
+            <i id='pidaras pidarasina' class="bi bi-x-circle reg-page__form-content-header-icon"></i>
+         </div>
+         
+         <div class="reg-page__form-content-input">
+            <b class="reg-page__form-content-input-title">Логин</b>
+            <input
+               class="reg-page__form-content-input-data"
+               type="text"
+               placeholder="Ваш логин"
+            />
+         </div>
+
+            <div class="reg-page__form-content-input">
+               <b class="reg-page__form-content-input-title">Имя</b>
+               <input
+                  class="reg-page__form-content-input-data"
+                  type="text"
+                  placeholder="Ваше имя"
+               />
+         </div>
+
+         <div class="reg-page__form-content-input">
+            <b class="reg-page__form-content-input-title">Фамилия</b>
+            <input
+               class="reg-page__form-content-input-data"
+               type="text"
+               placeholder="Ваша фамилия"
+            />
+         </div>
+
+         <div class="reg-page__form-content-input">
+            <b class="reg-page__form-content-input-title">Пароль</b>
+            <input
+               class="reg-page__form-content-input-data"
+               type="password"
+               placeholder="Ваш пароль"
+            />
+         </div>
+
+         <div class="reg-page__form-content-links">
+            <button class="reg-page__form-content-links-button">Зарегистрироваться</button>
+            <select id="selection" class="reg-page__form-content-links-link">
+               <option value="student">как студент</option>
+               <option value="teacher">как преподаватель</option>
+               <option value="author">как автор</option>
+            </select>
+         </div>
+
+      </div>
+   </div>
+
   <div class="auth-page__form">
-    <a class="auth-page__toogle">
+    <a class="auth-page__toogle" id='open_modal'>
       <i class="bi bi-person-plus auth-page__toogle-icon"></i>
     </a>
 
@@ -24,12 +81,12 @@
       <b class="auth-page__form-input-title">Пароль</b>
       <input
         class="auth-page__form-input-data"
-        type="text"
+        type="password"
         placeholder="Ваш пароль"
       />
     </div>
     <div class="auth-page__form-links">
-      <button class="auth-page__form-links-button">войти</button>
+      <button class="auth-page__form-links-button">Войти</button>
       <select id="selection" class="auth-page__form-links-link">
         <option value="student">как студент</option>
         <option value="teacher">как преподаватель</option>
