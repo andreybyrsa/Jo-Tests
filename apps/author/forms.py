@@ -1,8 +1,7 @@
-from django.contrib.auth import get_author_model
 from core.utils import get_field_widgets
 from django import forms
+from models import Author
 
-Author = get_author_model()
 profile_field_class = "bottom-side-bar__input"
 
 
