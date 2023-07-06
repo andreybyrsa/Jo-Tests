@@ -12,6 +12,7 @@ class Test(models.Model):
     questions = models.ManyToManyField('Question')
     test_time = models.TimeField()
     max_result = models.IntegerField()
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.title
@@ -32,6 +33,7 @@ class Question(models.Model):
     answers = models.ManyToMany('Answer')
     max_points = models.PositiveIntegerField()
     qtype = models.CharField(max_length=8, choices=QuestionType.choices, default=QuestionType.single)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.question
@@ -40,6 +42,7 @@ class Answer(models.Model):
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     answer = models.TextField(max_length=255, verbose_name='Вариант ответа')
     is_correct = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.answer
@@ -48,3 +51,4 @@ class Author(AbstractUser):
     profile_picture = models.FileField(null=True, blank=True, max_length=500)
     tests = models.ManyToManyField('Test')
     role = models.CharField(default='author')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
