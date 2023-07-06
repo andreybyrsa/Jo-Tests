@@ -5,38 +5,12 @@
   </div>
 
   <div class="header__tabs">
-    {% if current_user.role == 'teacher' or current_user.role == 'student' %}
-      <a class="header__tab" href="{% url '' %}">
-        <i class="bi bi-list header__tab-icon"></i>
-        <span>Список курсов</span>
+    {% for tab in header %}
+      <a class="header__tab" href="{% url tab.url_name %}">
+        <i class="{{ tab.icon_name }} header__tab-icon"></i>
+        <span>{{ tab.name }}</span>
       </a>
-    {% endif %}
-
-    {% if current_user.role == 'author' or current_user.role == 'teacher' %}
-      <a class="header__tab" href="{% url '' %}">
-        <i class="bi bi-list header__tab-icon"></i>
-        <span>Список тестов</span>
-      </a>
-    {% endif %}
-
-    {% if current_user.role == 'teacher' %}
-      <a class="header__tab" href="{% url '' %}">
-        <i class="bi bi-plus header__tab-icon"></i>
-        <span>Список курс</span>
-      </a>
-    {% endif %}
-
-    {% if current_user.role == 'author' %}
-      <a class="header__tab" href="{% url '' %}">
-        <i class="bi bi-plus header__tab-icon"></i>
-        <span>Создать тест</span>
-      </a>
-    {% endif %}
-
-    <a class="header__tab" href="{% url 'profile' %}">
-      <i class="bi bi-person-gear header__tab-icon"></i>
-      <span>Профиль</span>
-    </a>
+    {% endfor %}
 
     <a class="header__logout-button" href="{% url 'logout' %}">Выйти</a>
   </div>
