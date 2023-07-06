@@ -6,11 +6,13 @@ class Teacher(AbstractUser):
     role = models.CharField(default='teacher')
     courses = models.ManyToManyField('Course')
     groups = models.ManyToManyField('Group')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
 class Group(models.Model):
     groupname = models.CharField(max_length=127)
     teache = models.ForeingKey('Teacher')
     students = models.ManyToManyField('studentApp.Student')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
 class Course(models.Model):
     title = models.TextField(max_length=127, verbose_name='Название теста')
@@ -21,6 +23,7 @@ class Course(models.Model):
     tests = models.ManyToMany('authorApp.Test')
     groups = models.ManyToMany('Group')
     progress = models.FloatField()
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.title
