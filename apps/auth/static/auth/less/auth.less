@@ -1,18 +1,42 @@
 @import '/static/core/less/main.less';
 
 .auth-page {
-   .flexible(center, center, column);
-
-   width: 100%;
-   height: 100%;
 
    &__content {
+      .flexible(center, center);
+   }
+
+   &__toogle {
+      .position(absolute, @top: -50px, @right: -50px);
+
+      width: 140px;
+      height: 140px;
+      background-color: @primary-color;
+      border-radius: 40px;
+
+      cursor: pointer;
+
+      .flexible(center, center);
+
+      &-icon {
+         color: @white-color;
+         font-size: 50px;
+
+         display: flex;
+      }
+   }
+
+   &__form {
+      .position(relative);
+
       width: 100%;
       max-width: 500px;
 
       background-color: @white-color;
       padding: 60px;
       border-radius: 40px;
+      box-shadow: 1px 1px 40px @lighted-color;
+
       .flexible(@flex-direction: column, @gap: 30px);
 
       &-title {
@@ -21,9 +45,11 @@
       }
 
       &-input {
-         .flexible(@flex-direction: column, @gap: 10px);
          width: 100%;
+
          font-size: 20px;
+
+         .flexible(@flex-direction: column, @gap: 10px);
 
          &-title {
             font-weight: bold;
@@ -43,17 +69,20 @@
 
 
       &-links {
-         .flexible(center, center, column, @gap: 5px);
          width: 100%;
+
+         .flexible(center, center, column, @gap: 5px);
 
          &-button {
             width: 100%;
             padding: 15px;
             background-color: @secondary-color;
+            .border(solid, transparent, 2px, 12px);
+
             color: @white-color;
             font-size: 20px;
-            .border(solid, transparent, 2px, 12px);
-            transition: all .2s linear;
+
+            transition: all @default-transition-settings;
          }
 
          &-button:active {

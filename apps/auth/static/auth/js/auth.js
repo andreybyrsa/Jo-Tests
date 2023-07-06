@@ -1,3 +1,5 @@
+addPageClassName('auth-page')
+
 const selection = document.getElementById('selection')
 
 selection.addEventListener('change', (event) => {
