@@ -1,0 +1,37 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block content %} 
+   <div class="auth-page">
+      <div class="auth-page__content">
+         <h1 class="auth-page__content-title" >Авторизация</h1>
+         <div class="auth-page__content-input">
+            <b class="auth-page__content-input-title">Логин</b>
+            <input class="auth-page__content-input-data" type="text" placeholder='ваш логин'>
+         </div>
+         <div class="auth-page__content-input">
+            <b class="auth-page__content-input-title">Пароль</b>
+            <input class="auth-page__content-input-data" type="text" placeholder='ваш пароль'>
+         </div>
+         <div class="auth-page__content-links">
+            <button class="auth-page__content-links-button">
+               войти
+            </button>
+            <select id="selection" class="auth-page__content-links-link">
+               <option value="student">как студент</option> 
+               <option value="teacher">как преподаватель</option>
+               <option value="author">как автор</option>
+            </select>
+         </div>
+      </div> 
+   </div>
+{% endblock content %}
+
+{% block style-files %}
+   <link rel="stylesheet/less" href="{% static 'auth\less\auth.less' %}"/>
+{% endblock %}
+
+{% block script-files %}
+   <script type="text/javascript" src="{% static 'auth/js/auth.js' %}"></script>
+{% endblock %}
+
