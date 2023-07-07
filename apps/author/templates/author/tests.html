@@ -1,0 +1,13 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+{% block style-files %}
+<link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+<link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
+{% endblock %}
+{% block header %}
+{% include 'core/blocks/HeaderBlock.html' with pageClassName="index-page" title="django" %}
+{% endblock %}
+
+{% block left-side-bar %}
+{% include 'core/blocks/InfoSideBar.html' with pageClassName="index-page" title="django" %}
+{% endblock %}
