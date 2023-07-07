@@ -1,13 +1,13 @@
+from models import Teacher
 from core.utils.get_field_widgets import get_field_widgets
 from django import forms
-from models import Student
 
 profile_field_class = "bottom-side-bar__input"
 
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
-        model = Student
+        model = Teacher
         fields = ["username", "first_name", "last_name", "profile_picture"]
         widgets = {
             "username": get_field_widgets(
@@ -26,12 +26,12 @@ class UpdateProfileForm(forms.ModelForm):
             ),
         }
     def save(self, user_id):
-        StudentDB = Student.objects.get(user_id=user_id)
+        TeacherDB = Teacher.objects.get(user_id=user_id)
         form_data = self.cleaned_data
 
-        StudentDB.username = form_data["username"]
-        StudentDB.first_name = form_data["first_name"]
-        StudentDB.last_name = form_data["last_name"]
-        StudentDB.profile_picture = form_data["profile_picture"]
+        TeacherDB.username = form_data["username"]
+        TeacherDB.first_name = form_data["first_name"]
+        TeacherDB.last_name = form_data["last_name"]
+        TeacherDB.profile_picture = form_data["profile_picture"]
 
-        StudentDB.save() 
+        TeacherDB.save()
