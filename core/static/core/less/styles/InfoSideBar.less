@@ -1,0 +1,57 @@
+.info-side-bar {
+  padding: 30px 20px;
+  width: 400px;
+  height: 100%;
+  background-color: @white-color;
+  border-radius: 20px;
+
+  .flexible(stretch, flex-start, column, @gap: 20px);
+
+  &__header {
+    .flexible(flex-start, flex-start, column, @gap: 8px);
+  }
+
+  &__content {
+    .flexible(flex-start, flex-start, column, @gap: 30px);
+  }
+
+  &__title {
+    color: @black-color;
+    font-size: 25px;
+  }
+
+  &__text {
+    color: @black-color;
+    font-size: 20px;
+
+    &--lighted {
+      color: @lighted-color;
+    }
+  }
+
+  &__buttons {
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+  }
+
+  &__button {
+    font-size: 20px;
+
+    .flexible(flex-start, flex-start, @gap: 8px);
+
+    &--primary {
+      color: @primary-color;
+    }
+
+    &--success {
+      color: @success-color;
+    }
+
+    &--danger {
+      color: @danger-color;
+    }
+  }
+
+  &__default-image {
+    width: 100%;
+  }
+}

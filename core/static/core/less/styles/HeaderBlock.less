@@ -1,0 +1,47 @@
+@import '../main.less';
+
+.header {
+  padding: 30px 40px;
+  width: 100%;
+  background-color: @primary-color;
+
+  color: @white-color;
+
+  .flexible(center, space-between);
+
+  &__logo {
+    font-size: 35px;
+
+    .flexible(center, center, @gap: 20px);
+  }
+
+  &__tabs {
+    font-size: 22px;
+
+    .flexible(center, center, @gap: 20px);
+  }
+
+  &__tab {
+    opacity: @disable-opacity;
+
+    &-icon {
+      display: flex;
+    }
+
+    &--active {
+      opacity: 1;
+    }
+  }
+
+  &__logout-button {
+    width: 160px;
+    height: 50px;
+    background-color: @secondary-color;
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @black-color--blured;
+    }
+  }
+}
