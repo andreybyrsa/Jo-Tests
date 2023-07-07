@@ -1,15 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-
-class Author(AbstractUser):
-    profile_picture = models.FileField(null=True, blank=True, max_length=500)
-    tests = models.ManyToManyField("authorApp.Test")
-    role = models.CharField(default="author", max_length=50)
-    slug = models.SlugField(
-        max_length=255, unique=True, db_index=True, verbose_name="URL"
-    )
-    groups = None
+from apps.auth.models import Author
 
 
 class Test(models.Model):
@@ -22,7 +12,7 @@ class Test(models.Model):
     date_expired = models.DateTimeField(
         auto_now=True, verbose_name="Дата истекания доступа к тесту"
     )
-    questions = models.ManyToManyField("authorApp.Question")
+    questions = models.ManyToManyField("authorApp.Question", verbose_name="Вопросы", related_name='+')
     test_time = models.TimeField()
     max_result = models.IntegerField()
     slug = models.SlugField(
@@ -39,19 +29,17 @@ class Test(models.Model):
 
 
 class Question(models.Model):
+    
     class QuestionType(models.TextChoices):
         single = "single"
         multiple = "mutiple"
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     question = models.TextField(max_length=255, verbose_name="Вопрос")
-    answers = models.ManyToManyField("authorApp.Answer")
+    answers = models.ManyToManyField("authorApp.Answer", related_name='+')
     max_points = models.PositiveIntegerField()
     qtype = models.CharField(
         max_length=8, choices=QuestionType.choices, default=QuestionType.single
-    )
-    slug = models.SlugField(
-        max_length=255, unique=True, db_index=True, verbose_name="URL"
     )
 
     def __str__(self):
@@ -62,9 +50,6 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.TextField(max_length=255, verbose_name="Вариант ответа")
     is_correct = models.BooleanField(default=False)
-    slug = models.SlugField(
-        max_length=255, unique=True, db_index=True, verbose_name="URL"
-    )
 
     def __str__(self):
         return self.answer
