@@ -1,3 +1,4 @@
+{% load static %}
 <div class="info-side-bar">
   <div class="info-side-bar__header">
     <span class="info-side-bar__title"></span>
@@ -20,7 +21,7 @@
     </div>
 
     <div class="info-side-bar__buttons"></div>
-      {% for button in buttons %}
+      {% for button in info %}
       <a
         class="info-side-bar__button info-side-bar__button--{{ button.color }}"
         href="{% url button.url %}"
