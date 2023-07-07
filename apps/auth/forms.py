@@ -9,7 +9,7 @@ class UserForm(ModelForm):
       
       widgets = {
          'username': TextInput(attrs={
-            'class': 'auth-page__form-input',
+            'class': 'auth-page__form-input-data',
             'placeholder': 'ваш логин',
          }),
          'first_name': TextInput(attrs={
