@@ -35,8 +35,7 @@
    &__form {
       .position(relative);
 
-      width: 100%;
-      max-width: 450px;
+      width: 400px;
 
       background-color: @white-color;
       padding: 40px;
@@ -51,9 +50,10 @@
       }
 
       &-input {
-         min-width: 360px;
+         width: 100%;
 
          font-size: 18px;
+         color: @black-color;
 
          .flexible(@flex-direction: column, @gap: 5px);
 
@@ -108,26 +108,25 @@
 
 
 .reg-page__form {
-   .position(absolute,0,0,0,0,1);
+   .position(absolute, 0, 0, 0, 0, 1);
 
    .flexible(center, center);
 
    display: none;
 
    &--open {
-   display: flex;
-   animation: reg-page__open @default-animation-settings;
+      display: flex;
+      animation: reg-page__open @default-animation-settings;
    }
 
    &--close {
       animation: reg-page__close @default-animation-settings;
    }
 
-   &-content{
+   &-content {
       .flexible(none, none, column, @gap: 20px);
 
-      width: 100%;
-      max-width: 450px;
+      width: 400px;
       height: min-content;
 
       padding: 40px;
@@ -135,7 +134,7 @@
       border-radius: 40px;
 
       box-shadow: 1px 1px 40px @lighted-color;
-   
+
       &-header {
          .flexible(center, space-between);
 
@@ -159,25 +158,13 @@
          width: 100%;
 
          font-size: 18px;
+         color: @white-color;
 
          .flexible(@flex-direction: column, @gap: 5px);
 
          &-title {
             color: @white-color;
             font-weight: bold;
-         }
-
-         &-data {
-            width: 100%;
-            .border(solid, @white-color, 2px, 12px);
-            background-color: @primary-color;
-            padding: 13px 20px;
-            color: @white-color;
-
-            &::placeholder {
-               color: @white-color;
-               font-weight: 300;
-            }
          }
       }
 
@@ -208,7 +195,7 @@
             background-color: transparent;
             color: @white-color;
             background-color: @primary-color;
-            
+
 
 
             font-size: 18px;
@@ -216,24 +203,40 @@
          }
       }
    }
+
+   &-input-data {
+      width: 100%;
+      .border(solid, @white-color, 2px, 12px);
+      background-color: @primary-color;
+      padding: 13px 20px;
+      color: @white-color;
+
+      &::placeholder {
+         color: @white-color;
+         font-weight: 300;
+      }
+   }
+
 }
 
-@keyframes reg-page__open{
+@keyframes reg-page__open {
    0% {
       transform: scale(0.9);
       opacity: 0;
    }
+
    100% {
       transform: scale(1.0);
       opacity: 1;
    }
 }
 
-@keyframes reg-page__close{
-   0% {   
+@keyframes reg-page__close {
+   0% {
       transform: scale(1.0);
       opacity: 1;
    }
+
    100% {
       transform: scale(0.9);
       opacity: 0;

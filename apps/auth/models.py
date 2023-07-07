@@ -4,21 +4,21 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     class RoleType(models.TextChoices):
-        student = "студент"
-        author = "автор"
-        teacher = "преподаватель"
+        student = "student"
+        author = "author"
+        teacher = "teacher"
 
     profile_picture = models.FileField(
         null=True, blank=True, max_length=500, verbose_name=("Аватар")
     )
     role = models.CharField(
         choices=RoleType.choices,
-        default="студент",
+        default="student",
         max_length=50,
         verbose_name=("Роль"),
     )
     slug = models.SlugField(
-        max_length=255, unique=True, db_index=True, verbose_name=("URL")
+        max_length=255, db_index=True, verbose_name=("URL"), blank=True
     )
     groups = None
 

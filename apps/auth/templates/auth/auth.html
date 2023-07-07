@@ -3,71 +3,70 @@
 
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'auth\less\auth.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+{% endblock %}
+
+{% block modal %}
+   {% include 'core/modals/AlertModal.html' %}
 {% endblock %}
 
 {% block content %}
-
    <div>
       <form class="reg-page__form" id='modal' method='POST'>
-         {% csrf_token %}
          <div class="reg-page__form-content">
    
             <div class="reg-page__form-content-header">
                <h1 class="reg-page__form-content-header-title">Авторизация</h1>
-               <i id='pidaras pidarasina' class="bi bi-x-circle reg-page__form-content-header-icon"></i>
+               <i id='close modal' class="bi bi-x-circle reg-page__form-content-header-icon"></i>
             </div>
-            
-            <div class="reg-page__form-content-input">
-               <b class="reg-page__form-content-input-title">Логин</b>
-               <input class="auth-page__form-input-data"/>
-            </div>
-   
-               <div class="reg-page__form-content-input">
-                  <b class="reg-page__form-content-input-title">Имя</b>
-                  <input class="auth-page__form-input-data"/>
-            </div>
-   
-            <div class="reg-page__form-content-input">
-               <b class="reg-page__form-content-input-title">Фамилия</b>
-               <input class="auth-page__form-input-data"/>
-            </div>
-   
-            <div class="reg-page__form-content-input">
-               <b class="reg-page__form-content-input-title">Пароль</b>
-               <input class="auth-page__form-input-data"/>
-            </div>
-   
-            <div class="reg-page__form-content-links">
-               <button type="submit" class="reg-page__form-content-links-button">Зарегистрироваться</button>
-               <select id="selection" class="reg-page__form-content-links-link">
-                  <option value="student">как студент</option>
-                  <option value="teacher">как преподаватель</option>
-                  <option value="author">как автор</option>
-               </select>
-            </div>
-   
+
+            {% csrf_token %}
+            {% for input in signup_form %}
+               {% if forloop.last %}
+                  <div class="reg-page__form-content-links">
+                     <button
+                        name="register"
+                        type="submit"
+                        class="reg-page__form-content-links-button"
+                     >
+                        Зарегистрироваться
+                     </button>
+                     {{ input }}
+                  </div>
+               {% else %}
+                  <div class="reg-page__form-content-input">
+                     {{ input.label }}
+                     {{ input }}
+                  </div>
+               {% endif %}
+            {% endfor %}
          </div>
       </form>
    
      <form class="auth-page__form" method="POST">
-         {% csrf_token %}
          <a class="auth-page__toogle" id='open_modal'>
             <i class="bi bi-person-plus auth-page__toogle-icon"></i>
          </a>
 
          <h1 class="auth-page__form-title">Авторизация</h1>
-         <div class="auth-page__form-input">
-            <b class="auth-page__form-input-title">Логин</b>
-            <input class="auth-page__form-input-data"/>
-         </div>
-         <div class="auth-page__form-input">
-            <b class="auth-page__form-input-title">Пароль</b>
-            <input class="auth-page__form-input-data"/>
-         </div>
-         <button type="submit" class="auth-page__form-links-button">Войти</button>
+
+         {% csrf_token %}
+         {% for input in signin_form %}
+            <div class="auth-page__form-input">
+               {{ input.label }}
+               {{ input }}
+            </div>
+         {% endfor %}
+        
+         <button
+            name="login"
+            type="submit"
+            class="auth-page__form-links-button"
+         >
+            Войти
+         </button>
       </form>
    </div>
-
 {% endblock content %}
 
 {% block script-files %}
