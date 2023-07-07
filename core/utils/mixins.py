@@ -52,12 +52,13 @@ class InfoSidebarMixin:
             context = {}
             current_user = self.request.user
             if current_user.role == 'teacher':
-                info = info_course_teacher
-                if location == 'test':
-                    info = info_test_teacher
+                context['info'] = info_course_teacher
+                if location != 'course':
+                    context['info'] = info_test_teacher
             elif current_user.role == 'student':
-                info = info_student
-            context['info']=info
+                context['info'] = info_student
+            else:
+                 context['info'] = info_author
             return context
       
 class HeaderMixin:
