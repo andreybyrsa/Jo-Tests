@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     "debug_toolbar",
     
     "apps.auth",
+    'apps.author',
+    'apps.student',
+    'apps.teacher'
 ]
 
 MIDDLEWARE = [
