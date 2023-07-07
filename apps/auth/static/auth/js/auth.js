@@ -5,13 +5,13 @@ const selection = document.querySelectorAll('#selection')
 selection.forEach( selection => {
    selection.addEventListener('change', (event) => {
       if (event.target.value == 'student') {
-         selection.style.width = '112px'
+         selection.style.width = '124px'
        }
        if (event.target.value == 'teacher') {
-         selection.style.width = '170px'
+         selection.style.width = '186px'
        }
        if (event.target.value == "author") {
-         selection.style.width = "98px";
+         selection.style.width = "106px";
        }
    })
 })

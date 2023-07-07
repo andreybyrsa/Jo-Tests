@@ -7,10 +7,9 @@
 
 {% block content %}
 
-   <form method='post'>
-      {% csrf_token %}
-
-      <div class="reg-page__form" id='modal'>
+   <div>
+      <form class="reg-page__form" id='modal' method='POST'>
+         {% csrf_token %}
          <div class="reg-page__form-content">
    
             <div class="reg-page__form-content-header">
@@ -20,26 +19,26 @@
             
             <div class="reg-page__form-content-input">
                <b class="reg-page__form-content-input-title">Логин</b>
-               {{form.username}}
+               <input class="auth-page__form-input-data"/>
             </div>
    
                <div class="reg-page__form-content-input">
                   <b class="reg-page__form-content-input-title">Имя</b>
-                  {{form.first_name}}
+                  <input class="auth-page__form-input-data"/>
             </div>
    
             <div class="reg-page__form-content-input">
                <b class="reg-page__form-content-input-title">Фамилия</b>
-               {{form.last_name}}
+               <input class="auth-page__form-input-data"/>
             </div>
    
             <div class="reg-page__form-content-input">
                <b class="reg-page__form-content-input-title">Пароль</b>
-               {{form.password}}
+               <input class="auth-page__form-input-data"/>
             </div>
    
             <div class="reg-page__form-content-links">
-               <button class="reg-page__form-content-links-button">Зарегистрироваться</button>
+               <button type="submit" class="reg-page__form-content-links-button">Зарегистрироваться</button>
                <select id="selection" class="reg-page__form-content-links-link">
                   <option value="student">как студент</option>
                   <option value="teacher">как преподаватель</option>
@@ -48,35 +47,26 @@
             </div>
    
          </div>
-      </div>
+      </form>
    
-     <div class="auth-page__form">
-       <a class="auth-page__toogle" id='open_modal'>
-         <i class="bi bi-person-plus auth-page__toogle-icon"></i>
-       </a>
-   
-       <h1 class="auth-page__form-title">Авторизация</h1>
-       <div class="auth-page__form-input">
-         <b class="auth-page__form-input-title">Логин</b>
-         {% comment %} {{form.username}} {% endcomment %}
-         <input type="text" placeholder='ваш логин' class='auth-page__form-input-data'>
-       </div>
-       <div class="auth-page__form-input">
-         <b class="auth-page__form-input-title">Пароль</b>
-         {% comment %} {{form.password}} {% endcomment %}
-         <input type="text" placeholder='ваш логин' class='auth-page__form-input-data'>
-       </div>
-       <div class="auth-page__form-links">
-         <button class="auth-page__form-links-button">Войти</button>
-         <select id="selection" class="auth-page__form-links-link">
-           <option value="student">как студент</option>
-           <option value="teacher">как преподаватель</option>
-           <option value="author">как автор</option>
-         </select>
-       </div>
-     </div>
+     <form class="auth-page__form" method="POST">
+         {% csrf_token %}
+         <a class="auth-page__toogle" id='open_modal'>
+            <i class="bi bi-person-plus auth-page__toogle-icon"></i>
+         </a>
 
-   </form>
+         <h1 class="auth-page__form-title">Авторизация</h1>
+         <div class="auth-page__form-input">
+            <b class="auth-page__form-input-title">Логин</b>
+            <input class="auth-page__form-input-data"/>
+         </div>
+         <div class="auth-page__form-input">
+            <b class="auth-page__form-input-title">Пароль</b>
+            <input class="auth-page__form-input-data"/>
+         </div>
+         <button type="submit" class="auth-page__form-links-button">Войти</button>
+      </form>
+   </div>
 
 {% endblock content %}
 
