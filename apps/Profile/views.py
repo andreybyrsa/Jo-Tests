@@ -16,7 +16,7 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         header_def = self.get_user_header()
         cells_def = self.get_profile_cell()
         context =dict(list({'user': user, 'form': form}.items())+list(header_def.items())+list(cells_def.items()))
-        return render(request, 'Profile/profile.html', context)
+        return render(request, 'Profile/ProfilePage.html', context)
 
     def post(self, request):
         user = request.user
@@ -31,6 +31,6 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         header_def = self.get_user_header()
         cells_def = self.get_profile_cell()
         context =dict(list({'user': user, 'form': form}.items())+list(header_def.items())+list(cells_def.items()))
-        return render(request, 'Profile/profile.html', context)
+        return render(request, 'Profile/ProfilePage.html', context)
     
 
