@@ -1,0 +1,40 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'Tests/less/TestsPage.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+{% endblock %}
+
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' with header=header %}
+{% endblock %}
+
+{% block left-side-bar %}
+  {% include 'core/blocks/InfoSideBar.html' with info=test_side_bar %}
+{% endblock %}
+
+{% block content %}
+  {% if not json_tests %}
+    <span class="tests-page__placeholder">Тестов пока нет...</span>
+  {% endif %}
+
+  {% for test in json_tests %}
+    <div class="tests-page__test" onclick="openSideBar('{{ forloop.counter0 }}')">
+      <span class="tests-page__test-title">{{ test.title }}</span>
+
+      <span class="tests-page__test-description">{{ test.description }}</span>
+  </div>
+  {% endfor %}
+{% endblock %}
+
+{% block script-files %}
+  {{ json_tests|json_script:"data-tests" }}
+  <script type="text/javascript" src="{% static 'Tests/js/TestsPage.js' %}"></script>
+{% endblock %}

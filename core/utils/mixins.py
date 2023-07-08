@@ -78,7 +78,7 @@ info_test_author = [
     {
         "name": "Удалить тест",
         "url_name": "delete-test",
-        "icon_name": "bi bi-trash3",
+        "icon_name": "bi bi-trash",
         "color": "danger",
     },
 ]

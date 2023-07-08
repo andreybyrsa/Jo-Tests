@@ -1,0 +1,42 @@
+@import '/static/core/less/main.less';
+
+.tests-page {
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+
+    color: @primary-color;
+    font-size: 25px;
+    
+    .flexible(center, center);
+  }
+
+  &__test {
+    padding: 15px 30px;
+    width: 100%;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    opacity: @disable-opacity;
+
+    cursor: pointer;
+
+    .flexible(flex-start, flex-start, column, @gap: 4px);
+
+    &-title {
+      color: @black-color;
+      font-size: 25px;
+    }
+
+    &-description {
+      color: @lighted-color;
+      font-size: 18px;
+    }
+
+    &--active {
+      .border(solid, @primary-color, 1px, 20px);
+
+      opacity: 1;
+    }
+  }
+}
