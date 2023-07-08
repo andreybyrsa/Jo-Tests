@@ -124,7 +124,7 @@ class ProfileCellMixin:
         current_user = self.request.user
         user_cells = profile_cell.copy()
         if current_user.role == 'author':
-            context['cells'] = user_cells.pop(0)
+            context['cells'] = user_cells[0:1]
         elif current_user.role == 'teacher':
             user_cells.pop(1)
             context['cells'] = user_cells
