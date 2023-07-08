@@ -26,11 +26,20 @@ open_modal.addEventListener("click", (event) => {
   open_modal.style.display = "none";
 });
 
-close_modal.addEventListener("click", (event) => {
-  function close() {
+function closeRegPageModal() {
+  modal.classList.add("reg-page__form--close");
+  setTimeout(() => {
     modal.classList.remove("reg-page__form--open");
     open_modal.style.display = "flex";
+  }, 250);
+}
+
+close_modal.addEventListener("click", (event) => {
+  closeRegPageModal();
+});
+
+modal.addEventListener("click", (event) => {
+  if (event.target.id == "modal") {
+    closeRegPageModal();
   }
-  modal.classList.add("reg-page__form--close");
-  setTimeout(close, 250);
 });
