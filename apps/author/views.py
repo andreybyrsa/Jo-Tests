@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
-from django.views.generic import ListView
-from .models import Test, Author
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.views.generic import ListView
+
+from .models import Test, Author
 
 # СписокТестов(author, teacher)
 
 
 class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
     model = Test
-    login_url = '/auth/'
+    login_url = "/auth/"
     template_name = "author/tests.html"
     context_object_name = "tests"
 

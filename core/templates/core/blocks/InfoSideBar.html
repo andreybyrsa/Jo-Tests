@@ -1,26 +1,26 @@
 {% load static %}
 <div class="info-side-bar">
   <div class="info-side-bar__header">
-    <span class="info-side-bar__title"></span>
-    <span class="info-side-bat__text info-side-bat__text--lighted"></span>
+    <span class="info-side-bar__title">Коллоквиум - Дискретная математика</span>
+    <span class="info-side-bar__text info-side-bar__text--lighted">Проверка знания предмета по темам - графы, алгебра логики</span>
   </div>
 
   <div class="info-side-bar__content">
     <div class="info-side-bar__time-created">
-      <span class="info-side-bat__text info-side-bat__text--lighted">
-        Дата создания
+      <span class="info-side-bar__text info-side-bar__text--lighted">
+        Дата создания:
       </span>
-      <span class="info-side-bat__text"></span>
+      <span class="info-side-bar__text"></span>
     </div>
 
     <div class="info-side-bar__time-updated">
-      <span class="info-side-bat__text info-side-bat__text--lighted">
-        Дата редактирования
+      <span class="info-side-bar__text info-side-bar__text--lighted">
+        Дата редактирования:
       </span>
-      <span class="info-side-bat__text"></span>
+      <span class="info-side-bar__text"></span>
     </div>
 
-    <div class="info-side-bar__buttons"></div>
+    <div class="info-side-bar__buttons">
       {% for button in info %}
       <a
         class="info-side-bar__button info-side-bar__button--{{ button.color }}"
@@ -33,9 +33,11 @@
     </div>
   </div>
 
-  <img
-    class="info-side-bar__defult-image"
-    src="{% static 'core/images/sideBarImage.webp' %}"
-    alt="side bar image"
-  />
+  <div class="info-side-bar__image-wrapper">
+    <img
+      class="info-side-bar__image"
+      src="{% static 'core/images/sideBarImage.webp' %}"
+      alt="side bar image"
+    />
+  </div>
 </div>

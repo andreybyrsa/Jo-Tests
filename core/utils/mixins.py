@@ -29,7 +29,7 @@ header = [
     {"name": "Профиль", "url_name": "profile", "icon_name": "bi bi-person"},
 ]
 
-info_student = [
+info_course_student = [
     {
         "name": "Посмотреть курс",
         "url_name": "inspect-test",
@@ -68,7 +68,7 @@ info_test_teacher = [
     },
 ]
 
-info_author = [
+info_test_author = [
     {
         "name": "Редактировать тест",
         "url_name": "change-test",
@@ -93,9 +93,9 @@ class InfoSidebarMixin:
             if location != "course":
                 context["info"] = info_test_teacher
         elif current_user.role == "student":
-            context["info"] = info_student
+            context["info"] = info_course_student
         else:
-            context["info"] = info_author
+            context["info"] = info_test_author
         return context
 
 
