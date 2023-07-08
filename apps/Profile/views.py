@@ -12,7 +12,7 @@ class UserProfileView(LoginRequiredMixin, View):
         user = request.user
         form = UpdateProfileForm(instance=user)
         context = {'user': user, 'form': form}
-        return render(request, 'Profile/profile.html', context)
+        return render(request, 'Profile/ProfilePage.html', context)
 
     def post(self, request):
         user = request.user
@@ -22,5 +22,5 @@ class UserProfileView(LoginRequiredMixin, View):
             return redirect('user_profile')
 
         context = {'user': user, 'form': form}
-        return render(request, 'Profile/profile.html', context)
+        return render(request, 'Profile/ProfilePage.html', context)
 

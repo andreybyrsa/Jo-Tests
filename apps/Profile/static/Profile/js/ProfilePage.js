@@ -1,0 +1,1 @@
+addPageClassName("profile-page");
