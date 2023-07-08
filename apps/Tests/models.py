@@ -1,5 +1,5 @@
 from django.db import models
-from apps.auth.models import Author
+from apps.auth.models import Student, Author
 
 
 class Test(models.Model):
@@ -12,12 +12,12 @@ class Test(models.Model):
     date_expired = models.DateTimeField(
         auto_now=True, verbose_name="Дата истекания доступа к тесту"
     )
-    questions = models.ManyToManyField("authorApp.Question", verbose_name="Вопросы", related_name='+')
+    questions = models.ManyToManyField(
+        "TestsApp.Question", verbose_name="Вопросы", related_name="+"
+    )
     test_time = models.TimeField()
     max_result = models.IntegerField()
-    slug = models.SlugField(
-        max_length=255, unique=True, db_index=True, verbose_name="URL"
-    )
+    slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     def __str__(self):
         return self.title
@@ -28,15 +28,25 @@ class Test(models.Model):
         verbose_name_plural = "Тесты"
 
 
+class StudentResult(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    result = models.FloatField()
+    slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
+
+    class Meta:
+        verbose_name = "Группа"
+        verbose_name_plural = "Группы"
+
+
 class Question(models.Model):
-    
     class QuestionType(models.TextChoices):
         single = "single"
         multiple = "mutiple"
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     question = models.TextField(max_length=255, verbose_name="Вопрос")
-    answers = models.ManyToManyField("authorApp.Answer", related_name='+')
+    answers = models.ManyToManyField("TestsApp.Answer", related_name="+")
     max_points = models.PositiveIntegerField()
     qtype = models.CharField(
         max_length=8, choices=QuestionType.choices, default=QuestionType.single
@@ -44,6 +54,10 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+    
+    class Meta:
+        verbose_name = "Вопрос для теста"
+        verbose_name_plural = "Вопросы для тестов"
 
 
 class Answer(models.Model):
@@ -53,3 +67,20 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.answer
+
+    class Meta:
+        verbose_name = "Ответ для теста"
+        verbose_name_plural = "Ответы для тестов"
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    is_selected = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Ответ студента"
+        verbose_name_plural = "Ответы студентов"
+
+

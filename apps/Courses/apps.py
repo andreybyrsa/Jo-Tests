@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class StudentConfig(AppConfig):
+class CoursesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.student'
-    label = 'studentApp'
+    name = 'apps.Courses'
+    label = 'CoursesApp'

@@ -29,9 +29,9 @@ INSTALLED_APPS = [
     "debug_toolbar",
     
     "apps.auth",
-    'apps.author',
-    'apps.student',
-    'apps.teacher'
+    'apps.Tests',
+    'apps.Courses',
+    'apps.Profile'
 ]
 
 AUTH_USER_MODEL = "userAuth.User"

@@ -4,7 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import ListView
 
-from .models import Test, Author
+from apps.auth.models import Author
+from .models import Test
 
 # СписокТестов(author, teacher)
 
@@ -12,7 +13,7 @@ from .models import Test, Author
 class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
     model = Test
     login_url = "/auth/"
-    template_name = "author/tests.html"
+    template_name = "Tests/tests.html"
     context_object_name = "tests"
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -27,9 +28,10 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
         current_user = self.request.user
         if current_user.role == "teacher":
             return Test.objects.all()
+
         author = Author.objects.get(user=current_user)
         return author.tests.all()
 
 
 def test_create(request):
-    return render(request, "author/InfoSideBarTest.html")
+    return render(request, "Tests/InfoSideBarTest.html")
