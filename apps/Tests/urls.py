@@ -7,7 +7,6 @@ urlpatterns = [
     path('profile/', test_create, name='profile'),
     path('change_test/', test_create, name='change-test'),
     path('delete_test/', test_create, name='delete-test'),
-    path('dfw/', test_create, name=''),
     path('courses/', test_create, name='inspect_course'),
     path('profile/', test_create, name='create-course'),
     path('tests/', test_create, name='inspect-test'),
