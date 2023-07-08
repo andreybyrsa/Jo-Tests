@@ -17,15 +17,15 @@
 {% endblock %}
 
 {% block left-side-bar %}
-  {% include 'core/blocks/InfoSideBar.html' with info=test_side_bar %}
+  {% include 'core/blocks/InfoSideBar.html' with info=info %}
 {% endblock %}
 
 {% block content %}
-  {% if not json_tests %}
+  {% if not tests %}
     <span class="tests-page__placeholder">Тестов пока нет...</span>
   {% endif %}
 
-  {% for test in json_tests %}
+  {% for test in tests %}
     <div class="tests-page__test" onclick="openSideBar('{{ forloop.counter0 }}')">
       <span class="tests-page__test-title">{{ test.title }}</span>
 
