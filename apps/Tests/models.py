@@ -13,7 +13,7 @@ class Test(models.Model):
         auto_now=True, verbose_name="Дата истекания доступа к тесту"
     )
     questions = models.ManyToManyField(
-        "TestsApp.Question", verbose_name="Вопросы", related_name="+"
+        "TestsApp.Question", verbose_name="Вопросы", related_name="+", blank=True
     )
     test_time = models.TimeField()
     max_result = models.IntegerField()
