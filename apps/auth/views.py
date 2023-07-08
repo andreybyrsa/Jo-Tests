@@ -61,7 +61,7 @@ def user_auth(request):
 
             messages.error(request, "Некорректный ввод полей")
 
-    return render(request, "auth/auth.html", data)
+    return render(request, "auth/AuthPage.html", data)
 
 
 def user_logout(request):
