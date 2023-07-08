@@ -1,0 +1,92 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'Profile\less\profile.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+{% endblock %}
+
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1></h1>
+    
+    <form method="post" enctype="multipart/form-data" class="profile-page">
+        {% csrf_token %}
+        
+        <div>
+            <input type="text" name="username" id="id_username" value="{{ user.username }}" class="profile-page__nickname" placeholder="Логин">
+        </div>
+
+        <button class= "profile-page__edit" type="submit">Редактировать</button>
+
+        <div>
+            <input type="text" name="username" id="id_username" value="{{ user.username }}" class="profile-page__names" placeholder="Логин">
+        </div>
+        
+        <div>
+            <input type="text" name="first_name" id="id_first_name" value="{{ user.first_name }}" class="profile-page__names" placeholder="Имя">
+        </div>
+        
+        <div>
+            <input type="text" name="last_name" id="id_last_name" value="{{ user.last_name }}" class="profile-page__names" placeholder="Фамилия">
+        </div>
+        
+        <div>
+            <input type="file" name="profile_picture" id="id_profile_picture" class="profile-page__image-input">
+        </div>
+        
+    </form>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
