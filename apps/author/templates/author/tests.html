@@ -1,13 +1,20 @@
 {% extends 'core/pages/PageLayout.html' %}
 {% load static %}
+
 {% block style-files %}
-<link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
-<link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
 {% endblock %}
+
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+{% endblock %}
+
 {% block header %}
-{% include 'core/blocks/HeaderBlock.html' with pageClassName="index-page" title="django" %}
+  {% include 'core/blocks/HeaderBlock.html' %}
 {% endblock %}
 
 {% block left-side-bar %}
-{% include 'core/blocks/InfoSideBar.html' with pageClassName="index-page" title="django" %}
+  {% include 'core/blocks/InfoSideBar.html' %}
 {% endblock %}

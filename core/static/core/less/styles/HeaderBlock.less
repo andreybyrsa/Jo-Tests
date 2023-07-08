@@ -1,9 +1,10 @@
 @import '../main.less';
 
 .header {
-  padding: 30px 40px;
+  padding: 20px 40px;
   width: 100%;
   background-color: @primary-color;
+  border-radius: 20px;
 
   color: @white-color;
 
@@ -13,10 +14,14 @@
     font-size: 35px;
 
     .flexible(center, center, @gap: 20px);
+
+    &-image {
+      height: 40px;
+    }
   }
 
   &__tabs {
-    font-size: 22px;
+    font-size: 20px;
 
     .flexible(center, center, @gap: 20px);
   }
@@ -24,7 +29,11 @@
   &__tab {
     opacity: @disable-opacity;
 
+    .flexible(center, center, @gap: 4px);
+
     &-icon {
+      font-size: 25px;
+
       display: flex;
     }
 
@@ -37,6 +46,9 @@
     width: 160px;
     height: 50px;
     background-color: @secondary-color;
+    border-radius: 12px;
+
+    .flexible(center, center);
 
     transition: background-color @default-transition-settings;
 

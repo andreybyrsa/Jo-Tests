@@ -70,7 +70,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Message Storage
 
-MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
