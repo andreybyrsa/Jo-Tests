@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+from .models import Student, Author, Teacher
+
 from .forms import SigninForm, SignupForm
 
 
@@ -36,9 +38,19 @@ def user_auth(request):
 
         else:
             if signup_form.is_valid():
+                role = signup_form.cleaned_data["role"]
+
                 try:
                     user = signup_form.save()
                     login(request, user)
+
+                    if role == "student":
+                        Student.objects.create(user=user)
+                    elif role == "author":
+                        Author.objects.create(user=user)
+                    else:
+                        Teacher.objects.create(user=user)
+
                     messages.success(request, "Успешная регистрация")
 
                     return redirect("tests")  # поменяете на нужный url

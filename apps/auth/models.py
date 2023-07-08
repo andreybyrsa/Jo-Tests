@@ -22,26 +22,54 @@ class User(AbstractUser):
     )
     groups = None
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
 
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tests = models.ManyToManyField(
-        "authorApp.Test", verbose_name="Тесты", related_name="+"
+        "authorApp.Test", verbose_name="Тесты", related_name="+", blank=True
     )
+
+    def __str__(self) -> str:
+        return f"Автор {self.user}"
+    
+    class Meta:
+        verbose_name = 'Автор'
+        verbose_name_plural = 'Авторы'
 
 
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     result_tests = models.ManyToManyField(
-        "studentApp.StudentResult", verbose_name=("Результат теста"), related_name="+"
+        "studentApp.StudentResult",
+        verbose_name=("Результат теста"),
+        related_name="+",
+        blank=True,
     )
+
+    def __str__(self) -> str:
+        return f"Студент {self.user}"
+    
+    class Meta:
+        verbose_name = 'Студент'
+        verbose_name_plural = 'Студенты'
 
 
 class Teacher(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     courses = models.ManyToManyField(
-        "teacherApp.Course", verbose_name=("Курсы"), related_name="+"
+        "teacherApp.Course", verbose_name=("Курсы"), related_name="+", blank=True
     )
     groups = models.ManyToManyField(
-        "teacherApp.Group", verbose_name=("Группы"), related_name="+"
+        "teacherApp.Group", verbose_name=("Группы"), related_name="+", blank=True
     )
+
+    def __str__(self) -> str:
+        return f"Преподаватель {self.user}"
+    
+    class Meta:
+        verbose_name = 'Преподаватель'
+        verbose_name_plural = 'Преподаватели'
