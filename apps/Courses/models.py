@@ -12,7 +12,7 @@ class Group(models.Model):
         verbose_name_plural = 'Группы'
 
 class Course(models.Model):
-    title = models.TextField(max_length=127, verbose_name='Название теста')
+    title = models.TextField(max_length=127, verbose_name='Название курса')
     description = models.TextField(max_length=255, verbose_name = 'Описание')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
