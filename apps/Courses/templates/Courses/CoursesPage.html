@@ -27,13 +27,14 @@
 
   {% for course in courses %}
     <div class="tests-page__test" onclick="openSideBar('{{ forloop.counter0 }}')">
-      <span class="tests-page__test-title">{{ test.title }}</span>
+      <span class="tests-page__test-title">{{ course.title }}</span>
 
-      <span class="tests-page__test-description">{{ test.description }}</span>
+      <span class="tests-page__test-description">{{ course.description }}</span>
   </div>
   {% endfor %}
 {% endblock %}
 
 {% block script-files %}
+  {{ json_courses|json_script:"data-tests" }}
   <script type="text/javascript" src="{% static 'Courses/js/CoursesPage.js' %}"></script>
 {% endblock %}
