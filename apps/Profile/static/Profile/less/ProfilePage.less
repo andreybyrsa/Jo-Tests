@@ -1,0 +1,45 @@
+@import '/static/core/less/main.less';
+
+
+.profile-page {
+  background-color: @white-color;
+
+  &__nickname {
+    font-size: 60px;
+  }
+
+  &__names {
+    font-size: 30px;
+  }
+
+  &__edit {
+    font-size: 45px;
+  }
+
+  &__left-side-bar {
+    width: 50%;
+
+    .flexible(flex-start, flex-start, column, @gap: 20px);
+  }
+
+  &__content {
+    width: 50%;
+  }
+
+  &__cell {
+    padding: 0 30px;
+    width: 400px;
+    height: 80px;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    color: @black-color;
+    font-size: 25px;
+
+    .flexible(center, space-between);
+
+    &--active {
+      .border(solid, @primary-color, 1px, 20px);
+    }
+  }
+}

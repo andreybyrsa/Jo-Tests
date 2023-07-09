@@ -1,39 +1,55 @@
 {% load static %}
+
 <div class="info-side-bar">
   <div class="info-side-bar__header">
-    <span class="info-side-bar__title">Коллоквиум - Дискретная математика</span>
-    <span class="info-side-bar__text info-side-bar__text--lighted">Проверка знания предмета по темам - графы, алгебра логики</span>
+    <span id="side-bar-title" class="info-side-bar__title">
+      {% if side_bar_name == 'test' %}
+        Нет открытых тестов
+      {% else %}
+        Нет открытых курсов
+      {% endif %}
+    </span>
+    <span
+      id="side-bar-description"
+      class="info-side-bar__text info-side-bar__text--lighted"
+    >
+      {% if side_bar_name == 'test' %}
+        Нажмите на тест, который хотите просмотреть
+      {% else %}
+        Нажмите на курс, который хотите просмотреть
+      {% endif %}
+    </span>
   </div>
 
-  <div class="info-side-bar__content">
+  <div id="side-bar-content" class="info-side-bar__content">
     <div class="info-side-bar__time-created">
       <span class="info-side-bar__text info-side-bar__text--lighted">
         Дата создания:
       </span>
-      <span class="info-side-bar__text"></span>
+      <span id="side-bar-time-created" class="info-side-bar__text"></span>
     </div>
 
     <div class="info-side-bar__time-updated">
       <span class="info-side-bar__text info-side-bar__text--lighted">
         Дата редактирования:
       </span>
-      <span class="info-side-bar__text"></span>
+      <span id="side-bar-time-updated" class="info-side-bar__text"></span>
     </div>
 
     <div class="info-side-bar__buttons">
       {% for button in info %}
       <a
         class="info-side-bar__button info-side-bar__button--{{ button.color }}"
-        href="{% url button.url %}"
+        href="{% url button.url_name %}"
       >
-        <i class="{{ button.icon }} info-side-bar__button-icon"></i>
-        <span>{{ button.text }}</span>
+        <i class="{{ button.icon_name }} info-side-bar__button-icon"></i>
+        <span>{{ button.name }}</span>
       </a>
       {% endfor %}
     </div>
   </div>
 
-  <div class="info-side-bar__image-wrapper">
+  <div id="side-bar-image" class="info-side-bar__image-wrapper">
     <img
       class="info-side-bar__image"
       src="{% static 'core/images/sideBarImage.webp' %}"

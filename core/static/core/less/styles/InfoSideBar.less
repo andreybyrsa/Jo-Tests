@@ -1,7 +1,7 @@
 @import '../main.less';
 
 .info-side-bar {
-  padding: 30px 20px;
+  padding: 20px;
   width: 400px;
   height: 100%;
   background-color: @white-color;
@@ -15,6 +15,7 @@
 
   &__content {
     .flexible(flex-start, flex-start, column, @gap: 30px);
+    display: none;
   }
 
   &__title {
@@ -33,7 +34,7 @@
 
   &__time-created,
   &__time-updated {
-    .flexible(flex-start, flex-start, column, @gap: 8px);
+    .flexible(flex-start, flex-start, column, @gap: 4px);
   }
 
   &__buttons {
@@ -43,7 +44,11 @@
   &__button {
     font-size: 20px;
 
-    .flexible(flex-start, flex-start, @gap: 8px);
+    .flexible(center, flex-start, @gap: 8px);
+
+    &-icon {
+      display: flex;
+    }
 
     &--primary {
       color: @primary-color;

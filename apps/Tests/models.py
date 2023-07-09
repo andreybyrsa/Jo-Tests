@@ -19,6 +19,17 @@ class Test(models.Model):
     max_result = models.IntegerField()
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
+    def get_test_info(self):
+        return {
+            "title": self.title,
+            "description": self.description,
+            "time_create": self.time_create,
+            "time_update": self.time_update,
+            "questions_amount": self.count,
+            "test_time": self.test_time,
+            "max_result": self.max_result,
+        }
+
     def __str__(self):
         return self.title
 
@@ -35,8 +46,8 @@ class StudentResult(models.Model):
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     class Meta:
-        verbose_name = "Группа"
-        verbose_name_plural = "Группы"
+        verbose_name = "Результат студента"
+        verbose_name_plural = "Результаты студентов"
 
 
 class Question(models.Model):
@@ -54,7 +65,7 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
-    
+
     class Meta:
         verbose_name = "Вопрос для теста"
         verbose_name_plural = "Вопросы для тестов"
@@ -82,5 +93,3 @@ class Choice(models.Model):
     class Meta:
         verbose_name = "Ответ студента"
         verbose_name_plural = "Ответы студентов"
-
-

@@ -7,25 +7,31 @@ from django.views.generic import ListView
 from apps.auth.models import Author
 from .models import Test
 
-# СписокТестов(author, teacher)
-
 
 class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
+    """Список тестов - Author, Teacher"""
+
     model = Test
-    login_url = "/auth/"
-    template_name = "Tests/tests.html"
+    login_url = "/auth"
+    template_name = "Tests/TestsPage.html"
     context_object_name = "tests"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        json_tests = list(test.get_test_info() for test in context["tests"])
         header_def = self.get_user_header()
         sidebar_def = self.get_user_sidebar("test")
+
         return dict(
-            list(context.items()) + list(header_def.items()) + list(sidebar_def.items())
+            list(context.items())
+            + list(header_def.items())
+            + list(sidebar_def.items())
+            + list({"json_tests": json_tests}.items())
         )
 
-    def get_querryset(self):
+    def get_queryset(self):
         current_user = self.request.user
+
         if current_user.role == "teacher":
             return Test.objects.all()
 
