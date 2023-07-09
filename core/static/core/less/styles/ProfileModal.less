@@ -1,0 +1,50 @@
+@import '/static/core/less/main.less';
+
+.profile-modal {
+   .flexible(@align-items: center, @flex-direction: column, @gap: 20px);
+   width: 100%;
+   max-width: 500px;
+
+   padding: 30px;
+   border-radius: 20px;
+   background-color: @white-color;
+
+   &-input {
+      .flexible(@flex-direction: column, @gap: 5px);
+      width: 100%;
+
+      font-size: 20px;
+      color: @primary-color; 
+      
+      &--lighted {
+         width: 100%;
+         padding: 12px 20px;
+
+         color: @black-color;
+         .border(
+         @border-style: solid,
+         @border-color: @lighted-color,
+         @border-widths: 2px,
+         @border-radii: 12px,
+         ); 
+      }
+   }
+
+   &-button {
+      font-size: 20px;
+      width: 100%;
+      padding: 15px;
+
+      background-color: @secondary-color;
+      color: @white-color;
+      border-radius: 12px;   
+
+      transition: all @default-transition-settings;
+   }
+
+   &-button:active {
+      background-color: @primary-color;
+   }
+
+}
+
