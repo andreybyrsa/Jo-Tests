@@ -1,9 +1,49 @@
 {% load static %}
 
 <div class="create-test-side-bar">
-  {% for input in form %}
-    {input.label}
-    {input}
-  {% endfor %}
-  
+  <div class="create-test-side-bar__content">
+    <div class="create-test-side-bar__input-wrapper">
+      <span>Название теста</span>
+      <input class="create-test-side-bar__input" placeholder="Это новый тест" />
+    </div>
+
+    <div class="create-test-side-bar__input-wrapper">
+      <span>Описание теста</span>
+      <input
+        class="create-test-side-bar__input"
+        placeholder="Это описание теста"
+      />
+    </div>
+
+    <button class="create-test-side-bar__button">
+      <i class="bi bi-plus create-test-side-bar__button-icon"></i>
+      <span>Вопрос</span>
+    </button>
+
+    <button class="create-test-side-bar__button">
+      <i class="bi bi-plus create-test-side-bar__button-icon"></i>
+      <span>Ответ</span>
+    </button>
+
+    <button class="create-test-side-bar__toggle-button">
+      Поменять тип вопроса
+    </button>
+
+    <div class="create-test-side-bar__text">
+      <span class="create-test-side-bar__text-light">Дата создания:</span>
+      <span></span>
+    </div>
+
+    <div class="create-test-side-bar__text">
+      <span class="create-test-side-bar__text-light">Дата редактирования:</span>
+      <span></span>
+    </div>
+
+    <div class="create-test-side-bar__text">
+      <span class="create-test-side-bar__text-light">Количество вопросов:</span>
+      <span></span>
+    </div>
+  </div>
+
+  <button class="create-test-side-bar__submit-button">Cохранить тест</button>
 </div>
