@@ -27,9 +27,13 @@
   }
 
   &__tab {
+    color: @white-color;
+
     opacity: @disable-opacity;
 
     .flexible(center, center, @gap: 4px);
+
+    transition: opacity @default-transition-settings;
 
     &-icon {
       font-size: 25px;
@@ -40,6 +44,10 @@
     &--active {
       opacity: 1;
     }
+
+    &:active {
+      opacity: 1;
+    }
   }
 
   &__logout-button {
@@ -47,6 +55,8 @@
     height: 50px;
     background-color: @secondary-color;
     border-radius: 12px;
+
+    color: @white-color;
 
     .flexible(center, center);
 

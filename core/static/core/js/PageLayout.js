@@ -3,6 +3,8 @@ let pageLayoutContentWrapper = document.querySelector(
   ".page-layout__content-wrapper"
 );
 
+let headerTabs = document.querySelectorAll(".header__tab");
+
 if (pageLayoutSideBar.children.length) {
   pageLayoutContentWrapper.style.gap = "20px";
 }
@@ -11,6 +13,18 @@ let modalLayout = document.getElementById("modal-layout");
 
 const OPENING_MODAL_LAYOUT_CLASS = "page-layout-modal--opened";
 const CLOSING_MODAL_LAYOUT_CLASS = "page-layout-modal--closed";
+
+function setActiveLink() {
+  const currentLinks = Array.from(headerTabs);
+  const currentURL = window.location.pathname;
+
+  currentLinks.forEach((link) => {
+    if (link.getAttribute("href") == currentURL) {
+      link.classList.add("header__tab--active");
+    }
+  });
+}
+setActiveLink();
 
 function openModal() {
   modalLayout.style.display = "grid";
