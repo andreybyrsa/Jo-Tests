@@ -82,6 +82,11 @@
 
     &--active {
       .border(solid, @primary-color, 1px, 20px);
+      opacity: 1;
+    }
+
+    &--disabled {
+      opacity: @disable-opacity;
     }
   }
 
