@@ -20,7 +20,7 @@ class ViewCourses(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
         context = super().get_context_data(**kwargs)
         json_courses = list(test.get_course_info() for test in context["courses"])
         header_def = self.get_user_header()
-        sidebar_def = self.get_user_sidebar("test")
+        sidebar_def = self.get_user_sidebar()
 
         return dict(
             list(context.items())
