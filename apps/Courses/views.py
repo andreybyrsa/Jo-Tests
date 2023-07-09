@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 
 from apps.auth.models import Teacher, Student
+from apps.Tests.models import StudentResult
 from .models import Course
 
 
@@ -18,7 +19,7 @@ class ViewCourses(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        json_courses = list(test.get_course_info() for test in context["courses"])
+        json_courses = list(course.get_course_info() for course in context["courses"])
         header_def = self.get_user_header()
         sidebar_def = self.get_user_sidebar()
 
@@ -48,23 +49,21 @@ def delete_course(request, course_slug):
     return redirect("courses")
 
 
-# Отображение тестов в курсе(teacher, student)
+class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
+    model = Course
+    template_name = ''
+    context_object_name = 'course'
+    slug_url_kwarg = 'course_slug'
 
-# class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
-#       model = Course
-#       template_name = ''
-#       slug_url_kwarg = 'course_slug'
-#       context_object_name = ''
-
-#       def get_context_data(self, *, object_list=None, **kwargs):
-#             context = super().get_context_data(**kwargs)
-#             header_def = self.get_user_header()
-#             sidebar_def = self.get_user_info()
-#             return dict(list(context.items()) + list(header_def.items()) + list(inf0_sidebar_def.items()))
-
-#        course = Course.objects.get(slug=self.kwargs.get(slug_url_kwargs)
-#        current_user = self.request.user
-#        def get_queryset(self):
-#               if current_user.role == ‘teacher’:
-#                      return course.tests.all()
-#               return course.tests.filter(‘is_available’=True)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        current_user = self.request.user
+        header_def = self.get_user_header()
+        context = super().get_context_data(**kwargs)
+        if current_user.role == 'student':
+            tests = context['course'].tests.filter(is_available=True)
+            json_tests = list(test.get_test_info for test in tests)
+            return dict(list({"tests": tests}.items()) + list(header_def.items()) + list({"json_tests": json_tests}.items()))
+        if current_user.role == 'teacher':
+            tests = context['course'].tests.all()
+            results = context['course'].groups.students.results.all()
+            return dict(list({"tests": tests}.items()) + list(header_def.items()) + list({"results": results}.items()))

@@ -22,6 +22,9 @@ class User(AbstractUser):
     )
     groups = None
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
@@ -50,7 +53,6 @@ class Student(models.Model):
         related_name="+",
         blank=True,
     )
-
     def __str__(self) -> str:
         return f"Студент {self.user}"
 

@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-import uuid
 from apps.auth.models import Teacher
 
 
@@ -8,7 +7,10 @@ class Group(models.Model):
     groupname = models.CharField(max_length=127)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     students = models.ManyToManyField("userAuth.Student", verbose_name="Студенты")
-
+    
+    def __str__(self):
+        return self.groupname
+    
     class Meta:
         verbose_name = "Группа"
         verbose_name_plural = "Группы"
