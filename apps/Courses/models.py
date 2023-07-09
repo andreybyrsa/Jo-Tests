@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+import uuid
 from apps.auth.models import Teacher
 
 
@@ -23,6 +25,12 @@ class Course(models.Model):
     progress = models.FloatField()
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
+    def get_absolute_url(self):
+        return reverse('test', kwargs={'course_slug': self.slug})
+
+    def get_unique_slug(self):
+        return 'course'+str(uuid.uuid4())
+
     def get_course_info(self):
         return {
             "title": self.title,
@@ -30,6 +38,7 @@ class Course(models.Model):
             "time_create": self.time_create,
             "time_update": self.time_update,
             "progress": self.progress,
+            "url": self.get_absolute_url()
         }
 
     def __str__(self):
