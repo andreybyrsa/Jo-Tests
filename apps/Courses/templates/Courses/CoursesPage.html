@@ -46,6 +46,7 @@
 {% endblock %}
 
 {% block script-files %}
-  {{ json_courses|json_script:"data-tests" }}
+  {{ json_courses|json_script:"data-courses" }}
+  <script type="text/javascript" src="{% static 'core/js/InfoSideBar.js' %}"></script>
   <script type="text/javascript" src="{% static 'Courses/js/CoursesPage.js' %}"></script>
 {% endblock %}
