@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -41,12 +41,9 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
         return author.tests.all()
 
 
-class CreateTest(LoginRequiredMixin, HeaderMixin, CreateView):
-    form_class = TestCreateForm
-    login_url = "/auth"
-    template_name = "Tests/CreateTestPage.html"
+def test_create(request):
+    return render(request, "Tests/CreateTestPage.html")
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        header_def = self.get_user_header()
-
-        return dict(list(header_def.items()))
+def delete_test(request, test_slug):
+    Test.objects.get(slug=test_slug).delete()
+    return redirect('tests')

@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+import uuid
 from apps.auth.models import Student, Author
 
 
@@ -15,10 +17,14 @@ class Test(models.Model):
     questions = models.ManyToManyField(
         "TestsApp.Question", verbose_name="Вопросы", related_name="+", blank=True
     )
-    test_time = models.TimeField()
+    test_time = models.IntegerField(verbose_name='Время выполнения теста')
     max_result = models.IntegerField()
+    is_available = models.BooleanField(default=False, verbose_name='Доступен')
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
+    def get_absolute_url(self):
+        return reverse('inspect-test', kwargs={'test_slug': self.slug})
+    
     def get_test_info(self):
         return {
             "title": self.title,
@@ -28,6 +34,7 @@ class Test(models.Model):
             "questions_amount": self.count,
             "test_time": self.test_time,
             "max_result": self.max_result,
+            'slug': self.slug,
         }
 
     def __str__(self):
@@ -42,7 +49,8 @@ class Test(models.Model):
 class StudentResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    result = models.FloatField()
+    result = models.FloatField(default=0.0)
+    is_passed = models.BooleanField(default=False, verbose_name='Пройден')
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     class Meta:

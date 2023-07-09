@@ -40,7 +40,7 @@
       {% for button in info %}
       <a
         class="info-side-bar__button info-side-bar__button--{{ button.color }}"
-        href="{% url button.url_name %}"
+        href="{{ button.url_name }}"
       >
         <i class="{{ button.icon_name }} info-side-bar__button-icon"></i>
         <span>{{ button.name }}</span>

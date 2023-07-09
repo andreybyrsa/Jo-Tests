@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from apps.auth.models import Teacher
 
 
@@ -6,7 +7,10 @@ class Group(models.Model):
     groupname = models.CharField(max_length=127)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     students = models.ManyToManyField("userAuth.Student", verbose_name="Студенты")
-
+    
+    def __str__(self):
+        return self.groupname
+    
     class Meta:
         verbose_name = "Группа"
         verbose_name_plural = "Группы"
@@ -23,6 +27,9 @@ class Course(models.Model):
     progress = models.FloatField()
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
+    def get_absolute_url(self):
+        return reverse("inspect-course", kwargs={"course_slug": self.slug})
+
     def get_course_info(self):
         return {
             "title": self.title,
@@ -30,6 +37,7 @@ class Course(models.Model):
             "time_create": self.time_create,
             "time_update": self.time_update,
             "progress": self.progress,
+            "slug": self.slug,
         }
 
     def __str__(self):
