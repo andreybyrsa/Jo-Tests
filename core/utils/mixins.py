@@ -17,7 +17,8 @@ header = [
     {
         "name": "Список тестов", 
         "url_name": "tests", 
-        "icon_name": "bi bi-list"},
+        "icon_name": "bi bi-list"
+    },
     {
         "name": "Создать тест",
         "url_name": "create_test",

@@ -10,7 +10,7 @@
     />
   </div>
 
-  <div class="header__tabs">
+  <div id="header-tabs" class="header__tabs">
     {% for tab in header %}
       <a class="header__tab" href="{% url tab.url_name %}">
         <i class="{{ tab.icon_name }} header__tab-icon"></i>
