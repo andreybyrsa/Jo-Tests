@@ -22,10 +22,7 @@ class Test(models.Model):
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     def get_absolute_url(self):
-        return reverse('test', kwargs={'test_slug': self.slug})
-
-    def get_unique_slug(self):
-        return 'course'+str(uuid.uuid4())
+        return reverse('inspect-test', kwargs={'test_slug': self.slug})
     
     def get_test_info(self):
         return {
@@ -36,7 +33,7 @@ class Test(models.Model):
             "questions_amount": self.count,
             "test_time": self.test_time,
             "max_result": self.max_result,
-            'url': self.get_absolute_url()
+            'slug': self.slug
         }
 
     def __str__(self):

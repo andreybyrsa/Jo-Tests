@@ -81,7 +81,7 @@ info_course_teacher = [
 info_test_teacher = [
     {
         "name": "Посмотреть тест",
-        "url_name": "inspect-course",
+        "url_name": "",
         "icon_name": "bi bi-eye",
         "color": "success",
     },
@@ -90,13 +90,13 @@ info_test_teacher = [
 info_test_author = [
     {
         "name": "Редактировать тест",
-        "url_name": "change-test",
+        "url_name": "change_test/",
         "icon_name": "bi bi-pencil-square",
         "color": "primary",
     },
     {
         "name": "Удалить тест",
-        "url_name": "delete-test",
+        "url_name": "delete_test/",
         "icon_name": "bi bi-trash",
         "color": "danger",
     },
@@ -146,6 +146,6 @@ class InfoSidebarMixin:
                 context["info"] = info_test_teacher
         elif current_user.role == "student":
             context["info"] = info_course_student
-        else:
+        elif current_user.role == "author":
             context["info"] = info_test_author
         return context
