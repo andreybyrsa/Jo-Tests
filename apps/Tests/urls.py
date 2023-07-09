@@ -1,14 +1,14 @@
 from django.urls import path
-from .views import ViewTests, test_create
+from .views import ViewTests, CreateTest
 
 urlpatterns = [
     path("", ViewTests.as_view(), name="tests"),
-    path("create-test/", test_create, name="create-test"),
-    path("change-test/", test_create, name="change-test"),
-    path("delete-test/", test_create, name="delete-test"),
-    path("tests/", test_create, name="inspect-test"),
-    path('change-test/', test_create, name='change-test'),
-    path('delete-test/', test_create, name='delete-test'),
-    path('inspect-course/', test_create, name='inspect-course'),
-    path('profile/', test_create, name='create-course'),
+    path("create-test/", CreateTest.as_view(), name="create-test"),
+    path("change-test/", CreateTest.as_view(), name="change-test"),
+    path("delete-test/", CreateTest.as_view(), name="delete-test"),
+    path("tests/", CreateTest.as_view(), name="inspect-test"),
+    path("change-test/", CreateTest.as_view(), name="change-test"),
+    path("delete-test/", CreateTest.as_view(), name="delete-test"),
+    path("inspect-course/", CreateTest.as_view(), name="inspect-course"),
+    path("profile/", CreateTest.as_view(), name="create-course"),
 ]
