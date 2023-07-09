@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block left-side-bar %}
-  {% include 'core/blocks/InfoSideBar.html' with info=info %}
+  {% include 'core/blocks/InfoSideBar.html' with side_bar_name='course' info=info %}
 {% endblock %}
 
 {% block content %}
@@ -26,10 +26,21 @@
   {% endif %}
 
   {% for course in courses %}
-    <div class="tests-page__test" onclick="openSideBar('{{ forloop.counter0 }}')">
-      <span class="tests-page__test-title">{{ course.title }}</span>
+    <div class="courses-page__course" onclick="openSideBar('{{ forloop.counter0 }}')">
+      <div class="courses-page__course-text">
+        <span class="courses-page__course-title">{{ course.title }}</span>
+        <span class="courses-page__course-description">{{ course.description }}</span>
+      </div>
 
-      <span class="tests-page__test-description">{{ course.description }}</span>
+      <div class="courses-page__course-progress">
+        <span>Прогресс курса</span>
+
+        <div class="courses-page__progress-bar-wrapper">
+          <div class="courses-page__progress-bar">
+            <div class="courses-page__progress-bar-percents"></div>
+          </div>
+        </div>
+      </div>
   </div>
   {% endfor %}
 {% endblock %}
