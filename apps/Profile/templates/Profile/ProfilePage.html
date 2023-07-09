@@ -17,7 +17,7 @@
 
 {% block left-side-bar %}
   {% for cell in cells %}
-    <div class="profile-page__cell">
+    <div class="profile-page__cell" id='cell'>
       <span>{{ cell.name }}</span>
       <i class="bi bi-chevron-right profile-page__cell-icon"></i>
     </div>
@@ -25,34 +25,48 @@
 {% endblock %}
 
 {% block content %}
-  <h1></h1>
-  
-  <form method="post" enctype="multipart/form-data" class="profile-page">
-      {% csrf_token %}
-      
-      <div>
-          <input type="text" name="username" id="id_username" value="{{ user.username }}" class="profile-page__nickname" placeholder="Логин">
-      </div>
+  <form method="post" enctype="multipart/form-data" class='profile-page__form' id='form'>
+    {% csrf_token %}
 
-      <button class= "profile-page__edit" type="submit">Редактировать</button>
+    <div class="profile-page__form-header">
+      <img src="{% static 'core\images\profileFoto.png' %}" 
+          alt="profile" 
+          class="profile-page__form-img">
+      <div class="profile-page__form-edit">
+        {{ user.username }}
+        <button class= "profile-page__button" type="submit">Редактировать</button>
+      </div>
+    </div>
+    
+    <input class='profile-page__form-input' 
+    type="text" name="username" id="id_username" 
+    value="{{ user.username }}" placeholder="Логин">
 
-      <div>
-          <input type="text" name="username" id="id_username" value="{{ user.username }}" class="profile-page__names" placeholder="Логин">
-      </div>
-      
-      <div>
-          <input type="text" name="first_name" id="id_first_name" value="{{ user.first_name }}" class="profile-page__names" placeholder="Имя">
-      </div>
-      
-      <div>
-          <input type="text" name="last_name" id="id_last_name" value="{{ user.last_name }}" class="profile-page__names" placeholder="Фамилия">
-      </div>
-      
-      <div>
-          <input type="file" name="profile_picture" id="id_profile_picture" class="profile-page__image-input">
-      </div>
-      
+    <input class='profile-page__form-input'
+    type="text" name="first_name" id="id_first_name" 
+    value="{{ user.first_name }}" placeholder="Имя">
+
+    <input class='profile-page__form-input' 
+    type="text" name="last_name" id="id_last_name" 
+    value="{{ user.last_name }}" placeholder="Фамилия">
+
   </form>
+
+  <div class="profile-page__results" id='results'>
+
+    <div class="profile-page__results-test">
+      <div class="test-name">
+        <i class="bi bi-check2"></i>
+        Холодная война
+      </div>   
+      <div class="test-name">
+        13/20
+        <button class= "profile-page__button" type="submit">Просмотреть</button>
+      </div> 
+    </div>
+    
+  </div>
+
 {% endblock content %}
 
 {% block script-files %}
