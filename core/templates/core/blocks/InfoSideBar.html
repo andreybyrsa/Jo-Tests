@@ -3,13 +3,21 @@
 <div class="info-side-bar">
   <div class="info-side-bar__header">
     <span id="side-bar-title" class="info-side-bar__title">
-      Нет открытых тестов
+      {% if side_bar_name == 'test' %}
+        Нет открытых тестов
+      {% else %}
+        Нет открытых курсов
+      {% endif %}
     </span>
     <span
       id="side-bar-description"
       class="info-side-bar__text info-side-bar__text--lighted"
     >
-      Нажмите на тест, который хотите редактировать
+      {% if side_bar_name == 'test' %}
+        Нажмите на тест, который хотите просмотреть
+      {% else %}
+        Нажмите на курс, который хотите просмотреть
+      {% endif %}
     </span>
   </div>
 
