@@ -7,10 +7,10 @@ from django.views.generic import ListView
 from apps.auth.models import Author
 from .models import Test
 
-# СписокТестов(author, teacher)
-
 
 class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
+    """Список тестов - Author, Teacher"""
+
     model = Test
     login_url = "/auth"
     template_name = "Tests/TestsPage.html"
@@ -31,8 +31,10 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
 
     def get_queryset(self):
         current_user = self.request.user
+
         if current_user.role == "teacher":
             return Test.objects.all()
+
         author = Author.objects.get(user=current_user)
         return author.tests.all()
 

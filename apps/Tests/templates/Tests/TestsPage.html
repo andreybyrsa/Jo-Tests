@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block left-side-bar %}
-  {% include 'core/blocks/InfoSideBar.html' with info=info %}
+  {% include 'core/blocks/InfoSideBar.html' with side_bar_name='test' info=info %}
 {% endblock %}
 
 {% block content %}
@@ -36,5 +36,6 @@
 
 {% block script-files %}
   {{ json_tests|json_script:"data-tests" }}
+  <script type="text/javascript" src="{% static 'core/js/InfoSideBar.js' %}"></script>
   <script type="text/javascript" src="{% static 'Tests/js/TestsPage.js' %}"></script>
 {% endblock %}

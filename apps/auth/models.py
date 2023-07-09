@@ -43,6 +43,7 @@ class Author(models.Model):
 
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    courses = models.ManyToManyField('CoursesApp.Course', verbose_name='Курсы студента', related_name='+', blank=True,)
     result_tests = models.ManyToManyField(
         "TestsApp.StudentResult",
         verbose_name="Результат теста",

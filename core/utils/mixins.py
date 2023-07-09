@@ -21,7 +21,7 @@ header = [
     },
     {
         "name": "Создать тест",
-        "url_name": "create_test",
+        "url_name": "create-test",
         "icon_name": "bi bi-file-earmark-plus",
     },
     {
@@ -73,7 +73,7 @@ info_course_teacher = [
     {
         "name": "Удалить курс",
         "url_name": "delete-course",
-        "icon_name": "bi bi-trash3",
+        "icon_name": "bi bi-trash",
         "color": "danger",
     },
 ]
