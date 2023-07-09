@@ -26,10 +26,7 @@ class Course(models.Model):
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     def get_absolute_url(self):
-        return reverse('test', kwargs={'course_slug': self.slug})
-
-    def get_unique_slug(self):
-        return 'course'+str(uuid.uuid4())
+        return reverse("inspect-course", kwargs={"course_slug": self.slug})
 
     def get_course_info(self):
         return {
@@ -38,7 +35,7 @@ class Course(models.Model):
             "time_create": self.time_create,
             "time_update": self.time_update,
             "progress": self.progress,
-            "url": self.get_absolute_url()
+            "slug": self.slug,
         }
 
     def __str__(self):
