@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -39,5 +39,9 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
         return author.tests.all()
 
 
-def test_create(request):
+def test_create(request, test_slug):
     return render(request, "Tests/InfoSideBarTest.html")
+
+def delete_test(request, test_slug):
+    Test.objects.get(slug=test_slug).delete()
+    return redirect('tests')
