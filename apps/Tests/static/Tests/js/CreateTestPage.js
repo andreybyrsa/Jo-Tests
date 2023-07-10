@@ -118,12 +118,25 @@ function createNewQuestion() {
 
   const questionPointsWrapper = document.createElement("div");
   questionPointsWrapper.className = "create-test-page__question-points";
+
   const questionPointsText = document.createElement("span");
   questionPointsText.textContent = "Балл(ы)";
+
   const questionPointsInput = document.createElement("input");
   questionPointsInput.className = "create-test-page__question-points-input";
   questionPointsInput.type = "number";
   questionPointsInput.name = `points-${currentId}`;
+  questionPointsInput.defaultValue = 1;
+
+  questionPointsInput.addEventListener("input", (event) => {
+    const currentValue = event.target.value;
+    if (!currentValue || currentValue == "e") {
+      questionPointsInput.value = "";
+    }
+    if (+currentValue <= 0) {
+      questionPointsInput.value = "";
+    }
+  });
 
   questionPointsWrapper.appendChild(questionPointsText);
   questionPointsWrapper.appendChild(questionPointsInput);
