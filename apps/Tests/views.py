@@ -112,74 +112,43 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
                 {"test": test.get_test_info(), "questions_info": questions_info}.items()
             )
         )
-        
+
         return render(request, "Tests/CreateTestPage.html", context)
 
     def post(self, request, test_slug):
         test = Test.objects.get(slug=test_slug)
         post = get_request_list(request.POST)
-        print(post)
+
         try:
             test.title = request.POST["title"]
             test.description = request.POST["description"]
-            test.max_result = post['max_points']
-            test.count = post['count']
-            
+            test.max_result = post["max_points"]
+            test.count = post["count"]
+
             Question.objects.filter(test__id=test.id).delete()
             test.questions.clear()
             for i in range(post["count"]):
-                Q = Question.objects.create(
+                question = Question.objects.create(
                     test=test,
                     question=post["questions"][i],
                     max_points=post["points"][i],
                     qtype="single" if len(post["rightAnwers"][i]) == 1 else "multiple",
                 )
-                test.questions.add(Q)
+                test.questions.add(question)
 
                 for answer in post["answers"][i]:
-                    A = Answer.objects.create(
-                        question=Q,
+                    answer = Answer.objects.create(
+                        question=question,
                         answer=answer,
                         is_correct=True if answer in post["rightAnwers"][i] else False,
                     )
-                    Q.answers.add(A)
+                    question.answers.add(answer)
 
             test.save()
             messages.success(request, "Успешное обновление теста")
             return redirect("tests")
         except:
             messages.error(request, "Ошибка редактирования теста")
-
-        # try:
-        #     test = Test.objects.create(
-        #         author=author,
-        #         title=request.POST["title"],
-        #         description=request.POST["description"],
-        #         count=post["count"],
-        #         max_result=post["max_points"],
-        #         slug="test" + str(uuid4()),
-        #     )
-        #     author.tests.add(test)
-
-        #     for i in range(post["count"]):
-        #         Q = Question.objects.create(
-        #             test=test,
-        #             question=post["questions"][i],
-        #             max_points=post["points"][i],
-        #             qtype="single" if len(post["rightAnwers"][i]) == 1 else "multiple",
-        #         )
-        #         test.questions.add(Q)
-
-        #         for answer in post["answers"][i]:
-        #             A = Answer.objects.create(
-        #                 question=Q,
-        #                 answer=answer,
-        #                 is_correct=True if answer in post["rightAnwers"][i] else False,
-        #             )
-        #             Q.answers.add(A)
-        #     return redirect("tests")
-        # except:
-        #     messages.error(request, "Ошибка создания теста")
 
 
 def test_create(request):

@@ -74,5 +74,11 @@ function getCurrentDate(testDate) {
   let day = date.getDate();
   day = day >= 10 ? day : `0${day}`;
 
-  return `${day}:${month}:${year}`;
+  let hours = date.getHours();
+  hours = hours >= 10 ? hours : `0${hours}`;
+
+  let minutes = date.getMinutes();
+  minutes = minutes >= 10 ? minutes : `0${minutes}`
+
+  return `${day}.${month}.${year} ${hours}:${minutes}`;
 }

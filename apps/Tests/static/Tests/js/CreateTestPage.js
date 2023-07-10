@@ -36,14 +36,22 @@ let currentQuestion = null;
 let currentAnswers = null;
 
 if (JSON_TEST) {
-  const { title, description, time_create, questions_amount } = JSON_TEST;
+  const { title, description, time_create, time_update, questions_amount } =
+    JSON_TEST;
   inputTestTitle.value = title;
   inputTestDescription.value = description;
 
   dateCreated.textContent = getCurrentDate(time_create);
+  dateChanged.textContent =
+    time_create !== time_update ? getCurrentDate(time_update) : "Не изменено";
+
   questionsAmount.value = questions_amount;
 } else {
   dateCreated.textContent = getCurrentDate();
+
+  setInterval(() => {
+    dateCreated.textContent = getCurrentDate();
+  }, 10000);
 }
 
 if (JSON_QUESTIONS) {
