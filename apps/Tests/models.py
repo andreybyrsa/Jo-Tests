@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-import uuid
 from apps.auth.models import Student, Author
 
 
@@ -35,7 +34,7 @@ class Test(models.Model):
         return self.title
 
     class Meta:
-        ordering = ("time_update", "title")
+        ordering = ("time_update", "title",)
         verbose_name = "Тест"
         verbose_name_plural = "Тесты"
 

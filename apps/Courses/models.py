@@ -23,6 +23,14 @@ class CourseTest(models.Model):
     test_time = models.IntegerField(verbose_name='Время выполнения теста')
     is_available = models.BooleanField(default=False, verbose_name='Доступен')
 
+    def __str__(self):
+        return self.test
+    
+    class Meta:
+        ordering = ("title", "time_update",)
+        verbose_name = "Тест в курсе"
+        verbose_name_plural = "Тесты в курсе"
+
 
 class Course(models.Model):
     title = models.TextField(max_length=127, verbose_name="Название курса")
@@ -52,6 +60,6 @@ class Course(models.Model):
         return self.title
 
     class Meta:
-        ordering = ["title", "time_update"]
+        ordering = ("title", "time_update",)
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
