@@ -25,20 +25,6 @@ function useInfoSideBar(data, items, itemClassName) {
   activeClassName = `${itemClassName}--active`;
 }
 
-function getCurrentDate(testDate) {
-  const date = new Date(testDate);
-
-  const year = date.getFullYear();
-
-  let month = date.getMonth() + 1;
-  month = month >= 10 ? month : `0${month}`;
-
-  let day = date.getDate();
-  day = day >= 10 ? day : `0${day}`;
-
-  return `${day}:${month}:${year}`;
-}
-
 function removeActiveClassName(items) {
   Array.from(items).forEach((element) => {
     if (element.classList.contains(activeClassName)) {
