@@ -13,6 +13,9 @@ const toggleAnswerTypeButton = document.getElementById(
 );
 const deleteQuestionButton = document.getElementById("delete-question-button");
 
+const dateCreated = document.getElementById("date-created");
+const dateChanged = document.getElementById("date-changed");
+
 const questionsAmount = document.getElementById("questions-amount");
 
 const submitButton = document.getElementById("submit-button");
@@ -25,6 +28,22 @@ const TOGGLE_BUTTON_DISABLED_CLASS =
 let currentQuestions = [];
 let currentQuestion = null;
 let currentAnswers = null;
+
+function getCurrentDate() {
+  const date = new Date();
+
+  const year = date.getFullYear();
+
+  let month = date.getMonth() + 1;
+  month = month >= 10 ? month : `0${month}`;
+
+  let day = date.getDate();
+  day = day >= 10 ? day : `0${day}`;
+
+  return `${day}:${month}:${year}`;
+}
+
+dateCreated.textContent = getCurrentDate();
 
 submitButton.addEventListener("click", () => {
   testTitle.value = inputTestTitle.value;

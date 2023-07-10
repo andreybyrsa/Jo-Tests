@@ -30,10 +30,10 @@ function getCurrentDate(testDate) {
 
   const year = date.getFullYear();
 
-  let month = date.getMonth();
+  let month = date.getMonth() + 1;
   month = month >= 10 ? month : `0${month}`;
 
-  let day = date.getDay();
+  let day = date.getDate();
   day = day >= 10 ? day : `0${day}`;
 
   return `${day}:${month}:${year}`;
