@@ -27,7 +27,7 @@ class CourseTest(models.Model):
         return self.test
     
     class Meta:
-        ordering = ("title", "time_update",)
+        ordering = ('is_available')
         verbose_name = "Тест в курсе"
         verbose_name_plural = "Тесты в курсе"
 
