@@ -248,6 +248,7 @@ function createNewAnswer(answerText, answerType, isCorrectAnswer) {
   rightAnswer.type = currentAnswerType;
   rightAnswer.name = `rightAnswers-${currentId}`;
   rightAnswer.checked = isCorrectAnswer ? true : false;
+  rightAnswer.value = answerText ? answerText : "";
 
   const answerInput = document.createElement("input");
   answerInput.className = "create-test-page__question-answer";

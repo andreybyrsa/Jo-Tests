@@ -112,17 +112,39 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
                 {"test": test.get_test_info(), "questions_info": questions_info}.items()
             )
         )
-
+        
         return render(request, "Tests/CreateTestPage.html", context)
 
     def post(self, request, test_slug):
         test = Test.objects.get(slug=test_slug)
-
+        post = get_request_list(request.POST)
+        print(post)
         try:
             test.title = request.POST["title"]
             test.description = request.POST["description"]
-            test.save()
+            test.max_result = post['max_points']
+            test.count = post['count']
+            
+            Question.objects.filter(test__id=test.id).delete()
+            test.questions.clear()
+            for i in range(post["count"]):
+                Q = Question.objects.create(
+                    test=test,
+                    question=post["questions"][i],
+                    max_points=post["points"][i],
+                    qtype="single" if len(post["rightAnwers"][i]) == 1 else "multiple",
+                )
+                test.questions.add(Q)
 
+                for answer in post["answers"][i]:
+                    A = Answer.objects.create(
+                        question=Q,
+                        answer=answer,
+                        is_correct=True if answer in post["rightAnwers"][i] else False,
+                    )
+                    Q.answers.add(A)
+
+            test.save()
             messages.success(request, "Успешное обновление теста")
             return redirect("tests")
         except:
