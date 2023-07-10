@@ -1,20 +1,22 @@
 {% load static %}
-
+<form method="post" enctype="multipart/form-data" class='profile-modal__form' id='profile-modal'>
+   {% csrf_token %}
 <div class="profile-modal">
    <img src="{% static 'core\images\profileFoto.png' %}" alt="profile" class="profile-modal-img">
 
    <div class="profile-modal-input">
       <b class="">Логин</b>
-      <input type="text" class="profile-modal-input--lighted" placeholder='Логин студента'>
+      <input type="text" class="profile-modal-input--lighted" placeholder='Логин студента' value="{{ user.username }}">
    </div>
    <div class="profile-modal-input">
       <b class="">Имя</b>
-      <input type="text" class="profile-modal-input--lighted" placeholder='Имя студента'>
+      <input type="text" class="profile-modal-input--lighted" placeholder='Имя студента' value="{{ user.first_name}}">
    </div>
    <div class="profile-modal-input">
       <b class="">Фамилия</b>
-      <input type="text" class="profile-modal-input--lighted" placeholder='Фамилия студента'>
+      <input type="text" class="profile-modal-input--lighted" placeholder='Фамилия студента' value="{{ user.last_name }}">
    </div>
 
-   <button class="profile-modal-button">Сохранить</button>
+   <button class="profile-modal-button" type='submit'>Сохранить</button>
 </div>
+</form>

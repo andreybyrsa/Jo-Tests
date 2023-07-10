@@ -4,11 +4,13 @@
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'Profile/less/ProfilePage.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+  {% comment %} <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" /> {% endcomment %}
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/ProfileModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
-  {% include 'core/modals/AlertModal.html' %}
+  {% comment %} {% include 'core/modals/AlertModal.html' %} {% endcomment %}
+  {% include 'core/modals/ProfileModal.html' %}
 {% endblock %}
 
 {% block header %}
@@ -25,50 +27,93 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post" enctype="multipart/form-data" class='profile-page__form' id='form'>
-    {% csrf_token %}
-
-    <div class="profile-page__form-header">
+  <div class='profile-page__user' id='form'> {% comment %} Профиль {% endcomment %}
+    <div class="profile-page__user-username" >
       <img src="{% static 'core\images\profileFoto.png' %}" 
           alt="profile" 
-          class="profile-page__form-img">
-      <div class="profile-page__form-edit">
+          class="profile-page__user-img">
+      <div class="profile-page__user-edit">
         {{ user.username }}
-        <button class= "profile-page__button" type="submit">Редактировать</button>
+        <button class= "profile-page__button" onclick="openModal()" id='buttonProfileModal'>Редактировать</button>
       </div>
-    </div>
-    
-    <input class='profile-page__form-input' 
+    </div>  
+    <input class='profile-page__input-lighted' 
     type="text" name="username" id="id_username" 
     value="{{ user.username }}" placeholder="Логин">
-
-    <input class='profile-page__form-input'
+    <input class='profile-page__input-lighted'
     type="text" name="first_name" id="id_first_name" 
     value="{{ user.first_name }}" placeholder="Имя">
-
-    <input class='profile-page__form-input' 
+    <input class='profile-page__input-lighted' 
     type="text" name="last_name" id="id_last_name" 
     value="{{ user.last_name }}" placeholder="Фамилия">
+  </div> {% comment %} Профиль {% endcomment %}
 
-  </form>
-
-  <div class="profile-page__results" id='results'>
-
-    <div class="profile-page__results-test">
-      <div class="test-name">
+  <div class="profile-page__tests" id='tests'> {% comment %} Пройденные тесты {% endcomment %}
+    
+  <div class="profile-page__tests-test">
+      <div class="profile-page__tests-name">
         <i class="bi bi-check2"></i>
         Холодная война
       </div>   
-      <div class="test-name">
+      <div class="profile-page__tests-name">
         13/20
         <button class= "profile-page__button" type="submit">Просмотреть</button>
       </div> 
+    </div> 
+
+    <div class="profile-page__tests-test">
+      <div class="profile-page__tests-name">
+        <i class="bi bi-check2"></i>
+        Холодная война
+      </div>   
+      <div class="profile-page__tests-name">
+        13/20
+        <button class= "profile-page__button" type="submit">Просмотреть</button>
+      </div> 
+    </div> 
+
+  </div> {% comment %} Пройденные тесты {% endcomment %}
+
+  <div class="profile-page__addgroup" id='addgroup'> {% comment %} Добавить группу {% endcomment %}
+    <div class="profile-page__input">
+      <b>Название группы</b>
+      <input type="text" class='profile-page__input-lighted' placeholder='Название'>
+    </div>
+    <div class="profile-page__input">
+      <b>Логин</b>
+      <input type="text" class='profile-page__input-login' placeholder='Ваш логин'>
+    </div>
+    <div class="profile-page__addgroup-list">
+
+      <div>
+        <input type="checkbox" class="profile-page__addgroup-list-checkbox">
+        <b class="profile-page__addgroup-list-name">Тимур</b>
+      </div>
+      <div>
+        <input type="checkbox" class="profile-page__addgroup-list-checkbox">
+        <b class="profile-page__addgroup-list-name">Тимур</b>
+      </div>
+      
+    </div>
+    <button class= "profile-page__button">Добавить</button>
+  </div> {% comment %} Добавить группу {% endcomment %}
+
+  <div class="profile-page__listgroup" id='listgroup'>{% comment %} Список групп {% endcomment %}
+    
+    <div class="profile-page__listgroup-group">
+      <b>МКБМ-22-1</b>
+      <i class="bi bi-eye"></i>
+    </div>
+    <div class="profile-page__listgroup-group">
+      <b>МКБМ-22-1</b>
+      <i class="bi bi-eye"></i>
     </div>
     
-  </div>
+  </div> {% comment %} Список групп {% endcomment %}
 
 {% endblock content %}
 
 {% block script-files %}
   <script type="text/javascript" src="{% static 'Profile/js/ProfilePage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/ProfileModal.js' %}"></script>
 {% endblock %}

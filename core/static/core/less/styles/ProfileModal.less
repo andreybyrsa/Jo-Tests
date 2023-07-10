@@ -1,5 +1,27 @@
 @import '/static/core/less/main.less';
 
+@keyframes openModal {
+   0% {
+      opacity: 0;
+      transform: scale(0.9)
+   };
+   100% {
+      opacity: 1;
+      transform: scale(1)
+   }
+}
+
+@keyframes closeModal {
+   0% {
+      opacity: 1;
+      transform: scale(1)
+   };
+   100% {
+      opacity: 0;
+      transform: scale(0.9)
+   }
+}
+
 .profile-modal {
    .flexible(@align-items: center, @flex-direction: column, @gap: 20px);
    width: 100%;
@@ -8,6 +30,15 @@
    padding: 30px;
    border-radius: 20px;
    background-color: @white-color;
+
+   &__form {
+      align-self: center;
+      justify-self: center;
+      width: 100%;
+      max-width: 500px;
+
+      animation: openModal @default-animation-settings;
+   }
 
    &-input {
       .flexible(@flex-direction: column, @gap: 5px);

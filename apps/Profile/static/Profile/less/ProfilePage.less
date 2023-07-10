@@ -9,64 +9,9 @@
     .flexible(flex-start, flex-start, column, @gap: 20px);
   }
 
-  &__form {
-    .flexible(center, flex-start, column, @gap: 20px);
-    width: 100%;
-    max-width: 600px;
-    
-    background-color: @white-color;
-    height: min-content;
-    border-radius: 20px;
-    padding: 20px;
-
-    &-header {
-      .flexible(center, center, @gap: 40px);
-    }
-
-    &-img {
-      width: 100%;
-      max-width: 170px;
-    }
-
-    &-edit {
-      .flexible(center, flex-start, column, @gap: 15px);
-      width: 100%;
-
-      font-size: 36px;
-      font-weight: bold;
-    }
-
-    &-input {
-      width: 100%;
-      padding: 13px 20px;
-      font-size: 20px;
-
-      .border(
-        @border-style: solid,
-        @border-color: @lighted-color,
-        @border-widths: 2px,
-        @border-radii: 12px,
-      )
-    }
+  &-header {
+    .flexible(center, center, @gap: 40px);
   }
-
-  &__button {
-    width: 100%;
-    font-size: 18px;
-    font-weight: 500;
-
-    padding: 10px 15px;
-    background-color: @secondary-color;
-    border-radius: 12px;
-    color: @white-color;
-
-    transition: all @default-transition-settings;
-  }
-
-  &__button:active {
-    background-color: @primary-color;
-  }
-
 
   &__cell {
     padding: 0 30px;
@@ -90,32 +35,164 @@
     }
   }
 
-  &__results {
-    .flexible(flex-start, flex-start, column, @gap: 20px);
-    display: none;
+  &__button {
     width: 100%;
-    max-width: 600px;
+    max-width: 200px;
+    font-size: 18px;
+    font-weight: 500;
 
-    background-color: @white-color;
-    border-radius: 20px;
-    padding: 20px;
+    padding: 10px 15px;
+    background-color: @secondary-color;
+    border-radius: 12px;
+    color: @white-color;
 
-    &-test {
-      .flexible(center, space-between);
+    transition: all @default-transition-settings;
+  }
+
+  &__button:active {
+    background-color: @primary-color;
+  }
+
+  &__input{
+    .flexible(flex-start, flex-start, column, @gap: 5px);
+    width: 100%;
+    color: @primary-color;
+    font-size: 20px;
+
+    &-lighted {
       width: 100%;
-      padding: 10px 16px ;
+      padding: 12px 20px;
+      color: @black-color;
       .border(
         @border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px,
-        @border-radii: 12px
-      ); 
+        @border-radii: 12px,
+      );
+    }
+
+    &-login {
+      width: 100%;
+      padding: 12px 20px;
+      color: @black-color;
+      .border(
+        @border-style: solid,
+        @border-color: @lighted-color,
+        @border-widths: 2px 2px 0px 2px,
+        @border-radii: 12px 12px 0px 0px,
+      );
+    }
+  }
+
+  &__user {
+    .flexible(center, flex-start, column, @gap: 20px);
+    width: 100%;
+    max-width: 600px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: @white-color;
+
+    &-username {
+      .flexible(center, space-between, @gap: 20px);
+      width: 100%;
+      max-width: 450px;
+      font-size: 36px;
+    }
+
+    &-img {
+      width: 170px;
+      height: 170px;
+    }
+
+    &-edit {
+      .flexible(center, flex-start, column, @gap: 10px);
+      width: 200px;
+    }
+  }
+
+  &__tests{
+    .flexible(center, flex-start, column, @gap: 10px);
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: @white-color;
+
+    &-test {
+      .flexible(center, space-between, @gap: 20px);
+      width: 100%;
+      padding: 8px;
+      .border(
+        @border-style: solid,
+        @border-color: @lighted-color,
+        @border-widths: 2px,
+        @border-radii: 12px,
+      );
+    }
+
+    &-name {
+      .flexible(center, space-between, @gap: 16px);
+    }
+  }
+
+  &__addgroup{
+    .flexible(flex-end, flex-start, column, @gap: 20px);
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: @white-color;
+    font-size: 22px;
+
+    &-list {
+      .flexible(flex-start, flex-start, column, @gap: 10px);
+      width: 100%;
+      height: 200px;
+      margin: -20px 0px 0px 0px;
+      padding: 12px 20px;
+      .border(
+        @border-style: solid,
+        @border-color: @lighted-color,
+        @border-widths: 2px,
+        @border-radii: 0px 0px 12px 12px,
+      );
+
+      &-name {
+        font-weight: 500;
+      }
+      
+      &-checkbox {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+
+  &__listgroup {
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    background-color: @white-color;
+    border-radius: 20px;
+    padding: 20px;
+
+    &-group {
+      .flexible(center, space-between, @gap: 20px);
+      width: 100%;
+      color: @primary-color;
+      padding: 10px 20px;
+      .border(
+        @border-style: solid,
+        @border-color: @lighted-color,
+        @border-widths: 2px,
+        @border-radii: 12px,
+      )
     }
   }
 }
-
-.test-name {
-  .flexible(center, @gap: 20px);
-  font-size: 20px;
-  font-weight: 500;
- }
