@@ -93,13 +93,13 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
     redirect_field_name = 'tests'
 
     def get(self, request, test_slug):
+        form = TestCreateForm
         test = Test.objects.get(slug=test_slug)
         questions = Question.objects.filter(test__id = test.id)
-        print(questions)
-        form = TestCreateForm
+        questions_info = list(question.get_question_info() for question in questions)
         header_def = self.get_user_header()
-        context = dict(list({'form': form}.items())+list(header_def.items()))
-        return render(request, 'Tests/CreateTestPage.html', context)
+        context = dict(list({'form': form}.items())+list(header_def.items()+{'test': test, 'questions_info': questions_info}))
+        return render(request, 'Tests/EditTestPage.html', context)
     
     def post(self, request, test_slug):
         post = get_request_list(request.POST)
