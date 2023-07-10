@@ -81,11 +81,11 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
                 )
                 test.questions.add(question)
 
-                for answer in post["answers"][i]:
+                for post_answer in post["answers"][i]:
                     answer = Answer.objects.create(
                         question=question,
-                        answer=answer,
-                        is_correct=True if answer in post["rightAnwers"][i] else False,
+                        answer=post_answer,
+                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
                     )
                     question.answers.add(answer)
 
