@@ -42,8 +42,11 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
 
 
 def test_create(request):
-    return render(request, "Tests/CreateTestPage.html")
+    form = TestCreateForm()
+    print(request.POST)
+    return render(request, "Tests/CreateTestPage.html", {"form": form})
+
 
 def delete_test(request, test_slug):
     Test.objects.get(slug=test_slug).delete()
-    return redirect('tests')
+    return redirect("tests")

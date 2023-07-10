@@ -21,7 +21,14 @@
 {% endblock %}
 
 {% block content %}
-  
+  <form
+    id="questions"
+    class="create-test-page__questions"
+    method="POST"
+  >
+    {% csrf_token %}
+    {{ form }}
+  </form>
 {% endblock %}
 
 {% block script-files %}
