@@ -8,18 +8,13 @@ class Test(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     title = models.TextField(max_length=127, verbose_name="Название теста")
     description = models.TextField(max_length=255, verbose_name="Описание")
-    count = models.IntegerField(verbose_name="Количество вопросов")
+    count = models.PositiveIntegerField(verbose_name="Количество вопросов")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
-    date_expired = models.DateTimeField(
-        auto_now=True, verbose_name="Дата истекания доступа к тесту"
-    )
     questions = models.ManyToManyField(
         "TestsApp.Question", verbose_name="Вопросы", related_name="+", blank=True
     )
-    test_time = models.IntegerField(verbose_name='Время выполнения теста')
     max_result = models.IntegerField()
-    is_available = models.BooleanField(default=False, verbose_name='Доступен')
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     def get_absolute_url(self):
@@ -32,7 +27,6 @@ class Test(models.Model):
             "time_create": self.time_create,
             "time_update": self.time_update,
             "questions_amount": self.count,
-            "test_time": self.test_time,
             "max_result": self.max_result,
             'slug': self.slug,
         }
@@ -44,7 +38,6 @@ class Test(models.Model):
         ordering = ("time_update", "title")
         verbose_name = "Тест"
         verbose_name_plural = "Тесты"
-
 
 class StudentResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -61,7 +54,7 @@ class StudentResult(models.Model):
 class Question(models.Model):
     class QuestionType(models.TextChoices):
         single = "single"
-        multiple = "mutiple"
+        multiple = "multiple"
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     question = models.TextField(max_length=255, verbose_name="Вопрос")

@@ -16,13 +16,21 @@ class Group(models.Model):
         verbose_name_plural = "Группы"
 
 
+class CourseTest(models.Model):
+    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    test = models.ForeignKey('TestsApp.Test', on_delete=models.CASCADE)
+    date_expired = models.DateTimeField(verbose_name='Дата окончания доступа')
+    test_time = models.IntegerField(verbose_name='Время выполнения теста')
+    is_available = models.BooleanField(default=False, verbose_name='Доступен')
+
+
 class Course(models.Model):
     title = models.TextField(max_length=127, verbose_name="Название курса")
     description = models.TextField(max_length=255, verbose_name="Описание")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    tests = models.ManyToManyField("TestsApp.Test")
+    tests = models.ManyToManyField(CourseTest, related_name='courseTests')
     groups = models.ManyToManyField(Group)
     progress = models.FloatField()
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
