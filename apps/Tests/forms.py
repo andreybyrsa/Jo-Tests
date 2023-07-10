@@ -18,7 +18,7 @@ class TestCreateForm(forms.ModelForm):
             "title": forms.TextInput(
                 attrs={"class": create_test_input_class, "id": "test-title"}
             ),
-            "description": forms.Textarea(
+            "description": forms.TextInput(
                 attrs={"class": create_test_input_class, "id": "test-descriprion"}
             ),
         }

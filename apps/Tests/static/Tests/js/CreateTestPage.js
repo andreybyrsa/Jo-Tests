@@ -1,5 +1,11 @@
 addPageClassName("create-test-page");
 
+const dataTest = document.getElementById("data-test").textContent;
+const dataQuestions = document.getElementById("data-questions").textContent;
+
+const JSON_TEST = JSON.parse(dataTest);
+const JSON_QUESTIONS = JSON.parse(dataQuestions);
+
 const inputTestTitle = document.getElementById("input-test-title");
 const inputTestDescription = document.getElementById("input-test-description");
 const testTitle = document.getElementById("test-title");
@@ -29,14 +35,82 @@ let currentQuestions = [];
 let currentQuestion = null;
 let currentAnswers = null;
 
-dateCreated.textContent = getCurrentDate();
+if (JSON_TEST) {
+  const { title, description, time_create, time_update, questions_amount } =
+    JSON_TEST;
+  inputTestTitle.value = title;
+  inputTestDescription.value = description;
 
-submitButton.addEventListener("click", () => {
-  testTitle.value = inputTestTitle.value;
-  testDescription.value = inputTestDescription.value;
+  dateCreated.textContent = getCurrentDate(time_create);
+  dateChanged.textContent =
+    time_create !== time_update ? getCurrentDate(time_update) : "Не изменено";
 
-  questionsWrapper.submit();
-});
+  questionsAmount.value = questions_amount;
+} else {
+  dateCreated.textContent = getCurrentDate();
+
+  setInterval(() => {
+    dateCreated.textContent = getCurrentDate();
+  }, 10000);
+}
+
+if (JSON_QUESTIONS) {
+  activateDisabledButtons();
+
+  JSON_QUESTIONS.forEach((questionInfo) => {
+    const { question, max_points, answers, qtype } = questionInfo;
+    const answersType = qtype == "single" ? "radio" : "checkbox";
+
+    questionsWrapper.appendChild(createNewQuestion(question, max_points));
+
+    answers.forEach((answerInfo) => {
+      const { answer, is_correct } = answerInfo;
+
+      currentAnswers.appendChild(
+        createNewAnswer(answer, answersType, is_correct)
+      );
+    });
+  });
+
+  disableQuestions();
+  currentQuestions[0].classList.add(QUESTION_ACTIVE_CLASS);
+
+  currentQuestion = currentQuestions[0];
+  currentAnswers = getChildNodes(currentQuestion).find(
+    (element) => element.className == "create-test-page__question-answers"
+  );
+}
+
+function getChildNodes(nodeElement) {
+  return Array.from(nodeElement.childNodes);
+}
+
+function getDoubleInsideChild(nodeElement) {
+  return nodeElement.childNodes?.[0]?.childNodes[0];
+}
+
+function activateDisabledButtons() {
+  if (addAnswerButton.classList.contains(ANSWER_BUTTON_DISABLED_CLASS)) {
+    addAnswerButton.classList.remove(ANSWER_BUTTON_DISABLED_CLASS);
+    addAnswerButton.disabled = false;
+  }
+  if (toggleAnswerTypeButton.classList.contains(TOGGLE_BUTTON_DISABLED_CLASS)) {
+    toggleAnswerTypeButton.classList.remove(TOGGLE_BUTTON_DISABLED_CLASS);
+    toggleAnswerTypeButton.disabled = false;
+  }
+
+  deleteQuestionButton.style.display = "flex";
+}
+
+function disableButtons() {
+  deleteQuestionButton.style.display = "none";
+
+  addAnswerButton.classList.add(ANSWER_BUTTON_DISABLED_CLASS);
+  addAnswerButton.disabled = true;
+
+  toggleAnswerTypeButton.classList.add(TOGGLE_BUTTON_DISABLED_CLASS);
+  toggleAnswerTypeButton.disabled = true;
+}
 
 function disableQuestions() {
   currentQuestions.forEach((question) => {
@@ -46,15 +120,7 @@ function disableQuestions() {
 }
 
 addQuestionButton.addEventListener("click", () => {
-  if (addAnswerButton.classList.contains(ANSWER_BUTTON_DISABLED_CLASS)) {
-    addAnswerButton.classList.remove(ANSWER_BUTTON_DISABLED_CLASS);
-    addAnswerButton.disabled = false;
-  }
-  if (toggleAnswerTypeButton.classList.contains(TOGGLE_BUTTON_DISABLED_CLASS)) {
-    toggleAnswerTypeButton.classList.remove(TOGGLE_BUTTON_DISABLED_CLASS);
-    toggleAnswerTypeButton.disabled = false;
-  }
-  deleteQuestionButton.style.display = "flex";
+  activateDisabledButtons();
   disableQuestions();
 
   questionsWrapper.appendChild(createNewQuestion());
@@ -66,12 +132,13 @@ addAnswerButton.addEventListener("click", () => {
 });
 
 toggleAnswerTypeButton.addEventListener("click", () => {
-  const currentAnswer = currentAnswers.childNodes?.[0]?.childNodes[0];
+  const currentAnswer = getDoubleInsideChild(currentAnswers);
   const answerType = currentAnswer?.type == "radio" ? "radio" : "checkbox";
 
   if (currentAnswers.childNodes.length) {
-    Array.from(currentAnswers.childNodes).forEach((answerWrapper) => {
+    getChildNodes(currentAnswers).forEach((answerWrapper) => {
       const currentAnswer = answerWrapper.childNodes[0];
+
       if (answerType == "checkbox") {
         currentAnswer.type = "radio";
       } else {
@@ -83,30 +150,32 @@ toggleAnswerTypeButton.addEventListener("click", () => {
 
 deleteQuestionButton.addEventListener("click", () => {
   currentQuestion.remove();
+
   currentQuestions = currentQuestions.filter(
     (question) => question !== currentQuestion
   );
   questionsAmount.value = currentQuestions.length;
 
   if (currentQuestions.length == 0) {
-    deleteQuestionButton.style.display = "none";
-
-    addAnswerButton.classList.add(ANSWER_BUTTON_DISABLED_CLASS);
-    addAnswerButton.disabled = true;
-
-    toggleAnswerTypeButton.classList.add(TOGGLE_BUTTON_DISABLED_CLASS);
-    toggleAnswerTypeButton.disabled = true;
+    disableButtons();
 
     return;
   }
 
   currentQuestions.forEach((question, index) => {
-    const questionName = question.childNodes[0].childNodes[0];
+    const questionName = getDoubleInsideChild(question);
     questionName.textContent = `Вопрос ${index + 1}`;
   });
 });
 
-function createNewQuestion() {
+submitButton.addEventListener("click", () => {
+  testTitle.value = inputTestTitle.value;
+  testDescription.value = inputTestDescription.value;
+
+  questionsWrapper.submit();
+});
+
+function createNewQuestion(question, points) {
   const currentId = currentQuestions.length + 1;
   const questionId = `question-${currentId}`;
 
@@ -131,7 +200,8 @@ function createNewQuestion() {
   questionPointsInput.className = "create-test-page__question-points-input";
   questionPointsInput.type = "number";
   questionPointsInput.name = `points-${currentId}`;
-  questionPointsInput.defaultValue = 1;
+  questionPointsInput.value = points ? points : 1;
+  questionPointsInput.min = 1;
 
   questionPointsInput.addEventListener("input", (event) => {
     const currentValue = event.target.value;
@@ -151,6 +221,7 @@ function createNewQuestion() {
   const questionTextArea = document.createElement("textarea");
   questionTextArea.className = "create-test-page__question-textarea";
   questionTextArea.name = `question-${currentId}`;
+  questionTextArea.value = question ? question : "";
 
   const answersWrapper = document.createElement("div");
   answersWrapper.className = "create-test-page__question-answers";
@@ -167,22 +238,31 @@ function createNewQuestion() {
   return newQuestion;
 }
 
-function createNewAnswer() {
+function createNewAnswer(answerText, answerType, isCorrectAnswer) {
   const currentId = currentQuestion.id.split("-")[1];
-  const currentAnswer = currentAnswers.childNodes?.[0]?.childNodes[0];
-  const answerType = currentAnswer?.type == "radio" ? "radio" : "checkbox";
+  const currentAnswer = getDoubleInsideChild(currentAnswers);
+  let currentAnswerType = null;
+
+  if (answerType) {
+    currentAnswerType = answerType;
+  } else {
+    currentAnswerType = currentAnswer?.type == "radio" ? "radio" : "checkbox";
+  }
 
   const answerWrapper = document.createElement("div");
   answerWrapper.className = "create-test-page__question-answer-wrapper";
 
   const rightAnswer = document.createElement("input");
-  rightAnswer.type = answerType;
+  rightAnswer.type = currentAnswerType;
   rightAnswer.name = `rightAnswers-${currentId}`;
+  rightAnswer.checked = isCorrectAnswer ? true : false;
+  rightAnswer.value = answerText ? answerText : "";
 
   const answerInput = document.createElement("input");
   answerInput.className = "create-test-page__question-answer";
   answerInput.type = "text";
   answerInput.name = `answers-${currentId}`;
+  answerInput.value = answerText ? answerText : "";
 
   const answerDeleteButton = document.createElement("i");
   answerDeleteButton.className =
@@ -210,7 +290,7 @@ function focusQuestion(id) {
   activeQuestion.classList.add(QUESTION_ACTIVE_CLASS);
 
   currentQuestion = activeQuestion;
-  currentAnswers = Array.from(currentQuestion.childNodes).find(
+  currentAnswers = getChildNodes(currentQuestion).find(
     (element) => element.className == "create-test-page__question-answers"
   );
 }
