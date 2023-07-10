@@ -146,7 +146,8 @@ function createNewQuestion() {
   questionPointsInput.type = "number";
   questionPointsInput.name = `points-${currentId}`;
   questionPointsInput.defaultValue = 1;
-
+  questionPointsInput.min = 1
+  
   questionPointsInput.addEventListener("input", (event) => {
     const currentValue = event.target.value;
     if (!currentValue || currentValue == "e") {

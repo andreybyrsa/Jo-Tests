@@ -64,6 +64,14 @@ class Question(models.Model):
         max_length=8, choices=QuestionType.choices, default=QuestionType.single
     )
 
+    def get_question_info(self):
+        return {
+            'question': self.question,
+            'max_points': self.max_points,
+            'qtype': self.qtype,
+            'answers': list(answer.get_answer_info() for answer in self.answers.all())
+    }
+
     def __str__(self):
         return self.question
 
@@ -77,6 +85,12 @@ class Answer(models.Model):
     answer = models.TextField(max_length=255, verbose_name="Вариант ответа")
     is_correct = models.BooleanField(default=False)
 
+    def get_answer_info(self):
+        return {
+            'answer': self.answer,
+            'is_correct': self.is_correct,
+    }
+    
     def __str__(self):
         return self.answer
 
