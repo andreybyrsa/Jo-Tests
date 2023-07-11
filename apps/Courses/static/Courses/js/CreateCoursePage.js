@@ -1,0 +1,1 @@
+addPageClassName("create-course-page");

@@ -1,0 +1,36 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'Courses/less/CreateCoursePage.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+{% endblock %}
+
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' with header=header %}
+{% endblock %}
+
+{% block left-side-bar %}
+  {% include 'core/blocks/CreateCourseSideBar.html' %}
+{% endblock %}
+
+{% block content %}
+  <form
+    id="questions"
+    class="create-course-page__form"
+    method="POST"
+  >
+    {% csrf_token %}
+    {{ form }}
+  </form>
+{% endblock %}
+
+{% block script-files %}
+  <script type="text/javascript" src="{% static 'Courses/js/CreateCoursePage.js' %}"></script>
+{% endblock %}
