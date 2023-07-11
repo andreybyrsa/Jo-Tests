@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
 
 from apps.auth.models import Teacher, Student
-from apps.Tests.models import StudentResult
+from apps.Tests.models import StudentResult, Test
 from .models import Course
 
 from .forms import CourseCreateForm
@@ -48,11 +48,19 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
     redirect_field_name = "courses"
 
     def get(self, request):
+        current_user = request.user
         form = CourseCreateForm
         header_def = self.get_user_header()
-        context = dict(list({"form": form}.items()) + list(header_def.items()))
+        teacher = Teacher.objects.get(user__id=current_user.id)
+        groups = teacher.groups.all()
+        groups_info = list(group.get_group_info() for group in groups)
+        tests = Test.objects.all()
+        tests_info = list(test.get_test_info() for test in tests)
+        context = dict(list({"form": form, 'groups_info': groups_info, 'tests_info': tests_info}.items()) + list(header_def.items()))
 
         return render(request, "Courses/CreateCoursePage.html", context)
+    
+    # def post(self, request):
 
 
 def delete_course(request, course_slug):
