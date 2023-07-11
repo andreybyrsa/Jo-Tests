@@ -7,27 +7,27 @@ class Group(models.Model):
     groupname = models.CharField(max_length=127)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     students = models.ManyToManyField("userAuth.Student", verbose_name="Студенты")
-    
+
     def __str__(self):
         return self.groupname
-    
+
     class Meta:
         verbose_name = "Группа"
         verbose_name_plural = "Группы"
 
 
 class CourseTest(models.Model):
-    course = models.ForeignKey('Course', on_delete=models.CASCADE)
-    test = models.ForeignKey('TestsApp.Test', on_delete=models.CASCADE)
-    date_expired = models.DateTimeField(verbose_name='Дата окончания доступа')
-    test_time = models.IntegerField(verbose_name='Время выполнения теста')
-    is_available = models.BooleanField(default=False, verbose_name='Доступен')
+    course = models.ForeignKey("Course", on_delete=models.CASCADE)
+    test = models.ForeignKey("TestsApp.Test", on_delete=models.CASCADE)
+    date_expired = models.DateTimeField(verbose_name="Дата окончания доступа")
+    test_time = models.IntegerField(verbose_name="Время выполнения теста")
+    is_available = models.BooleanField(default=False, verbose_name="Доступен")
 
     def __str__(self):
         return self.test
-    
+
     class Meta:
-        ordering = ('is_available')
+        ordering = ["is_available"]
         verbose_name = "Тест в курсе"
         verbose_name_plural = "Тесты в курсе"
 
@@ -38,7 +38,7 @@ class Course(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    tests = models.ManyToManyField(CourseTest, related_name='courseTests')
+    tests = models.ManyToManyField(CourseTest, related_name="courseTests")
     groups = models.ManyToManyField(Group)
     progress = models.FloatField()
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
@@ -60,6 +60,9 @@ class Course(models.Model):
         return self.title
 
     class Meta:
-        ordering = ("title", "time_update",)
+        ordering = (
+            "title",
+            "time_update",
+        )
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"

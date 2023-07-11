@@ -85,7 +85,9 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
+                        is_correct=True
+                        if post_answer in post["rightAnwers"][i]
+                        else False,
                     )
                     question.answers.add(answer)
 
@@ -140,7 +142,9 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
+                        is_correct=True
+                        if post_answer in post["rightAnwers"][i]
+                        else False,
                     )
                     question.answers.add(answer)
 
