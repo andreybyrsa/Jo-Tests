@@ -6,12 +6,13 @@
   background-color: @white-color;
   border-radius: 20px;
 
-  .flexible(flex-end,
+  .flexible(
+    flex-end,
     flex-start,
     column,
     @aling-self: center,
-    @justify-self: center,
-    @gap: 20px);
+    @justify-self: center
+  );
 
   &__icon {
     color: @primary-color;
@@ -21,12 +22,34 @@
   }
 
   &__content {
+    &-wrapper {
+      padding-bottom: 20px;
+      width: 100%;
+      height: 400px;
+
+      .flexible(center, flex-start, column, @gap: 10px);
+    }
+
     width: 100%;
-    height: 300px;
+    height: 100%;
 
     overflow-y: scroll;
 
     .flexible(center, flex-start, column, @gap: 10px);
+  }
+
+  &__search-input {
+    padding: 0 20px;
+    width: 100%;
+    height: 52px;
+    .border(solid, @lighted-color, 0 0 1px);
+
+    color: @black-color;
+    font-size: 18px;
+
+    &::placeholder {
+      color: @lighted-color;
+    }
   }
 
   &__test {

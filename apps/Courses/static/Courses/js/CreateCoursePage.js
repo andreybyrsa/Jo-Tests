@@ -28,6 +28,7 @@ const addGroupButton = document.getElementById("add-group-button");
 const submitButton = document.getElementById("submit-button");
 
 const courseModalContent = document.getElementById("course-modal-content");
+const modalSearchInput = document.getElementById('search-input')
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
 
@@ -160,6 +161,8 @@ function addModalElements(data, currentData) {
 }
 
 function saveElements(data, currentData) {
+  modalSearchInput.value = '';
+
   Array.from(courseModalContent.childNodes).forEach((element) => {
     const checkboxInput = element.childNodes[0].childNodes[0];
 
