@@ -6,7 +6,14 @@ from apps.auth.models import Teacher
 class Group(models.Model):
     groupname = models.CharField(max_length=127)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    students = models.ManyToManyField("userAuth.Student", verbose_name="Студенты")
+    students = models.ManyToManyField("userAuth.Student", verbose_name="Студенты", related_name='students')
+    index = models.CharField(max_length=127, blank=True)
+
+    def get_group_info(self):
+        return {
+            'groupname': self.groupname,
+            'index': self.index,
+        }
 
     def __str__(self):
         return self.groupname
