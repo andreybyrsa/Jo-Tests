@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
 from core.utils.get_request_list import get_request_list
+from core.utils.get_unique_slug import get_unique_slug
 
 from .forms import TestCreateForm
 
@@ -74,7 +75,7 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
                 description=request.POST["description"],
                 count=post["count"],
                 max_result=post["max_points"],
-                slug="test" + str(uuid4()),
+                slug=get_unique_slug(Test, request.POST["title"]),
             )
             author.tests.add(test)
 

@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
 
+from core.utils.get_unique_slug import get_unique_slug
 from apps.auth.models import Teacher, Student
 from apps.Tests.models import StudentResult, Test
 from .models import Course, Group, CourseTest
@@ -76,7 +77,7 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
             description = post['description'],
             teacher = teacher,
             progress = 0,
-            slug = 'course' + str(uuid4())
+            slug = get_unique_slug(Course, post['title'])
         )
         teacher.courses.add(course)
 
