@@ -1,0 +1,38 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'Tests/less/CreateTestPage.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateTestSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+{% endblock %}
+
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' with header=header %}
+{% endblock %}
+
+{% block left-side-bar %}
+  {% include 'core/blocks/CreateTestSideBar.html' %}
+{% endblock %}
+
+{% block content %}
+  <form
+    id="questions"
+    class="create-test-page__questions"
+    method="POST"
+  >
+    {% csrf_token %}
+    {{ form }}
+  </form>
+{% endblock %}
+
+{% block script-files %}
+  {{ test|json_script:'data-test' }}
+  {{ questions_info|json_script:'data-questions' }}
+  <script type="text/javascript" src="{% static 'Tests/js/CreateTestPage.js' %}"></script>
+{% endblock %}
