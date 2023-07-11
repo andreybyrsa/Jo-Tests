@@ -54,6 +54,19 @@
     font-size: 18px;
 
     .flexible(center, space-between);
+
+    &-content {
+      .flexible(center, flex-start, @gap: 10px);
+    }
+
+    &-open-icon {
+      cursor: pointer;
+
+      color: @primary-color;
+      font-size: 25px;
+
+      display: flex;
+    }
   }
 
   &__groups {

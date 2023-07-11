@@ -64,24 +64,26 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
     
     def post(self, request):
         current_user = request.user
-        course = Course.objects.create(
-            title = request.POST['title'],
-            description = request.POST['description'],
-            teacher = Teacher.objects.get(user__id=current_user.id),
-            progress = 0,
-            slug = 'course' + str(uuid4())
-        )
-            
-        for post_group in request.POST['groups'].split(' '):
-            if post_group == '':
-                continue
-            group = Group.objects.get(index=post_group)
-            course.groups.add(group)
+        # course = Course.objects.create(
+        #     title = request.POST['title'],
+        #     description = request.POST['description'],
+        #     teacher = Teacher.objects.get(user__id=current_user.id),
+        #     progress = 0,
+        #     slug = 'course' + str(uuid4())
+        # )
         
-        for post_test in request.POST['tests'].split(' '):
-            if post_test == '':
-                continue
-            test = Group.objects.get(slug=post_test)
+        print(request.POST)
+            
+        # for post_group in request.POST['groups'].split(' '):
+        #     if post_group == '':
+        #         continue
+        #     group = Group.objects.get(index=post_group)
+        #     course.groups.add(group)
+        
+        # for post_test in request.POST['tests'].split(' '):
+        #     if post_test == '':
+        #         continue
+        #     test = Group.objects.get(slug=post_test)
 
         
             
