@@ -20,7 +20,7 @@ const toggleAnswerTypeButton = document.getElementById(
 const deleteQuestionButton = document.getElementById("delete-question-button");
 
 const dateCreated = document.getElementById("date-created");
-const dateChanged = document.getElementById("date-changed");
+const dateUpdated = document.getElementById("date-updated");
 
 const questionsAmount = document.getElementById("questions-amount");
 
@@ -42,7 +42,7 @@ if (JSON_TEST) {
   inputTestDescription.value = description;
 
   dateCreated.textContent = getCurrentDate(time_create);
-  dateChanged.textContent =
+  dateUpdated.textContent =
     time_create !== time_update ? getCurrentDate(time_update) : "Не изменено";
 
   questionsAmount.value = questions_amount;

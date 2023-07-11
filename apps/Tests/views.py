@@ -46,6 +46,8 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
 
 
 class CreateTest(LoginRequiredMixin, HeaderMixin, View):
+    """Создание теста - Author"""
+
     login_url = "/auth/"
     redirect_field_name = "tests"
 
@@ -85,7 +87,9 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
+                        is_correct=True
+                        if post_answer in post["rightAnwers"][i]
+                        else False,
                     )
                     question.answers.add(answer)
 
@@ -96,6 +100,8 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
 
 
 class EditTest(LoginRequiredMixin, HeaderMixin, View):
+    """Редактирование теста - Author"""
+
     login_url = "/auth/"
     redirect_field_name = "tests"
 
@@ -140,7 +146,9 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
+                        is_correct=True
+                        if post_answer in post["rightAnwers"][i]
+                        else False,
                     )
                     question.answers.add(answer)
 
@@ -151,12 +159,8 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
             messages.error(request, "Ошибка редактирования теста")
 
 
-def test_create(request):
-    form = TestCreateForm
-    print(request.POST)
-    return render(request, "Tests/CreateTestPage.html", {"form": form})
-
-
 def delete_test(request, test_slug):
+    """Удаление теста - Author"""
+
     Test.objects.get(slug=test_slug).delete()
     return redirect("tests")
