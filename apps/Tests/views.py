@@ -52,6 +52,10 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
     redirect_field_name = "tests"
 
     def get(self, request):
+        current_user = request.user
+        if current_user.role != 'author':
+            messages.error(request, 'Доступ запрещен')
+            return redirect('profile')
         form = TestCreateForm
         header_def = self.get_user_header()
         context = dict(list({"form": form}.items()) + list(header_def.items()))
@@ -106,6 +110,10 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
     redirect_field_name = "tests"
 
     def get(self, request, test_slug):
+        current_user = request.user
+        if current_user.role != 'author':
+            messages.error(request, 'Доступ запрещен')
+            return redirect('profile')
         test = Test.objects.get(slug=test_slug)
         form = TestCreateForm(instance=test)
         questions = Question.objects.filter(test__id=test.id)
