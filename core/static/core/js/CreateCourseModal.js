@@ -1,6 +1,8 @@
 const createCourseModal = document.getElementById("create-course-modal");
 
-const closeCourseModalButton = document.getElementById("close-modal-button");
+const closeCourseModalButton = document.getElementById(
+  "close-course-modal-button"
+);
 
 const searchInput = document.getElementById("search-input");
 
@@ -8,6 +10,8 @@ const OPENING_CREATE_COURSE_MODAL_CLASS = "create-course-modal--opened";
 const CLOSING_CREATE_COURSE_MODAL_CLASS = "create-course-modal--closed";
 
 function openCreateCourseModal() {
+  createCourseModal.style.display = "flex";
+
   createCourseModal.classList.add(OPENING_CREATE_COURSE_MODAL_CLASS);
   openModal();
 }
@@ -15,6 +19,8 @@ function openCreateCourseModal() {
 function closeCreateCourseModal() {
   createCourseModal.classList.add(CLOSING_CREATE_COURSE_MODAL_CLASS);
   setTimeout(() => {
+    createCourseModal.style.display = "none";
+
     createCourseModal.classList.remove(OPENING_CREATE_COURSE_MODAL_CLASS);
     createCourseModal.classList.remove(CLOSING_CREATE_COURSE_MODAL_CLASS);
   }, 300);
