@@ -32,7 +32,7 @@ class CourseTest(models.Model):
     is_available = models.BooleanField(default=False, verbose_name="Доступен")
 
     def __str__(self):
-        return self.test
+        return self.test.title
 
     class Meta:
         ordering = ["is_available"]

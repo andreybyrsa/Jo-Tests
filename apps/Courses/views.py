@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
+from django.contrib import messages
 
 from apps.auth.models import Teacher, Student
 from apps.Tests.models import StudentResult, Test
@@ -37,9 +38,10 @@ class ViewCourses(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
         current_user = self.request.user
 
         if current_user.role == "teacher":
-            teacher = Teacher.objects.get(user=current_user)
+            teacher = Teacher.objects.get(user__id=current_user.id)
             return teacher.courses.all()
-        student = Student.objects.get(user=current_user)
+        student = Student.objects.get(user__id=current_user.id)
+        
         return student.courses.all()
 
 
@@ -51,6 +53,9 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
 
     def get(self, request):
         current_user = request.user
+        # if current_user.role != 'teacher':
+        #     messages.error(request, 'Доступ запрещен')
+        #     return redirect('profile')
         form = CourseCreateForm
         header_def = self.get_user_header()
         teacher = Teacher.objects.get(user__id=current_user.id)
@@ -64,28 +69,43 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
     
     def post(self, request):
         current_user = request.user
-        # course = Course.objects.create(
-        #     title = request.POST['title'],
-        #     description = request.POST['description'],
-        #     teacher = Teacher.objects.get(user__id=current_user.id),
-        #     progress = 0,
-        #     slug = 'course' + str(uuid4())
-        # )
-        
-        print(request.POST)
-            
-        # for post_group in request.POST['groups'].split(' '):
-        #     if post_group == '':
-        #         continue
-        #     group = Group.objects.get(index=post_group)
-        #     course.groups.add(group)
-        
-        # for post_test in request.POST['tests'].split(' '):
-        #     if post_test == '':
-        #         continue
-        #     test = Group.objects.get(slug=post_test)
+        post = request.POST
+        teacher = Teacher.objects.get(user__id=current_user.id)
+        course = Course.objects.create(
+            title = post['title'],
+            description = post['description'],
+            teacher = teacher,
+            progress = 0,
+            slug = 'course' + str(uuid4())
+        )
+        teacher.courses.add(course)
 
+        for post_group in post['groups'].split(' '):
+            if post_group == '':
+                continue
+            group = Group.objects.get(index=post_group)
+            course.groups.add(group)
+            students = group.students.all()
+            for student in students:
+                student.courses.add(course)
+
+            
+                
         
+        for post_test in post['tests'].split(' '):
+            if post_test == '':
+                continue
+            info_test = post_test.split('/')
+            test = Test.objects.get(slug=info_test[0])
+            course_test = CourseTest.objects.create(
+                course = course,
+                test = test,
+                test_time = info_test[2],
+                is_available = True if info_test[1] == 'true' else False,
+            )
+            course.tests.add(course_test)
+        
+        return redirect('courses')
             
 
 
