@@ -28,7 +28,6 @@ class Group(models.Model):
 class CourseTest(models.Model):
     course = models.ForeignKey("Course", on_delete=models.CASCADE)
     test = models.ForeignKey("TestsApp.Test", on_delete=models.CASCADE)
-    date_expired = models.DateTimeField(verbose_name="Дата окончания доступа")
     test_time = models.IntegerField(verbose_name="Время выполнения теста")
     is_available = models.BooleanField(default=False, verbose_name="Доступен")
 

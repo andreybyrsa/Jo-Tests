@@ -5,9 +5,11 @@ from django.views.generic import ListView, DetailView, View
 
 from apps.auth.models import Teacher, Student
 from apps.Tests.models import StudentResult, Test
-from .models import Course
+from .models import Course, Group, CourseTest
 
 from .forms import CourseCreateForm
+
+from uuid import uuid4
 
 
 class ViewCourses(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
@@ -61,7 +63,26 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
         return render(request, "Courses/CreateCoursePage.html", context)
     
     def post(self, request):
-        print(request.POST)
+        current_user = request.user
+        course = Course.objects.create(
+            title = request.POST['title'],
+            description = request.POST['description'],
+            teacher = Teacher.objects.get(user__id=current_user.id),
+            progress = 0,
+            slug = 'course' + str(uuid4())
+        )
+            
+        for post_group in request.POST['groups'][0].split()[:-1]:
+            if post_group == '':
+                continue
+            group = Group.objects.get(index=post_group)
+            course.groups.add(group)
+        
+        for post_test in request.POST['tests'][0].split()[:-1]:
+            if post_test == '':
+                continue
+            test = Group.objects.get(slug=post_test)
+            
 
 
 def delete_course(request, course_slug):
