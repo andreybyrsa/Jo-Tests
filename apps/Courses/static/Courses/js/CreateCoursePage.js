@@ -18,6 +18,8 @@ const courseDescription = document.getElementById("course-description");
 const courseTests = document.getElementById("course-tests");
 const courseGroups = document.getElementById("course-groups");
 
+const dateCreated = document.getElementById("date-created");
+
 const testsWrapper = document.getElementById("tests");
 const groupsWrapper = document.getElementById("groups");
 
@@ -28,6 +30,11 @@ const submitButton = document.getElementById("submit-button");
 const courseModalContent = document.getElementById("course-modal-content");
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
+
+dateCreated.textContent = getCurrentDate();
+setInterval(() => {
+  dateCreated.textContent = getCurrentDate();
+}, 10000);
 
 let currentTests = [];
 let currentGroups = [];

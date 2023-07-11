@@ -72,16 +72,18 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
             slug = 'course' + str(uuid4())
         )
             
-        for post_group in request.POST['groups'][0].split()[:-1]:
+        for post_group in request.POST['groups'].split(' '):
             if post_group == '':
                 continue
             group = Group.objects.get(index=post_group)
             course.groups.add(group)
         
-        for post_test in request.POST['tests'][0].split()[:-1]:
+        for post_test in request.POST['tests'].split(' '):
             if post_test == '':
                 continue
             test = Group.objects.get(slug=post_test)
+
+        
             
 
 
