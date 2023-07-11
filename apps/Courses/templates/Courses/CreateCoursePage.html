@@ -5,11 +5,13 @@
   <link rel="stylesheet/less" href="{% static 'Courses/less/CreateCoursePage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateCourseModal.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
   {% include 'core/modals/AlertModal.html' %}
+  {% include 'core/modals/CreateCourseModal.html' %}
 {% endblock %}
 
 {% block header %}
@@ -30,35 +32,19 @@
     {{ form }}
     <div class="create-course-page__tests-wrapper">
       <span class="create-course-page__form-title">Тесты</span>  
-      <div class="create-course-page__tests">
-        
-        <div class="create-course-page__test">
-          <span>Виды сортировок</span>
-          <span>20 баллов</span>
-          <button class="create-course-page__remove-button">
-            <i class="bi bi-x-circle create-course-page__remove-icon"></i>
-          </button>
-        </div>
-
-      </div>
+      <div id="tests" class="create-course-page__tests"></div>
     </div>
 
     <div class="create-course-page__groups-wrapper">
       <span class="create-course-page__form-title">Группы</span>
-      <div class="create-course-page__groups">
-
-        <div class="create-course-page__group">
-          <span>МКМб-22-1</span>
-          <button class="create-course-page__remove-button">
-            <i class="bi bi-x-circle create-course-page__remove-icon"></i>
-          </button>
-        </div>
-
-      </div>
+      <div id="groups" class="create-course-page__groups"></div>
     </div>
   </form>
 {% endblock %}
 
 {% block script-files %}
+  {{ tests_info|json_script:"data-tests" }}
+  {{ groups_info|json_script:"data-groups" }}
   <script type="text/javascript" src="{% static 'Courses/js/CreateCoursePage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/CreateCourseModal.js' %}"></script>
 {% endblock %}

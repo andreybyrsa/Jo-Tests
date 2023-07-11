@@ -60,7 +60,8 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
 
         return render(request, "Courses/CreateCoursePage.html", context)
     
-    # def post(self, request):
+    def post(self, request):
+        print(request.POST)
 
 
 def delete_course(request, course_slug):
