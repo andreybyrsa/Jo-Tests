@@ -22,12 +22,40 @@
 
 {% block content %}
   <form
-    id="questions"
+    id="form"
     class="create-course-page__form"
     method="POST"
   >
     {% csrf_token %}
     {{ form }}
+    <div class="create-course-page__tests-wrapper">
+      <span class="create-course-page__form-title">Тесты</span>  
+      <div class="create-course-page__tests">
+        
+        <div class="create-course-page__test">
+          <span>Виды сортировок</span>
+          <span>20 баллов</span>
+          <button class="create-course-page__remove-button">
+            <i class="bi bi-x-circle create-course-page__remove-icon"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="create-course-page__groups-wrapper">
+      <span class="create-course-page__form-title">Группы</span>
+      <div class="create-course-page__groups">
+
+        <div class="create-course-page__group">
+          <span>МКМб-22-1</span>
+          <button class="create-course-page__remove-button">
+            <i class="bi bi-x-circle create-course-page__remove-icon"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
   </form>
 {% endblock %}
 
