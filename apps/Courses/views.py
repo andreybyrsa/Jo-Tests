@@ -53,9 +53,9 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
 
     def get(self, request):
         current_user = request.user
-        # if current_user.role != 'teacher':
-        #     messages.error(request, 'Доступ запрещен')
-        #     return redirect('profile')
+        if current_user.role != 'teacher':
+            messages.error(request, 'Доступ запрещен')
+            return redirect('profile')
         form = CourseCreateForm
         header_def = self.get_user_header()
         teacher = Teacher.objects.get(user__id=current_user.id)
