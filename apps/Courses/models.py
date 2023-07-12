@@ -33,9 +33,10 @@ class CourseTest(models.Model):
 
     def get_test_in_course_info(self):
         return {
-            'test_time': self.test_time,
-            'is_available': self.is_available,
-            'test_slug': self.test.slug
+            "test": self.test.get_test_info(),
+            "test_time": self.test_time,
+            "available": self.is_available,
+            "slug": self.test.slug,
         }
 
     def __str__(self):

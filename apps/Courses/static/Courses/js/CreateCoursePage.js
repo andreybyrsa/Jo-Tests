@@ -1,10 +1,18 @@
 addPageClassName("create-course-page");
 
+const dataCourse = document.getElementById("data-course").textContent;
 const dataTests = document.getElementById("data-tests").textContent;
 const dataGroups = document.getElementById("data-groups").textContent;
+const dataCourseTests =
+  document.getElementById("data-course-tests").textContent;
+const dataCourseGroups =
+  document.getElementById("data-course-groups").textContent;
 
+const JSON_COURSE = JSON.parse(dataCourse);
 const JSON_TESTS = JSON.parse(dataTests);
 const JSON_GROUPS = JSON.parse(dataGroups);
+const JSON_COURSE_TESTS = JSON.parse(dataCourseTests);
+const JSON_COURSE_GROUPS = JSON.parse(dataCourseGroups);
 
 const form = document.getElementById("form");
 
@@ -19,6 +27,7 @@ const courseTests = document.getElementById("course-tests");
 const courseGroups = document.getElementById("course-groups");
 
 const dateCreated = document.getElementById("date-created");
+const dateUpdated = document.getElementById("date-updated");
 
 const testsWrapper = document.getElementById("tests");
 const groupsWrapper = document.getElementById("groups");
@@ -28,19 +37,48 @@ const addGroupButton = document.getElementById("add-group-button");
 const submitButton = document.getElementById("submit-button");
 
 const courseModalContent = document.getElementById("course-modal-content");
-const modalSearchInput = document.getElementById("search-input");
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
 const saveTestSettings = document.getElementById("save-test-settings");
 
-dateCreated.textContent = getCurrentDate();
-setInterval(() => {
-  dateCreated.textContent = getCurrentDate();
-}, 10000);
-
-let currentTests = [];
+let currentTests = JSON_COURSE_TESTS
+  ? Array.from(JSON_COURSE_TESTS).map((test) => ({
+      ...test.test,
+      available: test.available,
+      test_time: test.test_time,
+    }))
+  : [];
 let currentTest = null;
-let currentGroups = [];
+let currentGroups = JSON_COURSE_GROUPS ? JSON_COURSE_GROUPS : [];
+
+if (JSON_COURSE) {
+  const { title, description, time_create, time_update } = JSON_COURSE;
+
+  courseTitleInput.value = title;
+  courseDescriptionInput.value = description;
+
+  dateCreated.textContent = getCurrentDate(time_create);
+  dateUpdated.textContent =
+    time_create !== time_update ? getCurrentDate(time_update) : "Не изменено";
+
+  Array.from(currentTests).forEach((test) => {
+    const { title, max_result, slug } = test;
+
+    testsWrapper.appendChild(createTest(title, max_result, slug));
+  });
+
+  Array.from(currentGroups).forEach((group) => {
+    const { groupname, index } = group;
+
+    groupsWrapper.appendChild(createGroup(groupname, index));
+  });
+} else {
+  dateCreated.textContent = getCurrentDate();
+
+  setInterval(() => {
+    dateCreated.textContent = getCurrentDate();
+  }, 10000);
+}
 
 addTestButton.addEventListener("click", () => {
   saveTestsButton.style.display = "flex";
@@ -62,13 +100,9 @@ submitButton.addEventListener("click", () => {
 
   courseTests.value = currentTests
     .reduce((prevValue, value) => {
-      const currentAvailable = value.available
-        ? value.available
-        : testAvailable.value;
+      const currentAvailable = value.available ? value.available : "false";
 
-      const currentTestTime = value.test_time
-        ? value.test_time
-        : testTime.value;
+      const currentTestTime = value.test_time ? value.test_time : 60;
 
       return (
         `${value.slug}/${currentAvailable}/${currentTestTime} ` + prevValue
@@ -98,6 +132,7 @@ saveGroupsButton.addEventListener("click", () => {
 saveTestSettings.addEventListener("click", () => {
   const testAvailable = document.getElementById("test-available");
   const testTime = document.getElementById("test-time");
+  console.log(testAvailable.value);
 
   currentTests.forEach((test) => {
     if (test.slug == currentTest.slug) {
@@ -105,9 +140,6 @@ saveTestSettings.addEventListener("click", () => {
       test.test_time = testTime.value;
     }
   });
-
-  testAvailable.value = false;
-  testTime.value = 60;
 
   closeTestModal();
   closeModal();
@@ -123,7 +155,7 @@ function createTest(testTextName, maxPoints, slug) {
   const openTestIcon = document.createElement("i");
   openTestIcon.className = "bi bi-eye create-course-page__test-open-icon";
   openTestIcon.onclick = () => {
-    currentTest = Array.from(JSON_TESTS).find((test) => test.slug === slug);
+    currentTest = currentTests.find((test) => test.slug === slug);
     openTestModal(currentTest);
   };
   const testName = document.createElement("span");
@@ -186,48 +218,52 @@ function addModalElements(data, currentData) {
   Array.from(data).forEach((dataElem) => {
     const { title, max_result, slug, groupname, index } = dataElem;
 
-    const isExistElement = currentData.find((elem) => elem === dataElem)
+    const isExistTest = currentData.find((elem) => elem.slug === slug)
+      ? true
+      : false;
+
+    const isExistGroup = currentData.find((elem) => elem.index === index)
       ? true
       : false;
 
     if (slug) {
       courseModalContent.appendChild(
-        createModalTest(title, max_result, slug, isExistElement)
+        createModalTest(title, max_result, slug, isExistTest)
       );
 
       return;
     }
 
     courseModalContent.appendChild(
-      createModalGroup(groupname, index, isExistElement)
+      createModalGroup(groupname, index, isExistGroup)
     );
   });
 }
 
 function saveElements(data, currentData) {
-  modalSearchInput.value = "";
-
   Array.from(courseModalContent.childNodes).forEach((element) => {
     const checkboxInput = element.childNodes[0].childNodes[0];
 
-    const choosenElement = Array.from(data).find(
+    const currentElement = Array.from(data).find(
       (dataElem) =>
         dataElem.slug === checkboxInput.value ||
         dataElem.index === checkboxInput.value
     );
 
+    const currentKey = currentElement.index ? "index" : "slug";
+
     if (checkboxInput.checked) {
       const isExistInCurrentData = currentData.find(
-        (elem) => elem === choosenElement
+        (elem) => elem[currentKey] === currentElement[currentKey]
       )
         ? true
         : false;
 
       if (!isExistInCurrentData) {
-        currentData.push(choosenElement);
+        currentData.push(currentElement);
       }
 
-      const { title, max_result, slug, index, groupname } = choosenElement;
+      const { title, max_result, slug, index, groupname } = currentElement;
 
       if (slug) {
         testsWrapper.appendChild(createTest(title, max_result, slug));
@@ -238,7 +274,7 @@ function saveElements(data, currentData) {
       groupsWrapper.appendChild(createGroup(groupname, index));
     } else {
       const currentElementIndex = currentData.findIndex(
-        (elem) => elem === choosenElement
+        (elem) => elem[currentKey] === currentElement[currentKey]
       );
 
       if (currentElementIndex >= 0) {

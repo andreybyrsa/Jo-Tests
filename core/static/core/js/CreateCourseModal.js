@@ -38,19 +38,13 @@ closeCourseModalButton.addEventListener("click", () => {
 });
 
 searchInput.addEventListener("input", (event) => {
-  const searchedValue = event.target.value.toLowerCase();
-  const testsArray = Array.from(courseModalContent.childNodes);
+  const searchedItem =
+    courseModalContent.childNodes[0].className ===
+    "create-course-modal__test-wrapper"
+      ? "create-course-modal__test"
+      : "create-course-modal__group-content"
 
-  testsArray.forEach((element) => {
-    const testTitle =
-      element.childNodes[0].childNodes[1].textContent.toLowerCase();
-
-    if (testTitle.includes(searchedValue)) {
-      element.style.display = "flex";
-    } else {
-      element.style.display = "none";
-    }
-  });
+  searchByChildNodes(event, courseModalContent.childNodes, searchedItem);
 });
 
 function createModalTest(testText, testMaxPoints, testSlug, isExistTest) {

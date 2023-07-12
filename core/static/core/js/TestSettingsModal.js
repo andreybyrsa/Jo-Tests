@@ -23,12 +23,12 @@ toggleButton.addEventListener("click", () => {
       toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
     }, 300);
 
-    toggleAvailable.value = false;
+    toggleAvailable.value = 'false';
   } else {
     toggleButton.classList.add(ACTIVE_TOGGLE_BUTTON_CLASS);
     toggleAvailable.classList.add(ACTIVE_TOGGLE_CLASS);
 
-    toggleAvailable.value = true;
+    toggleAvailable.value = 'true';
   }
 });
 
@@ -36,14 +36,15 @@ function openTestModal(currentTest) {
   const testTime = document.getElementById("test-time");
 
   testModal.style.display = "flex";
-
   testModal.classList.add(OPENING_TEST_SETTINGS_MODAL_CLASS);
   openModal();
 
   removeToggleClassNames();
 
+  toggleAvailable.value = 'false';
+
   testTime.value = currentTest?.test_time ? currentTest.test_time : 60;
-  switchToggle(currentTest?.available);
+  switchToggle(`${currentTest?.available}`);
 }
 
 function closeTestModal() {
@@ -68,13 +69,14 @@ closeTestModalButton.addEventListener("click", () => {
 });
 
 function switchToggle(available) {
-  if (available == "true") {
+  if (available === 'true') {
     toggleButton.click();
+    toggleAvailable.value = 'true';
   }
 }
 
 function removeToggleClassNames() {
+  toggleButton.classList.remove(ACTIVE_TOGGLE_BUTTON_CLASS);
   toggleAvailable.classList.remove(ACTIVE_TOGGLE_CLASS);
   toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
-  toggleButton.classList.remove(ACTIVE_TOGGLE_BUTTON_CLASS);
 }
