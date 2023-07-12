@@ -18,10 +18,7 @@ toggleButton.addEventListener("click", () => {
     toggleButton.classList.remove(ACTIVE_TOGGLE_BUTTON_CLASS);
     toggleAvailable.classList.add(DISABEL_TOGGLE_CLASS);
 
-    setTimeout(() => {
-      toggleAvailable.classList.remove(ACTIVE_TOGGLE_CLASS);
-      toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
-    }, 300);
+    setTimeout(() => removeToggleClassNames, 300);
 
     toggleAvailable.value = false;
   } else {
@@ -36,7 +33,6 @@ function openTestModal(currentTest) {
   const testTime = document.getElementById("test-time");
 
   testModal.style.display = "flex";
-
   testModal.classList.add(OPENING_TEST_SETTINGS_MODAL_CLASS);
   openModal();
 
@@ -76,5 +72,4 @@ function switchToggle(available) {
 function removeToggleClassNames() {
   toggleAvailable.classList.remove(ACTIVE_TOGGLE_CLASS);
   toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
-  toggleButton.classList.remove(ACTIVE_TOGGLE_BUTTON_CLASS);
 }
