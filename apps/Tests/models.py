@@ -45,6 +45,16 @@ class StudentResult(models.Model):
     is_passed = models.BooleanField(default=False, verbose_name='Пройден')
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
+    def get_result_info(self):
+        return {
+            'student': self.student,
+            'max_result': self.test.max_result,
+            'test_slug': self.test.slug,
+            'result': self.result,
+            'is_passed': self.is_passed,
+            'slug': self.slug,
+        }
+
     class Meta:
         verbose_name = "Результат студента"
         verbose_name_plural = "Результаты студентов"
