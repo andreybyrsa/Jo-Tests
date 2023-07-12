@@ -18,14 +18,17 @@ toggleButton.addEventListener("click", () => {
     toggleButton.classList.remove(ACTIVE_TOGGLE_BUTTON_CLASS);
     toggleAvailable.classList.add(DISABEL_TOGGLE_CLASS);
 
-    setTimeout(() => removeToggleClassNames, 300);
+    setTimeout(() => {
+      toggleAvailable.classList.remove(ACTIVE_TOGGLE_CLASS);
+      toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
+    }, 300);
 
-    toggleAvailable.value = false;
+    toggleAvailable.value = 'false';
   } else {
     toggleButton.classList.add(ACTIVE_TOGGLE_BUTTON_CLASS);
     toggleAvailable.classList.add(ACTIVE_TOGGLE_CLASS);
 
-    toggleAvailable.value = true;
+    toggleAvailable.value = 'true';
   }
 });
 
@@ -38,8 +41,10 @@ function openTestModal(currentTest) {
 
   removeToggleClassNames();
 
+  toggleAvailable.value = 'false';
+
   testTime.value = currentTest?.test_time ? currentTest.test_time : 60;
-  switchToggle(currentTest?.available);
+  switchToggle(`${currentTest?.available}`);
 }
 
 function closeTestModal() {
@@ -64,12 +69,14 @@ closeTestModalButton.addEventListener("click", () => {
 });
 
 function switchToggle(available) {
-  if (available == "true") {
+  if (available === 'true') {
     toggleButton.click();
+    toggleAvailable.value = 'true';
   }
 }
 
 function removeToggleClassNames() {
+  toggleButton.classList.remove(ACTIVE_TOGGLE_BUTTON_CLASS);
   toggleAvailable.classList.remove(ACTIVE_TOGGLE_CLASS);
   toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
 }
