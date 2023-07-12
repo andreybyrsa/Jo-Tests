@@ -1,9 +1,16 @@
 <div id="create-course-modal" class="create-course-modal">
-  <button id="close-modal-button">
+  <button id="close-course-modal-button">
     <i class="bi bi-x-circle create-course-modal__icon"></i>
   </button>
 
-  <div id="course-modal-content" class="create-course-modal__content"></div>
+  <div class="create-course-modal__content-wrapper">
+    <input
+      id="search-input"
+      class="create-course-modal__search-input"
+      placeholder="Поиск по названию"
+    />
+    <div id="course-modal-content" class="create-course-modal__content"></div>
+  </div>
 
   <button id="save-tests-button" class="create-course-modal__save-button">
     Сохранить тесты

@@ -6,12 +6,14 @@
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateSideBar.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateCourseModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/TestSettingsModal.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
   {% include 'core/modals/AlertModal.html' %}
   {% include 'core/modals/CreateCourseModal.html' %}
+  {% include 'core/modals/TestSettingsModal.html' %}
 {% endblock %}
 
 {% block header %}
@@ -47,4 +49,5 @@
   {{ groups_info|json_script:"data-groups" }}
   <script type="text/javascript" src="{% static 'Courses/js/CreateCoursePage.js' %}"></script>
   <script type="text/javascript" src="{% static 'core/js/CreateCourseModal.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/TestSettingsModal.js' %}"></script>
 {% endblock %}

@@ -18,6 +18,8 @@ const courseDescription = document.getElementById("course-description");
 const courseTests = document.getElementById("course-tests");
 const courseGroups = document.getElementById("course-groups");
 
+const dateCreated = document.getElementById("date-created");
+
 const testsWrapper = document.getElementById("tests");
 const groupsWrapper = document.getElementById("groups");
 
@@ -26,10 +28,18 @@ const addGroupButton = document.getElementById("add-group-button");
 const submitButton = document.getElementById("submit-button");
 
 const courseModalContent = document.getElementById("course-modal-content");
+const modalSearchInput = document.getElementById("search-input");
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
+const saveTestSettings = document.getElementById("save-test-settings");
+
+dateCreated.textContent = getCurrentDate();
+setInterval(() => {
+  dateCreated.textContent = getCurrentDate();
+}, 10000);
 
 let currentTests = [];
+let currentTest = null;
 let currentGroups = [];
 
 addTestButton.addEventListener("click", () => {
@@ -51,8 +61,21 @@ submitButton.addEventListener("click", () => {
   courseDescription.value = courseDescriptionInput.value;
 
   courseTests.value = currentTests
-    .reduce((prevValue, value) => `${value.slug} ` + prevValue, "")
+    .reduce((prevValue, value) => {
+      const currentAvailable = value.available
+        ? value.available
+        : testAvailable.value;
+
+      const currentTestTime = value.test_time
+        ? value.test_time
+        : testTime.value;
+
+      return (
+        `${value.slug}/${currentAvailable}/${currentTestTime} ` + prevValue
+      );
+    }, "")
     .slice(0, -1);
+
   courseGroups.value = currentGroups
     .reduce((prevValue, value) => `${value.index} ` + prevValue, "")
     .slice(0, -1);
@@ -72,12 +95,42 @@ saveGroupsButton.addEventListener("click", () => {
   saveElements(JSON_GROUPS, currentGroups);
 });
 
+saveTestSettings.addEventListener("click", () => {
+  const testAvailable = document.getElementById("test-available");
+  const testTime = document.getElementById("test-time");
+
+  currentTests.forEach((test) => {
+    if (test.slug == currentTest.slug) {
+      test.available = testAvailable.value;
+      test.test_time = testTime.value;
+    }
+  });
+
+  testAvailable.value = false;
+  testTime.value = 60;
+
+  closeTestModal();
+  closeModal();
+});
+
 function createTest(testTextName, maxPoints, slug) {
   const testWrapper = document.createElement("div");
   testWrapper.className = "create-course-page__test";
 
+  const testContent = document.createElement("div");
+  testContent.className = "create-course-page__test-content";
+
+  const openTestIcon = document.createElement("i");
+  openTestIcon.className = "bi bi-eye create-course-page__test-open-icon";
+  openTestIcon.onclick = () => {
+    currentTest = Array.from(JSON_TESTS).find((test) => test.slug === slug);
+    openTestModal(currentTest);
+  };
   const testName = document.createElement("span");
   testName.textContent = testTextName;
+
+  testContent.appendChild(openTestIcon);
+  testContent.appendChild(testName);
 
   const testMaxPoints = document.createElement("span");
   testMaxPoints.textContent = `${maxPoints} балл(ов)`;
@@ -88,7 +141,7 @@ function createTest(testTextName, maxPoints, slug) {
     currentTests = currentTests.filter((test) => test.slug !== slug);
   };
 
-  testWrapper.appendChild(testName);
+  testWrapper.appendChild(testContent);
   testWrapper.appendChild(testMaxPoints);
   testWrapper.appendChild(testRemoveButton);
 
@@ -128,7 +181,6 @@ function createRemoveButton() {
 function addModalElements(data, currentData) {
   removeModalElements();
 
-  openModal();
   openCreateCourseModal();
 
   Array.from(data).forEach((dataElem) => {
@@ -153,6 +205,8 @@ function addModalElements(data, currentData) {
 }
 
 function saveElements(data, currentData) {
+  modalSearchInput.value = "";
+
   Array.from(courseModalContent.childNodes).forEach((element) => {
     const checkboxInput = element.childNodes[0].childNodes[0];
 

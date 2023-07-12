@@ -54,6 +54,19 @@
     font-size: 18px;
 
     .flexible(center, space-between);
+
+    &-content {
+      .flexible(center, flex-start, @gap: 10px);
+    }
+
+    &-open-icon {
+      cursor: pointer;
+
+      color: @primary-color;
+      font-size: 25px;
+
+      display: flex;
+    }
   }
 
   &__groups {
@@ -79,7 +92,8 @@
   &__group {
     position: relative;
 
-    width: 150px;
+    padding: 0 10px;
+    min-width: 150px;
     height: 60px;
     .border(solid, @lighted-color, 2px, 12px);
 

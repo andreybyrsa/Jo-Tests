@@ -31,8 +31,15 @@ class CourseTest(models.Model):
     test_time = models.IntegerField(verbose_name="Время выполнения теста")
     is_available = models.BooleanField(default=False, verbose_name="Доступен")
 
+    def get_test_in_course_info(self):
+        return {
+            'test_time': self.test_time,
+            'is_available': self.is_available,
+            'test_slug': self.test.slug
+        }
+
     def __str__(self):
-        return self.test
+        return self.test.title
 
     class Meta:
         ordering = ["is_available"]
