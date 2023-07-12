@@ -37,21 +37,13 @@ closeCourseModalButton.addEventListener("click", () => {
   closeModal();
 });
 
-searchInput.addEventListener("input", (event) => {
-  const searchedValue = event.target.value.toLowerCase();
-  const testsArray = Array.from(courseModalContent.childNodes);
-
-  testsArray.forEach((element) => {
-    const testTitle =
-      element.childNodes[0].childNodes[1].textContent.toLowerCase();
-
-    if (testTitle.includes(searchedValue)) {
-      element.style.display = "flex";
-    } else {
-      element.style.display = "none";
-    }
-  });
-});
+searchInput.addEventListener("input", (event) =>
+  searchByChildNodes(
+    event,
+    courseModalContent.childNodes,
+    "create-course-modal__test"
+  )
+);
 
 function createModalTest(testText, testMaxPoints, testSlug, isExistTest) {
   const testWrapper = document.createElement("div");
