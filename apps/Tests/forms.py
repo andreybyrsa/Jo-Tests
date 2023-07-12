@@ -1,11 +1,6 @@
 from django import forms
 from .models import Test
 
-
-# title =
-# description =
-# slug = /
-
 create_test_input_class = "create-test-page__input create-test-page__input--hidden"
 
 

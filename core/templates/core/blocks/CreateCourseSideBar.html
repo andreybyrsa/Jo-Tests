@@ -1,0 +1,51 @@
+{% load static %}
+
+<div class="create-course-side-bar">
+  <div class="create-course-side-bar__content">
+    <div class="create-course-side-bar__input-wrapper">
+      <span>Название курса</span>
+      <input
+        id="input-course-title"
+        class="create-course-side-bar__input"
+        placeholder="Это новый курс"
+      />
+    </div>
+
+    <div class="create-course-side-bar__input-wrapper">
+      <span>Описание круса</span>
+      <input
+        id="input-course-description"
+        class="create-course-side-bar__input"
+        placeholder="Это описание курса"
+      />
+    </div>
+
+    <button id="add-test-button" class="create-course-side-bar__button">
+      <i class="bi bi-plus create-course-side-bar__button-icon"></i>
+      <span>Тест</span>
+    </button>
+
+    <button id="add-group-button" class="create-course-side-bar__button">
+      <i class="bi bi-plus create-course-side-bar__button-icon"></i>
+      <span>Группа</span>
+    </button>
+
+    <div class="create-course-side-bar__text">
+      <span class="create-course-side-bar__text-light">Дата создания:</span>
+      <span id="date-created"></span>
+    </div>
+
+    <div class="create-course-side-bar__text">
+      <span class="create-course-side-bar__text-light">Дата редактирования:</span>
+      <span id="date-updated">Не изменено</span>
+    </div>
+  </div>
+
+  <button
+    id="submit-button"
+    type="submit"
+    class="create-course-side-bar__submit-button"
+  >
+    Cохранить курс
+  </button>
+</div>

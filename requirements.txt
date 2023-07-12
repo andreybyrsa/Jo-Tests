@@ -2,3 +2,4 @@ Django==4.2.2
 django-debug-toolbar==4.1.0
 urllib3==1.25.11
 Pillow==9.5.0
+pytils==0.4.1

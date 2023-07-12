@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
 from core.utils.get_request_list import get_request_list
+from core.utils.get_unique_slug import get_unique_slug
 
 from .forms import TestCreateForm
 
@@ -46,10 +47,16 @@ class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
 
 
 class CreateTest(LoginRequiredMixin, HeaderMixin, View):
+    """Создание теста - Author"""
+
     login_url = "/auth/"
     redirect_field_name = "tests"
 
     def get(self, request):
+        current_user = request.user
+        if current_user.role != 'author':
+            messages.error(request, 'Доступ запрещен')
+            return redirect('profile')
         form = TestCreateForm
         header_def = self.get_user_header()
         context = dict(list({"form": form}.items()) + list(header_def.items()))
@@ -68,7 +75,7 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
                 description=request.POST["description"],
                 count=post["count"],
                 max_result=post["max_points"],
-                slug="test" + str(uuid4()),
+                slug=get_unique_slug(Test, request.POST["title"]),
             )
             author.tests.add(test)
 
@@ -85,7 +92,9 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
+                        is_correct=True
+                        if post_answer in post["rightAnwers"][i]
+                        else False,
                     )
                     question.answers.add(answer)
 
@@ -96,10 +105,16 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
 
 
 class EditTest(LoginRequiredMixin, HeaderMixin, View):
+    """Редактирование теста - Author"""
+
     login_url = "/auth/"
     redirect_field_name = "tests"
 
     def get(self, request, test_slug):
+        current_user = request.user
+        if current_user.role != 'author':
+            messages.error(request, 'Доступ запрещен')
+            return redirect('profile')
         test = Test.objects.get(slug=test_slug)
         form = TestCreateForm(instance=test)
         questions = Question.objects.filter(test__id=test.id)
@@ -140,7 +155,9 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
+                        is_correct=True
+                        if post_answer in post["rightAnwers"][i]
+                        else False,
                     )
                     question.answers.add(answer)
 
@@ -151,12 +168,8 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
             messages.error(request, "Ошибка редактирования теста")
 
 
-def test_create(request):
-    form = TestCreateForm
-    print(request.POST)
-    return render(request, "Tests/CreateTestPage.html", {"form": form})
-
-
 def delete_test(request, test_slug):
+    """Удаление теста - Author"""
+
     Test.objects.get(slug=test_slug).delete()
     return redirect("tests")

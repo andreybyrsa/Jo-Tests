@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "debug_toolbar",
+    'pytils',
     
     "apps.auth",
     'apps.Tests',

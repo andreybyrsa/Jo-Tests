@@ -14,6 +14,18 @@
   z-index: @z-index;
 }
 
+.fixedHeight(@pixels) {
+  height: @pixels;
+  max-height: @pixels;
+  min-height: @pixels;
+}
+
+.fixedWidth(@pixels) {
+  width: @pixels;
+  max-width: @pixels;
+  min-width: @pixels;
+}
+
 .border(
   @border-style: none,
   @border-color: transparent,
