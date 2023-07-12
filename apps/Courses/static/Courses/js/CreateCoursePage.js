@@ -39,7 +39,6 @@ setInterval(() => {
 }, 10000);
 
 let currentTests = [];
-let currentTest = null;
 let currentGroups = [];
 
 addTestButton.addEventListener("click", () => {
@@ -123,7 +122,7 @@ function createTest(testTextName, maxPoints, slug) {
   const openTestIcon = document.createElement("i");
   openTestIcon.className = "bi bi-eye create-course-page__test-open-icon";
   openTestIcon.onclick = () => {
-    currentTest = Array.from(JSON_TESTS).find((test) => test.slug === slug);
+    const currentTest = Array.from(JSON_TESTS).find((test) => test.slug === slug);
     openTestModal(currentTest);
   };
   const testName = document.createElement("span");

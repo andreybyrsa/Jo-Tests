@@ -78,7 +78,25 @@ function getCurrentDate(testDate) {
   hours = hours >= 10 ? hours : `0${hours}`;
 
   let minutes = date.getMinutes();
-  minutes = minutes >= 10 ? minutes : `0${minutes}`
+  minutes = minutes >= 10 ? minutes : `0${minutes}`;
 
   return `${day}.${month}.${year} ${hours}:${minutes}`;
+}
+
+function searchByChildNodes(event, childNodes, searchedItem) {
+  const searchedValue = event.target.value.toLowerCase();
+
+  Array.from(childNodes).forEach((childNode) => {
+    const currentNode = Array.from(childNode.childNodes).find(
+      (node) => node.className === searchedItem
+    );
+
+    const currentValue = currentNode?.textContent.toLowerCase();
+
+    if (currentValue?.includes(searchedValue)) {
+      childNode.style.display = "flex";
+    } else {
+      childNode.style.display = "none";
+    }
+  });
 }
