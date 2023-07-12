@@ -72,43 +72,128 @@ class CreateCourse(LoginRequiredMixin, HeaderMixin, View):
         current_user = request.user
         post = request.POST
         teacher = Teacher.objects.get(user__id=current_user.id)
-        course = Course.objects.create(
-            title = post['title'],
-            description = post['description'],
-            teacher = teacher,
-            progress = 0,
-            slug = get_unique_slug(Course, post['title'])
-        )
-        teacher.courses.add(course)
-
-        for post_group in post['groups'].split(' '):
-            if post_group == '':
-                continue
-            group = Group.objects.get(index=post_group)
-            course.groups.add(group)
-            students = group.students.all()
-            for student in students:
-                student.courses.add(course)
-
-            
-                
-        
-        for post_test in post['tests'].split(' '):
-            if post_test == '':
-                continue
-            info_test = post_test.split('/')
-            test = Test.objects.get(slug=info_test[0])
-            course_test = CourseTest.objects.create(
-                course = course,
-                test = test,
-                test_time = info_test[2],
-                is_available = True if info_test[1] == 'true' else False,
+        try:
+            course = Course.objects.create(
+                title = post['title'],
+                description = post['description'],
+                teacher = teacher,
+                progress = 0,
+                slug = get_unique_slug(Course, post['title'])
             )
-            course.tests.add(course_test)
+            teacher.courses.add(course)
+
+            for post_group in post['groups'].split(' '):
+                if post_group == '':
+                    continue
+                group = Group.objects.get(index=post_group)
+                course.groups.add(group)
+                students = group.students.all()
+                for student in students:
+                    student.courses.add(course)
+
+                
+                    
+            
+            for post_test in post['tests'].split(' '):
+                if post_test == '':
+                    continue
+                info_test = post_test.split('/')
+                test = Test.objects.get(slug=info_test[0])
+                course_test = CourseTest.objects.create(
+                    course = course,
+                    test = test,
+                    test_time = info_test[2],
+                    is_available = True if info_test[1] == 'true' else False,
+                )
+                course.tests.add(course_test)
+            messages.success(request, 'Курс успешно создан')
+            return redirect('courses')
         
-        return redirect('courses')
+        except:
+            messages.error(request, 'Ошибка создания курса')
+            return redirect('courses')
             
 
+class EditCourse(LoginRequiredMixin, HeaderMixin, View):
+    """Создание курса - Teacher"""
+
+    login_url = "/auth/"
+    redirect_field_name = "courses"
+
+    def get(self, request, course_slug):
+        current_user = request.user
+        if current_user.role != 'teacher':
+            messages.error(request, 'Доступ запрещен')
+            return redirect('profile')
+        form = CourseCreateForm
+        header_def = self.get_user_header()
+        teacher = Teacher.objects.get(user__id=current_user.id)
+        groups = teacher.groups.all()
+        groups_info = list(group.get_group_info() for group in groups)
+        tests = Test.objects.all()
+        tests_info = list(test.get_test_info() for test in tests)
+        course = Course.objects.get(slug=course_slug)
+        course_tests = course.tests.all()
+        course_tests_info = [test.get_test_in_course_info() for test in course_tests]
+        course_groups = course.tests.all()
+        course_groups_info = [group.get_group_info() for group in course_groups]
+        context = dict(
+            list(
+                    {
+                        "form": form, 
+                        'groups_info': groups_info, 
+                        'tests_info': tests_info, 
+                        'course_tests_info': course_tests_info,
+                        'course_groups_info': course_groups_info,     
+                    }.items()
+                ) + list(header_def.items())
+            )
+
+        return render(request, "Courses/CreateCoursePage.html", context)
+    
+    def post(self, request, course_slug):
+        current_user = request.user
+        post = request.POST
+        course = Course.objects.get(slug=course_slug)
+
+        try:
+            course.title = post['title']
+            course.description = post['description']
+            
+            course.tests.clear()
+            CourseTest.objects.filter(course__id = course.id).delete()
+            course.groups.clear()
+            
+            for post_group in post['groups'].split(' '):
+                if post_group == '':
+                    continue
+                group = Group.objects.get(index=post_group)
+                course.groups.add(group)
+                students = group.students.all()
+                for student in students:
+                    student.courses.add(course)
+
+            for post_test in post['tests'].split(' '):
+                if post_test == '':
+                    continue
+                info_test = post_test.split('/')
+                test = Test.objects.get(slug=info_test[0])
+                course_test = CourseTest.objects.create(
+                    course = course,
+                    test = test,
+                    test_time = info_test[2],
+                    is_available = True if info_test[1] == 'true' else False,
+                )
+                course.tests.add(course_test)
+
+            course.save()
+            messages.success(request, 'Курс успешно изменён')
+            return redirect('courses')
+        
+        except:
+            messages.error(request, 'Ошибка изменения курса')
+            return redirect('courses')
+        
 
 def delete_course(request, course_slug):
     """Удаление курса - Teacher"""
