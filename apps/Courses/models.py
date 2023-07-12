@@ -36,7 +36,6 @@ class CourseTest(models.Model):
             "test": self.test.get_test_info(),
             "test_time": self.test_time,
             "available": self.is_available,
-            "slug": self.test.slug,
         }
 
     def __str__(self):
