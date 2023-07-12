@@ -171,8 +171,12 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
 
             course.tests.clear()
             CourseTest.objects.filter(course__id=course.id).delete()
+            groups = course.groups.all()
+            for group in groups:
+                for student in group.students.all():
+                    student.courses.remove(course)
             course.groups.clear()
-
+            
             for post_group in post["groups"].split(" "):
                 if post_group == "":
                     continue
@@ -181,6 +185,7 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
                 students = group.students.all()
                 for student in students:
                     student.courses.add(course)
+            
 
             for post_test in post["tests"].split(" "):
                 if post_test == "":

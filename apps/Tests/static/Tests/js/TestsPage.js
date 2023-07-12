@@ -11,7 +11,7 @@ const searchInput = document.getElementById("search-input");
 const searchIcon = document.getElementById("search-icon");
 
 const ACTIVE_SEARCH_ICON_COLOR = "#4360F8";
-const DISABLED_SEARCH_ICON_COLOR = "#898989";
+const DISABLED_SEARCH_ICON_COLOR = "#000000";
 
 searchInput.addEventListener("input", (event) => {
   const searchedValue = event.target.value;
