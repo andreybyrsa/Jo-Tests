@@ -3,10 +3,6 @@ let profileModal = document.getElementById("profile-modal");
 const OPENING_PROFILE_MODAL_CLASS = "profile-modal--opened";
 const CLOSING_PROFILE_MODAL_CLASS = "profile-modal--closed";
 
-if (alertModal !== null) {
-  openAlertModal();
-}
-
 function openProfileModal() {
   profileModal.classList.add(OPENING_PROFILE_MODAL_CLASS);
   openModal();
