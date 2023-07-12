@@ -33,16 +33,13 @@ const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
 const saveTestSettings = document.getElementById("save-test-settings");
 
-const currentTestSlug = document.getElementById("test-slug");
-const testAvailable = document.getElementById("test-available");
-const testTime = document.getElementById("test-time");
-
 dateCreated.textContent = getCurrentDate();
 setInterval(() => {
   dateCreated.textContent = getCurrentDate();
 }, 10000);
 
 let currentTests = [];
+let currentTest = null;
 let currentGroups = [];
 
 addTestButton.addEventListener("click", () => {
@@ -78,6 +75,7 @@ submitButton.addEventListener("click", () => {
       );
     }, "")
     .slice(0, -1);
+
   courseGroups.value = currentGroups
     .reduce((prevValue, value) => `${value.index} ` + prevValue, "")
     .slice(0, -1);
@@ -98,26 +96,18 @@ saveGroupsButton.addEventListener("click", () => {
 });
 
 saveTestSettings.addEventListener("click", () => {
-  const toggle = document.getElementById("toggle");
+  const testAvailable = document.getElementById("test-available");
+  const testTime = document.getElementById("test-time");
 
   currentTests.forEach((test) => {
-    if (test.slug == currentTestSlug.value) {
+    if (test.slug == currentTest.slug) {
       test.available = testAvailable.value;
       test.test_time = testTime.value;
     }
   });
 
-  currentTestSlug.value = "";
   testAvailable.value = false;
   testTime.value = 60;
-
-  if (toggle.classList.contains("test-settings-modal__toggle--active")) {
-    toggle.classList.remove("test-settings-modal__toggle--active");
-    testAvailable.value = false;
-  } else {
-    toggle.classList.add("test-settings-modal__toggle--active");
-    testAvailable.value = true;
-  }
 
   closeTestModal();
   closeModal();
@@ -133,7 +123,8 @@ function createTest(testTextName, maxPoints, slug) {
   const openTestIcon = document.createElement("i");
   openTestIcon.className = "bi bi-eye create-course-page__test-open-icon";
   openTestIcon.onclick = () => {
-    openTestModal(slug);
+    currentTest = Array.from(JSON_TESTS).find((test) => test.slug === slug);
+    openTestModal(currentTest);
   };
   const testName = document.createElement("span");
   testName.textContent = testTextName;
