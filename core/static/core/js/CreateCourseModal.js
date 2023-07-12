@@ -37,13 +37,15 @@ closeCourseModalButton.addEventListener("click", () => {
   closeModal();
 });
 
-searchInput.addEventListener("input", (event) =>
-  searchByChildNodes(
-    event,
-    courseModalContent.childNodes,
-    "create-course-modal__test"
-  )
-);
+searchInput.addEventListener("input", (event) => {
+  const searchedItem =
+    courseModalContent.childNodes[0].className ===
+    "create-course-modal__test-wrapper"
+      ? "create-course-modal__test"
+      : "create-course-modal__group-content"
+
+  searchByChildNodes(event, courseModalContent.childNodes, searchedItem);
+});
 
 function createModalTest(testText, testMaxPoints, testSlug, isExistTest) {
   const testWrapper = document.createElement("div");

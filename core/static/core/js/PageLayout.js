@@ -86,6 +86,7 @@ function getCurrentDate(testDate) {
 function searchByChildNodes(event, childNodes, searchedItem) {
   const searchedValue = event.target.value.toLowerCase();
 
+  console.log(childNodes[0].childNodes);
   Array.from(childNodes).forEach((childNode) => {
     const currentNode = Array.from(childNode.childNodes).find(
       (node) => node.className === searchedItem
