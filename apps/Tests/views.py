@@ -101,7 +101,9 @@ class CreateTest(LoginRequiredMixin, HeaderMixin, View):
             messages.success(request, "Успешное создание теста!")
             return redirect("tests")
         except:
+            
             messages.error(request, "Ошибка создания теста")
+            return redirect("tests")
 
 
 class EditTest(LoginRequiredMixin, HeaderMixin, View):
@@ -164,8 +166,10 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
             test.save()
             messages.success(request, "Успешное обновление теста")
             return redirect("tests")
+        
         except:
             messages.error(request, "Ошибка редактирования теста")
+            return redirect("tests")
 
 
 def delete_test(request, test_slug):
