@@ -29,33 +29,47 @@
     font-size: 18px;
 
     .flexible(center, space-between);
+  }
 
-    input {
-      width: 50px;
-      .border(solid, @black-color, 0 0 1px);
+  &__date-input {
+    width: 50px;
+    .border(solid, @black-color, 0 0 1px);
 
-      color: @primary-color;
-    }
+    color: @primary-color;
   }
 
   &__toggle {
     &-button {
       position: relative;
 
-      padding: 5px;
-      width: 50px;
+      width: 45px;
       height: 28px;
-      .border(solid, @black-color, 1px, 20px);
+      border-radius: 20px;
+      background-color: @lighted-color;
+
+      transition: background-color 0.3s ease-out;
+
+      &--active {
+        background-color: @primary-color;
+      }
     }
 
-    .position(absolute, @left: 5px, @top: 5px, @bottom: 5px);
+    .position(absolute, @left: 3px, @top: 3px, @bottom: 3px);
 
     width: 20px;
-    border-radius: 20px;
-    background-color: @lighted-color;
+    border-radius: 50%;
+    background-color: @white-color;
+    
+    cursor: pointer;
+
+    color: @white-color;
 
     &--active {
-      animation: toggleButton @default-animation-settings;
+      animation: toggleSwitchActive @default-animation-settings;
+    }
+
+    &--disable {
+      animation: toggleSwitchDisable @default-animation-settings;
     }
   }
 
@@ -114,16 +128,22 @@
   }
 }
 
-@keyframes toggleButton {
+@keyframes toggleSwitchActive {
   from {
-    .position(absolute, @left: 5px, @top: 5px, @bottom: 5px);
-
-    background-color: @lighted-color;
+    left: 3px;
   }
 
   to {
-    .position(absolute, @right: 5px, @top: 5px, @bottom: 5px);
+    left: 22px;
+  }
+}
 
-    background-color: @primary-color;
+@keyframes toggleSwitchDisable {
+  from {
+    left: 22px;
+  }
+
+  to {
+    left: 3px;
   }
 }

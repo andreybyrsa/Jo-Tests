@@ -3,20 +3,27 @@
     <i class="bi bi-x-circle test-settings-modal__icon"></i>
   </button>
 
-  <input id="test-slug" hidden/>
-
   <div class="test-settings-modal__date-setting">
     <span>Время выполнения теста (минуты):</span>
-    <input id="test-time" value="60" type="number" min="1" />
+    <input
+      type="number"
+      id="test-time"
+      value="60"
+      min="1"
+      class="test-settings-modal__date-input"
+    />
   </div>
 
   <div class="test-settings-modal__available-setting">
     <span>Видимость теста (для групп):</span>
     <button id="toggle-button" class="test-settings-modal__toggle-button">
-      <span id="toggle" class="test-settings-modal__toggle"></span>
+      <input
+        id="test-available"
+        class="test-settings-modal__toggle"
+        value="false"
+        disabled
+      />
     </button>
-
-    <input id="test-available" value="false" hidden />
   </div>
 
   <button
