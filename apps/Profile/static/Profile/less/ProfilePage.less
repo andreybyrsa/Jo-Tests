@@ -6,7 +6,7 @@
   &__left-side-bar {
     width: 50%;
 
-    .flexible(flex-start, flex-start, column, @gap: 20px);
+    .flexible(flex-start, flex-start, column, @gap: 10px);
   }
 
   &-header {
@@ -22,6 +22,8 @@
 
     color: @black-color;
     font-size: 25px;
+
+    cursor: pointer;
 
     .flexible(center, space-between);
 
@@ -53,35 +55,39 @@
     background-color: @primary-color;
   }
 
-  &__input{
-    .flexible(flex-start, flex-start, column, @gap: 5px);
+  &__input {
+    .flexible(flex-start, flex-start, column, @gap: 4px);
     width: 100%;
+
     color: @primary-color;
-    font-size: 20px;
+    font-size: 18px;
 
     &-lighted {
       width: 100%;
       padding: 12px 20px;
-      color: @black-color;
-      .border(
-        @border-style: solid,
+      .border(@border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px,
         @border-radii: 12px,
       );
+
+      color: @black-color;
     }
 
     &-login {
       width: 100%;
       padding: 12px 20px;
       color: @black-color;
-      .border(
-        @border-style: solid,
+      .border(@border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px 2px 0px 2px,
         @border-radii: 12px 12px 0px 0px,
       );
     }
+  }
+
+  &__image-input {
+    display: none;
   }
 
   &__user {
@@ -111,7 +117,7 @@
     }
   }
 
-  &__tests{
+  &__tests {
     .flexible(center, flex-start, column, @gap: 10px);
     display: none;
     width: 100%;
@@ -125,8 +131,7 @@
       .flexible(center, space-between, @gap: 20px);
       width: 100%;
       padding: 8px;
-      .border(
-        @border-style: solid,
+      .border(@border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px,
         @border-radii: 12px,
@@ -138,7 +143,7 @@
     }
   }
 
-  &__addgroup{
+  &__addgroup {
     .flexible(flex-end, flex-start, column, @gap: 20px);
     display: none;
     width: 100%;
@@ -155,8 +160,7 @@
       height: 200px;
       margin: -20px 0px 0px 0px;
       padding: 12px 20px;
-      .border(
-        @border-style: solid,
+      .border(@border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px,
         @border-radii: 0px 0px 12px 12px,
@@ -165,7 +169,7 @@
       &-name {
         font-weight: 500;
       }
-      
+
       &-checkbox {
         width: 15px;
         height: 15px;
@@ -187,8 +191,7 @@
       width: 100%;
       color: @primary-color;
       padding: 10px 20px;
-      .border(
-        @border-style: solid,
+      .border(@border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px,
         @border-radii: 12px,

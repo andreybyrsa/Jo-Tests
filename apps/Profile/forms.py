@@ -5,27 +5,32 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-profile_field_class = "profile-page__input"
+profile_field_class = "profile-page__input-lighted"
 
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "profile_picture"]
+        fields = ["username", "first_name", "last_name"]
+        labels = {
+            "username": "Логин",
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+        }
         widgets = {
             "username": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Логин"
+                field_class=profile_field_class, placeholder="Ваш логие"
             ),
             "first_name": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Имя"
+                field_class=profile_field_class, placeholder="Ваше имя"
             ),
             "last_name": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Фамилия"
+                field_class=profile_field_class, placeholder="Ваша фамилия"
             ),
             "profile_picture": get_field_widgets(
-                type = "file",
-                id = "image-input",
-                field_class = "profile-page__image-input",
+                type="file",
+                id="image-input",
+                field_class="profile-page__image-input",
             ),
         }
 
@@ -38,4 +43,4 @@ class UpdateProfileForm(forms.ModelForm):
         UserDB.last_name = form_data["last_name"]
         UserDB.profile_picture = form_data["profile_picture"]
 
-        UserDB.save() 
+        UserDB.save()

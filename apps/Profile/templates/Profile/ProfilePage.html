@@ -27,37 +27,55 @@
 {% endblock %}
 
 {% block content %}
-  <div class='profile-page__user' id='form'> {% comment %} Профиль {% endcomment %}
+  <div class='profile-page__user' id='form'>
     <div class="profile-page__user-username" >
-      <img src="{% static 'core\images\profileFoto.png' %}" 
+      {% if user.profile_picture %}
+        <img
+          class="profile-page__user-img"
+          src="{{ user.profile_picture }}" 
           alt="profile" 
-          class="profile-page__user-img">
+        >
+      {% else %}
+        <img
+          class="profile-page__user-img"
+          src="{% static 'core/images/profileFoto.png' %}" 
+          alt="profile" 
+        >
+      {% endif %}
+
       <div class="profile-page__user-edit">
         {{ user.username }}
-        <button class= "profile-page__button" onclick="openModal()" id='buttonProfileModal'>Редактировать</button>
+        <button
+          id='buttonProfileModal'
+          class= "profile-page__button"
+          onclick="openProfileModal()"
+        >
+          Редактировать
+        </button>
       </div>
-    </div>  
-    <input class='profile-page__input-lighted' 
-    type="text" name="username" id="id_username" 
-    value="{{ user.username }}" placeholder="Логин">
-    <input class='profile-page__input-lighted'
-    type="text" name="first_name" id="id_first_name" 
-    value="{{ user.first_name }}" placeholder="Имя">
-    <input class='profile-page__input-lighted' 
-    type="text" name="last_name" id="id_last_name" 
-    value="{{ user.last_name }}" placeholder="Фамилия">
-  </div> {% comment %} Профиль {% endcomment %}
+    </div> 
+ 
+    {% for input in form %}
+      <div class="profile-page__input">
+        {{ input.label }}
+        <input
+          class='profile-page__input-lighted' 
+          value="{{ input.value }}"
+          disabled
+        >
+      </div>
+    {% endfor %}
+  </div>
 
-  <div class="profile-page__tests" id='tests'> {% comment %} Пройденные тесты {% endcomment %}
-    
-  <div class="profile-page__tests-test">
+  <div id='tests' class="profile-page__tests">
+    <div class="profile-page__tests-test">
       <div class="profile-page__tests-name">
         <i class="bi bi-check2"></i>
         Холодная война
       </div>   
       <div class="profile-page__tests-name">
         13/20
-        <button class= "profile-page__button" type="submit">Просмотреть</button>
+        <button class= "profile-page__button">Просмотреть</button>
       </div> 
     </div> 
 
@@ -68,23 +86,23 @@
       </div>   
       <div class="profile-page__tests-name">
         13/20
-        <button class= "profile-page__button" type="submit">Просмотреть</button>
+        <button class= "profile-page__button">Просмотреть</button>
       </div> 
     </div> 
+  </div> 
 
-  </div> {% comment %} Пройденные тесты {% endcomment %}
-
-  <div class="profile-page__addgroup" id='addgroup'> {% comment %} Добавить группу {% endcomment %}
+  <div id='addgroup' class="profile-page__addgroup">
     <div class="profile-page__input">
       <b>Название группы</b>
-      <input type="text" class='profile-page__input-lighted' placeholder='Название'>
+      <input class='profile-page__input-lighted' placeholder='Название' />
     </div>
+
     <div class="profile-page__input">
       <b>Логин</b>
-      <input type="text" class='profile-page__input-login' placeholder='Ваш логин'>
+      <input class='profile-page__input-login' placeholder='Ваш логин' />
     </div>
+
     <div class="profile-page__addgroup-list">
-
       <div>
         <input type="checkbox" class="profile-page__addgroup-list-checkbox">
         <b class="profile-page__addgroup-list-name">Тимур</b>
@@ -93,24 +111,22 @@
         <input type="checkbox" class="profile-page__addgroup-list-checkbox">
         <b class="profile-page__addgroup-list-name">Тимур</b>
       </div>
-      
     </div>
+
     <button class= "profile-page__button">Добавить</button>
-  </div> {% comment %} Добавить группу {% endcomment %}
+  </div>
 
-  <div class="profile-page__listgroup" id='listgroup'>{% comment %} Список групп {% endcomment %}
-    
+  <div id='listgroup' class="profile-page__listgroup">
     <div class="profile-page__listgroup-group">
       <b>МКБМ-22-1</b>
       <i class="bi bi-eye"></i>
     </div>
+
     <div class="profile-page__listgroup-group">
       <b>МКБМ-22-1</b>
       <i class="bi bi-eye"></i>
     </div>
-    
-  </div> {% comment %} Список групп {% endcomment %}
-
+  </div>
 {% endblock content %}
 
 {% block script-files %}
