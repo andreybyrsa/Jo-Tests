@@ -8,9 +8,9 @@ from ..settings import BASE_DIR
 
 
 image_kit = ImageKit(
-    private_key=os.getenv('IMAGE_KIT_PRIVATE_KEY'),
-    public_key=os.getenv('IMAGE_KIT_PUBLIC_KEY'),
-    url_endpoint=os.getenv('IMAGE_KIT_URL_ENDPOINT'),
+    private_key='private_IYsSrRQI7G1Nyj0CafJw5Qr+Fyc=',
+    public_key='public_YkbX+oa9OxUBkCXzLO2bfmbXilc=',
+    url_endpoint='https://ik.imagekit.io/devOPS/',
 )
 
 

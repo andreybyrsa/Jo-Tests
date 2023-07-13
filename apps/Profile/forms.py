@@ -12,7 +12,7 @@ profile_field_class = "profile-page__input"
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "profile_picture"]
+        fields = ["profile_picture", "username", "first_name", "last_name"]
         widgets = {
             "username": get_field_widgets(
                 field_class = profile_field_class, placeholder = "Логин"

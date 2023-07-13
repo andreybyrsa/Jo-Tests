@@ -21,7 +21,12 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         header_def = self.get_user_header()
         cells_def = self.get_profile_cell()
         context = dict(
-            list({"user": user, "update_profile_form": update_profile_form, "find_group_student_form": find_group_student_form, "group_edit_form": group_edit_form}.items())
+            list({
+                    "user": user,
+                    "update_profile_form": update_profile_form,
+                    "find_group_student_form": find_group_student_form,
+                    "group_edit_form": group_edit_form
+                }.items())
             + list(header_def.items())
             + list(cells_def.items())
         )
