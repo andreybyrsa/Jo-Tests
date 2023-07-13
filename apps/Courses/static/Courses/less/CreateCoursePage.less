@@ -1,0 +1,121 @@
+@import '/static/core/less/main.less';
+
+.create-course-page {
+  &__form {
+    width: 100%;
+    height: 100%;
+
+    .flexible(center, flex-start, column, @gap: 20px);
+
+    &-title {
+      padding: 0 20px;
+      width: 100%;
+      
+      color: @primary-color;
+      font-size: 25px;
+    }
+  }
+
+  &__input {
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__tests {
+    &-wrapper {
+      padding: 20px 0;
+      width: 100%;
+      height: 60%;
+      border-radius: 20px;
+      background-color: @white-color;
+
+      .flexible(flex-start, flex-start, column);
+    }
+
+    padding: 20px 20px 0;
+    width: 100%;
+    height: 100%;
+
+    overflow-y: scroll;
+
+    .flexible(center, flex-start, column, @gap: 20px);
+  }
+
+  &__test {
+    position: relative;
+
+    padding: 0 20px;
+    width: 100%;
+    .fixedHeight(60px);
+    .border(solid, @lighted-color, 2px, 12px);
+
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(center, space-between);
+
+    &-content {
+      .flexible(center, flex-start, @gap: 10px);
+    }
+
+    &-open-icon {
+      cursor: pointer;
+
+      color: @primary-color;
+      font-size: 25px;
+
+      display: flex;
+    }
+  }
+
+  &__groups {
+    &-wrapper {
+      padding: 20px 0;
+      width: 100%;
+      height: 40%;
+      border-radius: 20px;
+      background-color: @white-color;
+
+      .flexible(flex-start, flex-start, column);
+    }
+
+    padding: 20px 20px 0;
+    width: 100%;
+    height: 100%;
+
+    overflow-y: scroll;
+
+    .flexible(flex-start, flex-start, @flex-wrap: wrap, @gap: 20px);
+  }
+
+  &__group {
+    position: relative;
+
+    padding: 0 10px;
+    min-width: 150px;
+    height: 60px;
+    .border(solid, @lighted-color, 2px, 12px);
+
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+  }
+
+  &__remove {
+    &-button {
+      .position(absolute, @top: -10px, @right: -6px);
+
+      background-color: @white-color;
+      border-radius: 50%;
+    }
+
+    &-icon {
+      color: @danger-color;
+      font-size: 25px;
+
+      display: flex;
+    }
+  }
+}

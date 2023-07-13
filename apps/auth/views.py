@@ -6,12 +6,14 @@ from .models import Student, Author, Teacher
 
 from .forms import SigninForm, SignupForm
 
+from core.utils.get_current_redirect_name import get_current_redirect_name
+
 
 def user_auth(request):
     current_user = request.user
 
     if current_user.is_authenticated:
-        return redirect("tests")  # поменяете на нужный url
+        return redirect(get_current_redirect_name(current_user))
 
     signin_form = SigninForm(request.POST or None)
     signup_form = SignupForm(request.POST or None)
@@ -28,7 +30,8 @@ def user_auth(request):
                     login(request, user)
                     messages.success(request, "Успешный вход в аккаунт")
 
-                    return redirect("tests")  # поменяете на нужный url
+                    return redirect(get_current_redirect_name(user))
+
                 except:
                     messages.error(request, "Неверный логин или пароль")
 
@@ -53,7 +56,7 @@ def user_auth(request):
 
                     messages.success(request, "Успешная регистрация")
 
-                    return redirect("tests")  # поменяете на нужный url
+                    return redirect(get_current_redirect_name(user))
                 except:
                     messages.error(request, "Ошибка регистрации")
 

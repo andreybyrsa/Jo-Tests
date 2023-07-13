@@ -1,0 +1,144 @@
+@import '../main.less';
+
+.create-test-side-bar,
+.create-course-side-bar {
+  padding: 20px;
+  width: 400px;
+  height: 100%;
+  background-color: @white-color;
+  border-radius: 20px;
+
+  overflow-y: scroll;
+
+  .flexible(center, space-between, column, @gap: 20px);
+
+  &__content {
+    width: 100%;
+
+    .flexible(flex-start, flex-start, column, @gap: 20px);
+  }
+
+  &__input {
+    &-wrapper {
+      width: 100%;
+
+      color: @primary-color;
+      font-size: 18px;
+
+      .flexible(flex-start, flex-start, column, @gap: 4px);
+    }
+
+    padding: 0 20px;
+    width: 100%;
+    height: 52px;
+    .border(solid, @lighted-color, 2px, 12px);
+
+    color: @black-color;
+
+    &::placeholder {
+      color: @lighted-color;
+    }
+  }
+
+  &__button {
+    width: 50%;
+    height: 52px;
+    background-color: @primary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @secondary-color;
+    }
+
+    &--disabled {
+      background-color: @lighted-color;
+
+      transition: none;
+
+      &:active {
+        background-color: @lighted-color;
+      }
+    }
+
+    &-icon {
+      font-size: 30px;
+
+      display: flex;
+    }
+  }
+
+  &__toggle-button {
+    color: @primary-color;
+    font-size: 18px;
+
+    transition: color @default-transition-settings;
+
+    &:active {
+      color: @secondary-color;
+    }
+
+    &--disabled {
+      color: @lighted-color;
+
+      transition: none;
+
+      &:active {
+        color: @lighted-color;
+      }
+    }
+  }
+
+  &__delete-button {
+    color: @danger-color;
+    font-size: 18px;
+
+    transition: color @default-transition-settings;
+
+    display: none;
+
+    &:active {
+      color: @primary-color;
+    }
+  }
+
+  &__text {
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(center, flex-start, @gap: 4px);
+
+    &-light {
+      color: @lighted-color;
+    }
+
+    input {
+      width: 50px;
+      background-color: transparent;
+    }
+  }
+
+  &__submit-button {
+    width: 100%;
+    height: 52px;
+    min-height: 52px;
+    max-height: 52px;
+    background-color: @secondary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+}

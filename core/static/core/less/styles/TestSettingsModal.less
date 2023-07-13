@@ -1,0 +1,149 @@
+@import '../main.less';
+
+.test-settings-modal {
+  padding: 20px;
+  width: 400px;
+  background-color: @white-color;
+  border-radius: 20px;
+
+  .flexible(flex-end,
+    flex-start,
+    column,
+    @aling-self: center,
+    @justify-self: center, @gap: 20px);
+
+  display: none;
+
+  &__icon {
+    color: @primary-color;
+    font-size: 35px;
+
+    display: flex;
+  }
+
+  &__date-setting,
+  &__available-setting {
+    width: 100%;
+
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(center, space-between);
+  }
+
+  &__date-input {
+    width: 50px;
+    .border(solid, @black-color, 0 0 1px);
+
+    color: @primary-color;
+  }
+
+  &__toggle {
+    &-button {
+      position: relative;
+
+      width: 45px;
+      height: 28px;
+      border-radius: 20px;
+      background-color: @lighted-color;
+
+      transition: background-color 0.3s ease-out;
+
+      &--active {
+        background-color: @primary-color;
+      }
+    }
+
+    .position(absolute, @left: 3px, @top: 3px, @bottom: 3px);
+
+    width: 20px;
+    border-radius: 50%;
+    background-color: @white-color;
+    
+    cursor: pointer;
+
+    color: @white-color;
+
+    &--active {
+      animation: toggleSwitchActive @default-animation-settings;
+    }
+
+    &--disable {
+      animation: toggleSwitchDisable @default-animation-settings;
+    }
+  }
+
+  &__save-button {
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+    background-color: @secondary-color;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+
+  &--opened {
+    animation: openTestSettingsModal @default-animation-settings;
+  }
+
+  &--closed {
+    animation: closeTestSettingsModal @default-animation-settings;
+  }
+}
+
+@keyframes openTestSettingsModal {
+  from {
+    opacity: 0;
+
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+@keyframes closeTestSettingsModal {
+  from {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+
+    transform: scale(0.95);
+  }
+}
+
+@keyframes toggleSwitchActive {
+  from {
+    left: 3px;
+  }
+
+  to {
+    left: 22px;
+  }
+}
+
+@keyframes toggleSwitchDisable {
+  from {
+    left: 22px;
+  }
+
+  to {
+    left: 3px;
+  }
+}
