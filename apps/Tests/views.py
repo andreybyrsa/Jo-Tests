@@ -134,16 +134,17 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
 
     def post(self, request, test_slug):
         test = Test.objects.get(slug=test_slug)
+        print(request.POST)
         post = get_request_list(request.POST)
-
         try:
             test.title = request.POST["title"]
             test.description = request.POST["description"]
             test.max_result = post["max_points"]
             test.count = post["count"]
 
+
             Question.objects.filter(test__id=test.id).delete()
-            test.questions.clear()
+            
             for i in range(post["count"]):
                 question = Question.objects.create(
                     test=test,
@@ -157,9 +158,7 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
                     answer = Answer.objects.create(
                         question=question,
                         answer=post_answer,
-                        is_correct=True
-                        if post_answer in post["rightAnwers"][i]
-                        else False,
+                        is_correct=True if post_answer in post["rightAnwers"][i] else False,
                     )
                     question.answers.add(answer)
 
