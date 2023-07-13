@@ -90,3 +90,38 @@ function changeContent(itemId) {
     listgroup.style.display = "flex";
   }
 }
+
+
+window.addEventListener("DOMContentLoaded", function() {
+  const profilePicture = document.getElementById("profile-picture");
+
+  const editButton = document.getElementById("edit-button");
+
+  const fileInput = document.getElementById("file-input");
+
+  profilePicture.addEventListener("mouseover", function() {
+    editButton.style.display = "block";
+  });
+
+  profilePicture.addEventListener("mouseout", function() {
+    editButton.style.display = "none";
+  });
+
+  profilePicture.addEventListener("click", function() {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", function(event) {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function() {
+        profilePicture.src = reader.result;
+      });
+
+      reader.readAsDataURL(selectedFile);
+    }
+  });
+});
