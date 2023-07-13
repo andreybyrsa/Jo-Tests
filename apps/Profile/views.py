@@ -5,7 +5,8 @@ from django.views import View
 from django.contrib import messages
 from core.utils.mixins import HeaderMixin, ProfileCellMixin
 from core.utils.upload_image import upload_image
-from .forms import UpdateProfileForm
+from .forms import UpdateProfileForm, FindGroupStudentForm, GroupEditForm
+
 
 
 class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
@@ -14,12 +15,13 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
 
     def get(self, request):
         user = request.user
-
-        form = UpdateProfileForm(instance=user)
+        find_group_student_form = FindGroupStudentForm()
+        group_edit_form = GroupEditForm()
+        update_profile_form = UpdateProfileForm(instance=user)
         header_def = self.get_user_header()
         cells_def = self.get_profile_cell()
         context = dict(
-            list({"user": user, "form": form}.items())
+            list({"user": user, "update_profile_form": update_profile_form, "find_group_student_form": find_group_student_form, "group_edit_form": group_edit_form}.items())
             + list(header_def.items())
             + list(cells_def.items())
         )
