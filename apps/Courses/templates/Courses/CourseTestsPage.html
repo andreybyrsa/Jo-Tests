@@ -15,17 +15,17 @@
   {% if user.role == 'student' %}
     {% include 'core/blocks/TestStartSideBar.html' %}
   {% else %}
-    {% include 'core/blocks/TestResultsSideBar.html' %}
+    {% include 'core/blocks/TestStartSideBar.html' %}
   {% endif %}
 {% endblock %}
 
 {% block content %}
   <div class="course-tests-page__tests">
-    {% if not course_tests %}
+    {% if not json_course_tests %}
       <span class="course-tests-page__placeholder">Тестов пока нет...</span>
     {% endif %}
 
-    {% for test in course_tests %}
+    {% for test in json_course_tests %}
       <div class="course-tests-page__test">
         <span class="course-tests-page__test-title">{{ test.test.title }}</span>
 

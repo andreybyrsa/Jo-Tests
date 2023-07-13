@@ -243,19 +243,24 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
 
             return dict(
                 list(header_def.items())
-                + list({'course_tests': course_tests}.items())
-                + list({"json_course_tests": json_course_tests}.items())
-                + list({"tests_results": course_results}.items())
+                + list(
+                    {
+                        "json_course_tests": json_course_tests,
+                        "tests_results": course_results,
+                    }.items()
+                )
             )
 
         elif current_user.role == "teacher":
             course_tests = context["course"].tests.all()
-            json_course_tests = []
-            for course_test in course_tests:
-                json_course_tests.append(course_test.get_test_in_course_info())
+            json_course_tests = list(
+                test.get_test_in_course_info() for test in course_tests
+            )
+
             groups = context["course"].groups.all()
             results = []
             json_groups = []
+
             for group in groups:
                 json_groups.append(group.get_group_info())
                 for student in group.students.all():
@@ -269,9 +274,14 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
                                 test__slug=course_test["test"]["slug"],
                             )
                             results.append(result.get_result_info())
+
             return dict(
-                list({"json_course_tests": course_tests}.items())
-                + list({"json_groups": json_groups}.items())
-                + list(header_def.items())
-                + list({"results": results}.items())
+                list(header_def.items())
+                + list(
+                    {
+                        "json_course_tests": json_course_tests,
+                        "json_groups": json_groups,
+                        "results": results,
+                    }.items()
+                )
             )
