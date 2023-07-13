@@ -11,7 +11,7 @@ profile_field_class = "profile-page__input-lighted"
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name"]
+        fields = ["profile_picture" ,"username", "first_name", "last_name"]
         labels = {
             "username": "Логин",
             "first_name": "Имя",

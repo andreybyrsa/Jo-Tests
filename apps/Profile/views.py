@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from core.utils.mixins import HeaderMixin, ProfileCellMixin
+from core.utils.upload_image import upload_image
 from .forms import UpdateProfileForm
 
 
@@ -25,20 +26,18 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         return render(request, "Profile/ProfilePage.html", context)
 
     def post(self, request):
-        user = request.user
-        form = UpdateProfileForm(request.POST, request.FILES, instance=user)
-        try:
-            form.save()
-            messages.success(request, "Данные сохранены")
-            redirect("profile")
-        except:
-            messages.error(request, "Неверные данные")
-            redirect("profile")
-        header_def = self.get_user_header()
-        cells_def = self.get_profile_cell()
-        context = dict(
-            list({"user": user, "form": form}.items())
-            + list(header_def.items())
-            + list(cells_def.items())
-        )
-        return render(request, "Profile/ProfilePage.html", context)
+        if 'first_name' in request.POST:
+            user = request.user
+            update_form = UpdateProfileForm(request.POST, request.FILES, instance=user)
+            new_profile_picture = request.FILES or None
+            if (new_profile_picture):
+                    update_form.cleaned_data["profile_picture"] = upload_image(
+                        new_profile_picture["profile_picture"], user.id
+                    )
+            try:
+                update_form.save()
+                messages.success(request, "Данные сохранены")
+                return redirect("profile")
+            except:
+                messages.error(request, "Неверные данные")
+                return redirect("profile")
