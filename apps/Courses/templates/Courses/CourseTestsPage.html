@@ -1,0 +1,42 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'Courses/less/CourseTestsPage.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/TestStartSideBar.less' %}" />
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' with header=header %}
+{% endblock %}
+
+{% block left-side-bar %}
+  {% if user.role == 'student' %}
+    {% include 'core/blocks/TestStartSideBar.html' %}
+  {% else %}
+    {% include 'core/blocks/TestResultsSideBar.html' %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="course-tests-page__tests">
+    {% if not course_tests %}
+      <span class="course-tests-page__placeholder">Тестов пока нет...</span>
+    {% endif %}
+
+    {% for test in course_tests %}
+      <div class="course-tests-page__test">
+        <span class="course-tests-page__test-title">{{ test.test.title }}</span>
+
+        <span class="course-tests-page__test-description">{{ test.test.description }}</span>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block script-files %}
+  {{ json_course_tests|json_script:"data-course-tests" }}
+  {{ tests_results|json_script:"data-tests-results" }}
+  <script type="module" src="{% static 'Courses/js/CourseTestsPage.js' %}"></script>
+{% endblock %}
