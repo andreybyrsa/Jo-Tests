@@ -1,48 +1,14 @@
-const createCourseModal = document.getElementById("create-course-modal");
-
-const closeCourseModalButton = document.getElementById(
-  "close-course-modal-button"
-);
+const [createCourseModal, openCreateCourseModal, closeCreateCourseModal] =
+  useModal("create-course-modal", null, "close-course-modal-button");
 
 const searchInput = document.getElementById("search-input");
-
-const OPENING_CREATE_COURSE_MODAL_CLASS = "create-course-modal--opened";
-const CLOSING_CREATE_COURSE_MODAL_CLASS = "create-course-modal--closed";
-
-function openCreateCourseModal() {
-  createCourseModal.style.display = "flex";
-
-  createCourseModal.classList.add(OPENING_CREATE_COURSE_MODAL_CLASS);
-  openModal();
-}
-
-function closeCreateCourseModal() {
-  createCourseModal.classList.add(CLOSING_CREATE_COURSE_MODAL_CLASS);
-  setTimeout(() => {
-    createCourseModal.style.display = "none";
-
-    createCourseModal.classList.remove(OPENING_CREATE_COURSE_MODAL_CLASS);
-    createCourseModal.classList.remove(CLOSING_CREATE_COURSE_MODAL_CLASS);
-  }, 300);
-}
-
-modalLayout.addEventListener("click", (event) => {
-  if (event.target.id === "modal-layout") {
-    closeCreateCourseModal();
-  }
-});
-
-closeCourseModalButton.addEventListener("click", () => {
-  closeCreateCourseModal();
-  closeModal();
-});
 
 searchInput.addEventListener("input", (event) => {
   const searchedItem =
     courseModalContent.childNodes[0].className ===
     "create-course-modal__test-wrapper"
       ? "create-course-modal__test"
-      : "create-course-modal__group-content"
+      : "create-course-modal__group-content";
 
   searchByChildNodes(event, courseModalContent.childNodes, searchedItem);
 });

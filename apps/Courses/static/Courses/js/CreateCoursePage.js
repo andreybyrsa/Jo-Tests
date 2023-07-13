@@ -132,7 +132,6 @@ saveGroupsButton.addEventListener("click", () => {
 saveTestSettings.addEventListener("click", () => {
   const testAvailable = document.getElementById("test-available");
   const testTime = document.getElementById("test-time");
-  console.log(testAvailable.value);
 
   currentTests.forEach((test) => {
     if (test.slug == currentTest.slug) {
@@ -141,8 +140,7 @@ saveTestSettings.addEventListener("click", () => {
     }
   });
 
-  closeTestModal();
-  closeModal();
+  closeTestSettingsModal();
 });
 
 function createTest(testTextName, maxPoints, slug) {
