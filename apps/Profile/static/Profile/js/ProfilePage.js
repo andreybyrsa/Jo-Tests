@@ -1,5 +1,11 @@
 addPageClassName("profile-page");
 
+const [profileModal, openProfileModal, closeProfileModal] = useModal(
+  "profile-modal",
+  null,
+  null
+);
+
 const form = document.getElementById("form");
 const results = document.getElementById("tests");
 const addgroup = document.getElementById("addgroup");

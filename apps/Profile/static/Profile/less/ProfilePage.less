@@ -27,8 +27,11 @@
 
     .flexible(center, space-between);
 
+    transition: opacity @default-transition-settings;
+
     &--active {
       .border(solid, @primary-color, 1px, 20px);
+
       opacity: 1;
     }
 
