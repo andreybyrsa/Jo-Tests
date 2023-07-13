@@ -5,6 +5,7 @@
   <link rel="stylesheet/less" href="{% static 'Courses/less/CourseTestsPage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/TestStartSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/TestResultsSideBar.less' %}" />
 {% endblock %}
 
 {% block header %}
@@ -15,7 +16,7 @@
   {% if user.role == 'student' %}
     {% include 'core/blocks/TestStartSideBar.html' %}
   {% else %}
-    {% include 'core/blocks/TestStartSideBar.html' %}
+    {% include 'core/blocks/TestResultsSideBar.html' with groups=json_groups %}
   {% endif %}
 {% endblock %}
 
@@ -38,5 +39,7 @@
 {% block script-files %}
   {{ json_course_tests|json_script:"data-course-tests" }}
   {{ tests_results|json_script:"data-tests-results" }}
+  {{ json_groups|json_script:"data-groups" }}
+  {{ results|json_script:"data-results" }}
   <script type="module" src="{% static 'Courses/js/CourseTestsPage.js' %}"></script>
 {% endblock %}
