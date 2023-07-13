@@ -1,6 +1,3 @@
-import { addPageClassName } from "/static/core/js/PageLayout.js";
-import { openSideBar, useInfoSideBar } from "/static/core/js/InfoSideBar.js";
-
 addPageClassName("courses-page");
 
 const dataCourses = document.getElementById("data-courses").textContent;

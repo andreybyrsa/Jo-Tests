@@ -46,5 +46,6 @@
 
 {% block script-files %}
   {{ json_tests|json_script:"data-tests" }}
-  <script type="module" src="{% static 'Tests/js/TestsPage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/InfoSideBar.js' %}"></script>
+  <script type="text/javascript" src="{% static 'Tests/js/TestsPage.js' %}"></script>
 {% endblock %}
