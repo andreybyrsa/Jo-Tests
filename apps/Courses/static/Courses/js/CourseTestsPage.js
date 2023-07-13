@@ -24,6 +24,7 @@ const sideBarImage = document.getElementById("side-bar-image");
 const tests = document.querySelectorAll(".course-tests-page__test");
 
 const ACTIVE_TEST_CLASS = "course-tests-page__test--active";
+const DISABLED_BUTTON_CLASS = "test-start-side-bar__button--disabled";
 
 Array.from(tests).forEach((test, index) => {
   test.onclick = () => openSideBar(index, test);
@@ -61,12 +62,16 @@ function openSideBar(index, currentTest) {
     ? `${result}/${max_result}`
     : "не начато";
 
+  console.log(result);
   if (result) {
-    sidebarButton.classList.add("test-start-side-bar__button--disabled");
+    sidebarButton.classList.add(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Просмотреть";
 
     sidebarButton.href = sidebarButton.getAttribute("href") + result_slug;
   } else {
+    sidebarButton.classList.remove(DISABLED_BUTTON_CLASS);
+    sidebarButton.textContent = "Начать тест";
+
     sidebarButton.href = sidebarButton.getAttribute("href") + slug;
   }
 }
