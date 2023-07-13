@@ -1,3 +1,21 @@
+import {
+  addPageClassName,
+  getCurrentDate,
+} from "/static/core/js/PageLayout.js";
+
+import {
+  courseModalContent,
+  openCreateCourseModal,
+  closeCreateCourseModal,
+  createModalTest,
+  createModalGroup,
+} from "/static/core/js/CreateCourseModal.js";
+
+import {
+  openTestModal,
+  closeTestSettingsModal,
+} from "/static/core/js/TestSettingsModal.js";
+
 addPageClassName("create-course-page");
 
 const dataCourse = document.getElementById("data-course").textContent;
@@ -36,7 +54,6 @@ const addTestButton = document.getElementById("add-test-button");
 const addGroupButton = document.getElementById("add-group-button");
 const submitButton = document.getElementById("submit-button");
 
-const courseModalContent = document.getElementById("course-modal-content");
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
 const saveTestSettings = document.getElementById("save-test-settings");
@@ -282,7 +299,6 @@ function saveElements(data, currentData) {
   });
 
   closeCreateCourseModal();
-  closeModal();
 }
 
 function removeWrapperElements(elementWrapper) {

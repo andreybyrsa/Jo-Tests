@@ -1,9 +1,20 @@
+import {
+  addPageClassName,
+  searchByChildNodes,
+} from "/static/core/js/PageLayout.js";
+
+import { useInfoSideBar, openSideBar } from "/static/core/js/InfoSideBar.js";
+
 addPageClassName("tests-page");
 
 const dataTests = document.getElementById("data-tests").textContent;
 const JSON_DATA = JSON.parse(dataTests);
 
 const tests = document.querySelectorAll(".tests-page__test");
+
+Array.from(tests).forEach((test, index) => {
+  test.onclick = () => openSideBar(index);
+});
 
 useInfoSideBar(JSON_DATA, tests, "tests-page__test");
 

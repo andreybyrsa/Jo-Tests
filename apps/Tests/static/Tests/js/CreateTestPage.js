@@ -1,3 +1,8 @@
+import {
+  addPageClassName,
+  getCurrentDate,
+} from "/static/core/js/PageLayout.js";
+
 addPageClassName("create-test-page");
 
 const dataTest = document.getElementById("data-test").textContent;

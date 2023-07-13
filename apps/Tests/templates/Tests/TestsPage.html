@@ -36,7 +36,7 @@
     {% endif %}
 
     {% for test in tests %}
-      <div class="tests-page__test" onclick="openSideBar('{{ forloop.counter0 }}')">
+      <div class="tests-page__test">
         <span class="tests-page__test-title">{{ test.title }}</span>
 
         <span class="tests-page__test-description">{{ test.description }}</span>
@@ -47,6 +47,5 @@
 
 {% block script-files %}
   {{ json_tests|json_script:"data-tests" }}
-  <script type="text/javascript" src="{% static 'core/js/InfoSideBar.js' %}"></script>
-  <script type="text/javascript" src="{% static 'Tests/js/TestsPage.js' %}"></script>
+  <script type="module" src="{% static 'Tests/js/TestsPage.js' %}"></script>
 {% endblock %}

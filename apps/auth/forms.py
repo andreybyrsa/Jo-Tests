@@ -9,6 +9,7 @@ class SigninForm(forms.Form):
         max_length=50,
         widget=forms.TextInput(
             attrs={
+                "id": "signin-username",
                 "class": "auth-page__form-input-data",
                 "placeholder": "Ваш логин",
             }
@@ -21,6 +22,7 @@ class SigninForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "type": "password",
+                "id": "signin-password",
                 "class": "auth-page__form-input-data",
                 "placeholder": "Ваш пароль",
             }
@@ -34,6 +36,7 @@ class SignupForm(forms.Form):
         max_length=50,
         widget=forms.TextInput(
             attrs={
+                "id": "signup-username",
                 "class": "reg-page__form-input-data",
                 "placeholder": "Ваш логин",
             }
@@ -68,6 +71,7 @@ class SignupForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "type": "password",
+                "id": "signup-password",
                 "class": "reg-page__form-input-data",
                 "placeholder": "Ваш пароль",
             }
@@ -97,7 +101,7 @@ class SignupForm(forms.Form):
             first_name=form_data["first_name"],
             last_name=form_data["last_name"],
             password=form_data["password"],
-            role=form_data['role']
+            role=form_data["role"],
         )
 
         return user

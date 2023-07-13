@@ -34,5 +34,5 @@
 {% block script-files %}
   {{ test|json_script:'data-test' }}
   {{ questions_info|json_script:'data-questions' }}
-  <script type="text/javascript" src="{% static 'Tests/js/CreateTestPage.js' %}"></script>
+  <script type="module" src="{% static 'Tests/js/CreateTestPage.js' %}"></script>
 {% endblock %}

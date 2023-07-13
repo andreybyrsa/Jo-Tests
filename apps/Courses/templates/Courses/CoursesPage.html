@@ -26,7 +26,7 @@
   {% endif %}
 
   {% for course in courses %}
-    <div class="courses-page__course" onclick="openSideBar('{{ forloop.counter0 }}')">
+    <div class="courses-page__course">
       <div class="courses-page__course-text">
         <span class="courses-page__course-title">{{ course.title }}</span>
         <span class="courses-page__course-description">{{ course.description }}</span>
@@ -47,6 +47,5 @@
 
 {% block script-files %}
   {{ json_courses|json_script:"data-courses" }}
-  <script type="text/javascript" src="{% static 'core/js/InfoSideBar.js' %}"></script>
-  <script type="text/javascript" src="{% static 'Courses/js/CoursesPage.js' %}"></script>
+  <script type="module" src="{% static 'Courses/js/CoursesPage.js' %}"></script>
 {% endblock %}
