@@ -1,0 +1,83 @@
+@import '../main.less';
+
+.edit-group-modal {
+   .flexible(flex-end, flex-start, column, @gap: 20px);
+   width: 100%;
+   max-width: 500px;
+   background-color: @white-color;
+   padding: 20px;
+   border-radius: 20px;
+
+   &__login{
+      .flexible(flex-start, flex-start, column, @gap: 5px);
+      width: 100%;
+      color: @primary-color;
+      font-size: 18px;
+
+      &-input {
+         width: 100%;
+         color: @black-color;
+         padding: 10px 20px;
+         .border(
+            @border-style: solid,
+            @border-color: @lighted-color,
+            @border-widths: 2px,
+            @border-radii: 12px,
+         )
+      }
+   }
+
+   &__group {
+      .flexible(flex-start, flex-start, column);
+      width: 100%;
+      font-size: 18px;
+      font-weight: 300;
+      color: @primary-color;
+
+      &-title {
+         width: 100%;
+         padding: 12px;
+         .border(
+            @border-style: solid,
+            @border-color: @lighted-color,
+            @border-widths: 2px 2px 0px 2px,
+            @border-radii: 12px 12px 0px 0px,
+         )
+      }
+
+      &-list {
+         .flexible(flex-start, flex-start, column, @gap: 10px);
+         width: 100%;
+         height: 200px;
+         padding: 12px;
+         overflow-y: scroll;
+         .border(
+            @border-style: solid,
+            @border-color: @lighted-color,
+            @border-widths: 2px,
+            @border-radii: 0px 0px 12px 12px,
+         )
+      } 
+
+      &-student {
+         .flexible(center, flex-start, @gap: 5px);
+      }
+   }
+
+   &__button {
+      font-size: 20px;
+      width: 100%;
+      max-width: 200px;
+      padding: 15px;
+
+      background-color: @secondary-color;
+      color: @white-color;
+      border-radius: 12px;   
+
+      transition: all @default-transition-settings;
+   }
+
+   &__button:active {
+      background-color: @primary-color;
+   }
+}

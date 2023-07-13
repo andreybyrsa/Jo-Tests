@@ -1,0 +1,22 @@
+{% load static %}
+
+<div class="edit-group-modal">
+   <div class="edit-group-modal__login">
+      <b>Добавить студента</b>
+      <input type="text" placeholder='Логин' class="edit-group-modal__login-input"> {% comment %} Логин студента {% endcomment %}
+   </div>
+   <div class="edit-group-modal__group">
+      <b class="edit-group-modal__group-title">МКМБ-22-1</b> {% comment %} Группа {% endcomment %}
+
+      <div class="edit-group-modal__group-list">
+
+         <div class="edit-group-modal__group-student"> 
+            <input type="checkbox">
+            <b>Тимур</b>
+         </div> {% comment %} Студенты какойто группы {% endcomment %}
+
+      </div>
+      
+   </div>
+   <button class="edit-group-modal__button">Изменить</button>
+</div>
