@@ -63,6 +63,54 @@ function addPageClassName(className) {
   });
 }
 
+function useModal(modalClassName, openButtonId, closeButtonId) {
+  const modal = document.querySelector(`.${modalClassName}`);
+  const openModalButton = document.getElementById(openButtonId);
+  const closeModalButton = document.getElementById(closeButtonId);
+
+  const OPENING_MODAL_CLASS = `${modalClassName}--opened`;
+  const CLOSING_MODAL_CLASS = `${modalClassName}--closed`;
+
+  const openCurrentModal = () => {
+    modal.style.display = "flex";
+    modal.classList.add(OPENING_MODAL_CLASS);
+    openModal();
+  };
+
+  const closeCurrentModal = () => {
+    modal.classList.add(CLOSING_MODAL_CLASS);
+
+    setTimeout(() => {
+      modal.classList.remove(OPENING_MODAL_CLASS);
+      modal.classList.remove(CLOSING_MODAL_CLASS);
+      modal.style.display = "none";
+    }, 300);
+    closeModal();
+  };
+
+  modalLayout.addEventListener("click", (event) => {
+    if (event.target.id === "modal-layout") {
+      if (modal) {
+        closeCurrentModal();
+      }
+    }
+  });
+
+  if (openModalButton) {
+    openModalButton.addEventListener("click", () => {
+      openCurrentModal();
+    });
+  }
+
+  if (closeModalButton) {
+    closeModalButton.addEventListener("click", () => {
+      closeCurrentModal();
+    });
+  }
+
+  return [modal, openCurrentModal, closeCurrentModal];
+}
+
 function getCurrentDate(testDate) {
   let date = testDate ? new Date(testDate) : new Date();
 
