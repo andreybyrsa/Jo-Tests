@@ -15,6 +15,7 @@ class Group(models.Model):
         return {
             "groupname": self.groupname,
             "index": self.index,
+            "students": list(student.username for student in self.students)
         }
 
     def __str__(self):

@@ -26,13 +26,15 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
             students = Student.objects.all()
             teacher = Teacher.objects.get(user__id = user.id)
             teacher_groups = teacher.groups.all()
+            json_groups_info = list(group.get_group_info() for group in teacher_groups)
             context = dict(
                 list({
                         "user": user,
                         "update_profile_form": update_profile_form,
                         "group_student_form": group_student_form,
                         "students": students,
-                        "teacher_groups": teacher_groups
+                        "teacher_groups": teacher_groups,
+                        "json_groups_info": json_groups_info,
                     }.items())
                 + list(header_def.items())
                 + list(cells_def.items())
