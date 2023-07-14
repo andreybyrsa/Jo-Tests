@@ -18,9 +18,12 @@
       <div class="test-results-side-bar__group-wrapper">
         <div class="test-results-side-bar__group-header">
           <span>{{ group.groupname }}</span>
-          <i class="bi bi-chevron-down test-results-side-bar__group-icon"></i>
+          <i
+            id="{{ group.index }}-icon"
+            class="bi bi-chevron-down test-results-side-bar__group-icon"
+          ></i>
         </div>
-        <div class="test-results-side-bar__group">123</div>
+        <div id="{{ group.index }}-results" class="test-results-side-bar__group"></div>
       </div>
     {% endfor %}
   </div>

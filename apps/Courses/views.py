@@ -272,6 +272,7 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
                             result = StudentResult.objects.get(
                                 student__id=student.id,
                                 test__slug=course_test["test"]["slug"],
+                                group__index=group.index
                             )
                             results.append(result.get_result_info())
 
