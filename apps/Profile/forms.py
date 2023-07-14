@@ -6,13 +6,18 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-profile_field_class = "profile-page__input"
+profile_field_class = "profile-modal__input"
 
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["profile_picture", "username", "first_name", "last_name"]
+        labels = {
+            'username': 'Логин',
+            "first_name": 'Имя',
+            'last_name': 'Фамилия',
+        }
         widgets = {
             "username": get_field_widgets(
                 field_class = profile_field_class, placeholder = "Логин"
@@ -26,7 +31,7 @@ class UpdateProfileForm(forms.ModelForm):
             "profile_picture": get_field_widgets(
                 type = "file",
                 id = "image-input",
-                field_class = "profile-page__image-input",
+                field_class = "profile-modal__image-input",
             ),
         }
 

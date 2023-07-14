@@ -5,12 +5,13 @@ from imagekitio import ImageKit
 from imagekitio.models.UploadFileRequestOptions import UploadFileRequestOptions
 
 from ..settings import BASE_DIR
+from .keys import *
 
 
 image_kit = ImageKit(
-    private_key='private_IYsSrRQI7G1Nyj0CafJw5Qr+Fyc=',
-    public_key='public_YkbX+oa9OxUBkCXzLO2bfmbXilc=',
-    url_endpoint='https://ik.imagekit.io/devOPS/',
+    private_key=IMAGE_KIT_PRIVATE_KEY,
+    public_key=IMAGE_KIT_PUBLIC_KEY,
+    url_endpoint=IMAGE_KIT_URL_ENDPOINT,
 )
 
 
@@ -30,7 +31,7 @@ def upload_image(file: str, user_id: str) -> str:
             file=image_file,
             file_name=image_name,
             options=UploadFileRequestOptions(
-                overwrite_file=False,
+                overwrite_file=True,
             ),
         ),
     )
@@ -38,5 +39,6 @@ def upload_image(file: str, user_id: str) -> str:
     os.remove(image_path)
 
     current_image_url = uploaded_image[0].response_metadata.raw["url"]
+    print(current_image_url)
 
     return current_image_url
