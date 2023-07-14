@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-profile_field_class = "profile-modal__input"
+profile_field_class = "profile-modal__input--lighted"
 
 
 class UpdateProfileForm(forms.ModelForm):
@@ -14,24 +14,25 @@ class UpdateProfileForm(forms.ModelForm):
         model = User
         fields = ["profile_picture", "username", "first_name", "last_name"]
         labels = {
-            'username': 'Логин',
-            "first_name": 'Имя',
-            'last_name': 'Фамилия',
+            "username": "Логин",
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+            "profile_picture": "",
         }
         widgets = {
             "username": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Логин"
+                field_class=profile_field_class, placeholder="Новый логин"
             ),
             "first_name": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Имя"
+                field_class=profile_field_class, placeholder="Новое имя"
             ),
             "last_name": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Фамилия"
+                field_class=profile_field_class, placeholder="Новая фамилия"
             ),
             "profile_picture": get_field_widgets(
-                type = "file",
-                id = "image-input",
-                field_class = "profile-modal__image-input",
+                type="file",
+                id="image-input",
+                field_class="profile-modal__image-input",
             ),
         }
 
@@ -45,6 +46,7 @@ class UpdateProfileForm(forms.ModelForm):
         UserDB.profile_picture = form_data["profile_picture"]
 
         UserDB.save()
+
 
 class FindGroupStudentForm(forms.Form):
     group_name = forms.CharField(
@@ -65,7 +67,7 @@ class FindGroupStudentForm(forms.Form):
             user = User.objects.get(username=student_login)
         except User.DoesNotExist:
             raise forms.ValidationError("Student not found.")
-        
+
         try:
             group = Group.objects.get(name=group_name)
         except Group.DoesNotExist:
@@ -75,8 +77,6 @@ class FindGroupStudentForm(forms.Form):
         cleaned_data["student"] = user
 
         return cleaned_data
-
-
 
 
 class GroupEditForm(forms.Form):
