@@ -23,7 +23,14 @@ class User(AbstractUser):
     groups = None
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        return self.first_name + " " + self.last_name
+
+    def get_user_info(self):
+        return {
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+        }
 
     class Meta:
         verbose_name = "Пользователь"
@@ -46,13 +53,19 @@ class Author(models.Model):
 
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    courses = models.ManyToManyField('CoursesApp.Course', verbose_name='Курсы студента', related_name='+', blank=True,)
+    courses = models.ManyToManyField(
+        "CoursesApp.Course",
+        verbose_name="Курсы студента",
+        related_name="+",
+        blank=True,
+    )
     result_tests = models.ManyToManyField(
         "TestsApp.StudentResult",
         verbose_name="Результат теста",
         related_name="+",
         blank=True,
     )
+
     def __str__(self) -> str:
         return f"Студент {self.user}"
 

@@ -16,9 +16,9 @@ const cell = document.querySelectorAll(".profile-page__cell");
 const active = "profile-page__cell--active";
 const disabled = "profile-page__cell--disabled";
 
-Array.from(cell)[0].classList.add(active);
-Array.from(cell)[1].classList.add(disabled);
-Array.from(cell)[2].classList.add(disabled);
+Array.from(cell)[0]?.classList.add(active);
+Array.from(cell)[1]?.classList.add(disabled);
+Array.from(cell)[2]?.classList.add(disabled);
 
 function activeCell(id) {
   Array.from(cell)[id].classList.add(active);
@@ -91,37 +91,18 @@ function changeContent(itemId) {
   }
 }
 
+const profilePicture = document.getElementById("profile-picture");
 
-window.addEventListener("DOMContentLoaded", function() {
-  const profilePicture = document.getElementById("profile-picture");
+const fileInput = document.getElementById("image-input");
 
-  const editButton = document.getElementById("edit-button");
+profilePicture.addEventListener("click", function () {
+  fileInput.click();
+});
 
-  const fileInput = document.getElementById("file-input");
+fileInput.addEventListener("change", function (event) {
+  const selectedFile = URL.createObjectURL(event.target.files[0]);
 
-  profilePicture.addEventListener("mouseover", function() {
-    editButton.style.display = "block";
-  });
-
-  profilePicture.addEventListener("mouseout", function() {
-    editButton.style.display = "none";
-  });
-
-  profilePicture.addEventListener("click", function() {
-    fileInput.click();
-  });
-
-  fileInput.addEventListener("change", function(event) {
-    const selectedFile = event.target.files[0];
-
-    if (selectedFile) {
-      const reader = new FileReader();
-
-      reader.addEventListener("load", function() {
-        profilePicture.src = reader.result;
-      });
-
-      reader.readAsDataURL(selectedFile);
-    }
-  });
+  if (selectedFile) {
+    profilePicture.src = selectedFile;
+  }
 });

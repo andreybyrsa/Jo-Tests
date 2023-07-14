@@ -9,25 +9,28 @@
    {% csrf_token %}
    <div class="profile-modal__form">
       {% for input in update_profile_form %}
-         {% if forloop.first %}
+         {% if not forloop.first %}
+            <div class="profile-modal__input">
+               {{ input.label }}
+               {{ input }}
+            </div>
+         {% else %}
+            {{ input }}
             {% if user.profile_picture %}
                <img
-                  class="profile-modal__img"
+                  id="profile-picture"
+                  class="profile-modal__image"
                   src="{{ user.profile_picture }}" 
                   alt="profile" 
                >
             {% else %}
                <img
-                  class="profile-modal__img"
+                  id="profile-picture"
+                  class="profile-modal__image"
                   src="{% static 'core/images/profileFoto.png' %}" 
                   alt="profile" 
                >
             {% endif %}
-         {% else %}
-            <div class="profile-modal__input">
-               <b class="">{{ input.label }}</b>
-               {{ input }}
-            </div>
          {% endif %}
       {% endfor %}
       

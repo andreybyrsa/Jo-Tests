@@ -37,12 +37,12 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
             user = request.user
             update_form = UpdateProfileForm(request.POST, request.FILES, instance=user)
             new_profile_picture = request.FILES or None
-            if (new_profile_picture):
+            if (new_profile_picture and update_form.is_valid()):
                     update_form.cleaned_data["profile_picture"] = upload_image(
                         new_profile_picture["profile_picture"], user.id
                     )
             try:
-                update_form.save()
+                update_form.save(user.username)
                 messages.success(request, "Данные сохранены")
                 return redirect("profile")
             except:
