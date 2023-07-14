@@ -12,12 +12,27 @@ const [editGroupModal, openEditGroupModal, closeEditGroupModal] = useModal(
   null
 );
 
-// const groups = document.querySelectorAll('.profile-page__listgroup-group')
+const groups = document.getElementById('data-groups').textContent
+const JSON_GROUPS = JSON.parse(groups)
+const nameGroup = document.getElementById('group-input')
+const nameStudents = document.querySelectorAll('.profile-page__addgroup-list-checkbox')
+const deleteGroup = document.getElementById('delete-group')
 
-// function openEditGroupModal(itemId) {
-//   console.log(itemId)
-// }
-
+function openGroupModal(groupIndex) {
+  openEditGroupModal()
+  const currentGroup = Array.from(JSON_GROUPS).find( info => info.index == groupIndex )
+  const {groupname, index, students} = currentGroup
+  nameGroup.value = groupname
+  Array.from(nameStudents).forEach( nameStudent => {
+    const isExistStudents = students.find( student => student == nameStudent.value )
+    if (isExistStudents) {
+      nameStudent.checked = true
+    } else {
+      nameStudent.checked = false
+    }
+  })
+  deleteGroup.href = 'delete-group/' + index
+}
 
 
 const form = document.getElementById("form");

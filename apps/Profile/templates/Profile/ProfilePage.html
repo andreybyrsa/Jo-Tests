@@ -110,18 +110,8 @@
   </form>
 
   <div id='listgroup' class="profile-page__listgroup">
-    {% comment %} <div class="profile-page__listgroup-group">
-      <b>МКБМ-22-1</b>
-      <i class="bi bi-eye"></i>
-    </div>
-
-    <div class="profile-page__listgroup-group">
-      <b>МКБМ-22-1</b>
-      <i class="bi bi-eye"></i>
-    </div> {% endcomment %}
-    {% comment %} {{ group_student_form }} {% endcomment %}
     {% for group in teacher_groups %}
-    <div class="profile-page__listgroup-group" onclick="openEditGroupModal()">
+    <div class="profile-page__listgroup-group" onclick="openGroupModal( '{{group.index}}' )">
       {{ group.groupname }}
       <i class="bi bi-eye"></i>
     </div>
@@ -131,5 +121,6 @@
 {% endblock content %}
 
 {% block script-files %}
+  {{ json_groups_info|json_script:"data-groups" }}
   <script type="text/javascript" src="{% static 'Profile/js/ProfilePage.js' %}"></script>
 {% endblock %}

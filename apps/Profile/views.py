@@ -29,7 +29,7 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
             json_groups_info = list(group.get_group_info() for group in teacher_groups)
             for i in range(len(json_groups_info)):
                 group = Group.objects.get(index=json_groups_info[i]["index"])
-                json_groups_info[i]['students'] = list(student.user__username for student in group.students.all())
+                json_groups_info[i]['students'] = list(student.user.username for student in group.students.all())
             context = dict(
                 list({
                         "user": user,

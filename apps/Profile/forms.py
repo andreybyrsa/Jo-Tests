@@ -61,5 +61,6 @@ class GroupStudentForm(forms.ModelForm):
             "groupname": get_field_widgets(
                     field_class= "profile-page__input-lighted",
                     placeholder= "Введите название группы",
+                    id= 'group-input'
                 ),
         }
