@@ -5,11 +5,13 @@
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'Profile/less/ProfilePage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/ProfileModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/EditGroupModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
-  {% comment %} {% include 'core/modals/AlertModal.html' %} {% endcomment %}
+  {% include 'core/modals/AlertModal.html' %}
   {% include 'core/modals/ProfileModal.html' %}
+  {% include 'core/modals/EditGroupModal.html' %}
 {% endblock %}
 
 {% block header %}
@@ -70,56 +72,45 @@
   </div>
 
   <div id='tests' class="profile-page__tests">
+    {% for result in test_results %}
     <div class="profile-page__tests-test">
       <div class="profile-page__tests-name">
-        <i class="bi bi-check2"></i>
-        Холодная война
-      </div>   
+        <i class="bi bi-check2 profile-page__tests-icon"></i>
+        {{ result.test.title }}
+      </div>
       <div class="profile-page__tests-name">
-        13/20
-        <button class= "profile-page__button">Просмотреть</button>
+        {{ result.result|round }}/{{ result.test.max_result }}
+        <a href='/test/{{ result.slug }}' class= "profile-page__button">Просмотреть</a>
       </div> 
-    </div> 
-
-    <div class="profile-page__tests-test">
-      <div class="profile-page__tests-name">
-        <i class="bi bi-check2"></i>
-        Холодная война
-      </div>   
-      <div class="profile-page__tests-name">
-        13/20
-        <button class= "profile-page__button">Просмотреть</button>
-      </div> 
-    </div> 
+    </div>
+    {% endfor %}
   </div> 
 
-  <div id='addgroup' class="profile-page__addgroup">
+  <form method='POST' id='addgroup' class="profile-page__addgroup">
+    {% csrf_token %}
     <div class="profile-page__input">
-      <b>Название группы</b>
-      <input class='profile-page__input-lighted' placeholder='Название' />
+      {{ group_student_form }}
     </div>
 
     <div class="profile-page__input">
       <b>Логин</b>
-      <input class='profile-page__input-login' placeholder='Ваш логин' />
+      <input id='login-input' class='profile-page__input-login' placeholder='Ваш логин'/>
     </div>
 
     <div class="profile-page__addgroup-list">
-      <div>
-        <input type="checkbox" class="profile-page__addgroup-list-checkbox">
-        <b class="profile-page__addgroup-list-name">Тимур</b>
+      {% for student in students %}
+      <div class="profile-page__addgroup-students">
+        <input name='students-login' type="checkbox" class="profile-page__addgroup-list-checkbox" value={{ student.user.username }}>
+        <b class="profile-page__addgroup-list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</b>
       </div>
-      <div>
-        <input type="checkbox" class="profile-page__addgroup-list-checkbox">
-        <b class="profile-page__addgroup-list-name">Тимур</b>
-      </div>
+      {% endfor %}
     </div>
 
-    <button class= "profile-page__button">Добавить</button>
-  </div>
+    <button class="profile-page__button" type='submit'>Добавить</button>
+  </form>
 
   <div id='listgroup' class="profile-page__listgroup">
-    <div class="profile-page__listgroup-group">
+    {% comment %} <div class="profile-page__listgroup-group">
       <b>МКБМ-22-1</b>
       <i class="bi bi-eye"></i>
     </div>
@@ -127,8 +118,16 @@
     <div class="profile-page__listgroup-group">
       <b>МКБМ-22-1</b>
       <i class="bi bi-eye"></i>
+    </div> {% endcomment %}
+    {% comment %} {{ group_student_form }} {% endcomment %}
+    {% for group in teacher_groups %}
+    <div class="profile-page__listgroup-group" onclick="openEditGroupModal()">
+      {{ group.groupname }}
+      <i class="bi bi-eye"></i>
     </div>
+    {% endfor %}
   </div>
+
 {% endblock content %}
 
 {% block script-files %}

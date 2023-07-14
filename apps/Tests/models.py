@@ -44,7 +44,7 @@ class Test(models.Model):
 
 class StudentResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    group = models.ForeignKey("CoursesApp.Group", default=None, on_delete=models.CASCADE)
+    group = models.ForeignKey("CoursesApp.Group", default=1, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     result = models.FloatField(default=0.0)
     is_passed = models.BooleanField(default=False, verbose_name="Пройден")

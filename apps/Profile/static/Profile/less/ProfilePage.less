@@ -42,7 +42,7 @@
 
   &__button {
     width: 100%;
-    max-width: 200px;
+    max-width: 150px;
     font-size: 18px;
     font-weight: 500;
 
@@ -64,6 +64,7 @@
 
     color: @primary-color;
     font-size: 18px;
+    font-weight: 300;
 
     &-lighted {
       width: 100%;
@@ -134,7 +135,7 @@
     &-test {
       .flexible(center, space-between, @gap: 20px);
       width: 100%;
-      padding: 8px;
+      padding: 8px 20px;
       .border(@border-style: solid,
         @border-color: @lighted-color,
         @border-widths: 2px,
@@ -145,18 +146,28 @@
     &-name {
       .flexible(center, space-between, @gap: 16px);
     }
+
+    &-icon {
+      color: @success-color;
+      font-size: 25px;
+
+      display: flex; 
+    }
   }
 
   &__addgroup {
     .flexible(flex-end, flex-start, column, @gap: 20px);
     display: none;
+    align-self: center;
+    justify-self: center;
+
     width: 100%;
     max-width: 600px;
     height: min-content;
     padding: 20px;
     border-radius: 20px;
     background-color: @white-color;
-    font-size: 22px;
+    font-size: 20px;
 
     &-list {
       .flexible(flex-start, flex-start, column, @gap: 10px);
@@ -179,16 +190,23 @@
         height: 15px;
       }
     }
+
+    &-students {
+      .flexible(center, flex-start, @gap: 8px);
+    }
   }
 
   &__listgroup {
     .flexible(flex-start, flex-start, column, @gap: 10px);
     display: none;
+
     width: 100%;
     max-width: 600px;
     background-color: @white-color;
     border-radius: 20px;
-    padding: 20px;
+    padding: 18px 20px;
+    font-weight: 400;
+    cursor: pointer;
 
     &-group {
       .flexible(center, space-between, @gap: 20px);
@@ -201,5 +219,37 @@
         @border-radii: 12px,
       )
     }
+  }
+
+  &--opened {
+    animation: openEditGroupModal @default-animation-settings;
+ }
+
+ &--closed {
+    animation: closeEditGroupModal @default-animation-settings;
+ }
+}
+
+@keyframes openEditGroupModal {
+  0% {
+     opacity: 0;
+     transform: scale(0.9)
+  }
+
+  100% {
+     opacity: 1;
+     transform: scale(1)
+  }
+}
+
+@keyframes closeEditGroupModal {
+  0% {
+     opacity: 1;
+     transform: scale(1)
+  }
+
+  100% {
+     opacity: 0;
+     transform: scale(0.9)
   }
 }

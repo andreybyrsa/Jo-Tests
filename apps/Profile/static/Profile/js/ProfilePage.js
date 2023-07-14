@@ -6,6 +6,20 @@ const [profileModal, openProfileModal, closeProfileModal] = useModal(
   null
 );
 
+const [editGroupModal, openEditGroupModal, closeEditGroupModal] = useModal(
+  "profile-page__addgroup",
+  null,
+  null
+);
+
+// const groups = document.querySelectorAll('.profile-page__listgroup-group')
+
+// function openEditGroupModal(itemId) {
+//   console.log(itemId)
+// }
+
+
+
 const form = document.getElementById("form");
 const results = document.getElementById("tests");
 const addgroup = document.getElementById("addgroup");
@@ -105,4 +119,11 @@ fileInput.addEventListener("change", function (event) {
   if (selectedFile) {
     profilePicture.src = selectedFile;
   }
+});
+
+const searchInput = document.getElementById("login-input");
+const students = document.querySelectorAll('.profile-page__addgroup-students')
+
+searchInput.addEventListener("input", (event) => {
+  searchByChildNodes(event, students, "profile-page__addgroup-list-name");
 });

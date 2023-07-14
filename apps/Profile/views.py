@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib import messages
 from core.utils.mixins import HeaderMixin, ProfileCellMixin
 from core.utils.upload_image import upload_image
-from .forms import UpdateProfileForm, FindGroupStudentForm, GroupEditForm
+from .forms import UpdateProfileForm, GroupStudentForm
 from apps.auth.models import Student, Teacher
 from apps.Courses.models import Group
 
@@ -18,8 +18,7 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
 
     def get(self, request):
         user = request.user
-        find_group_student_form = FindGroupStudentForm()
-        group_edit_form = GroupEditForm()
+        group_student_form = GroupStudentForm()
         update_profile_form = UpdateProfileForm(instance=user)
         header_def = self.get_user_header()
         cells_def = self.get_profile_cell()
@@ -31,8 +30,7 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
                 list({
                         "user": user,
                         "update_profile_form": update_profile_form,
-                        "find_group_student_form": find_group_student_form,
-                        "group_edit_form": group_edit_form,
+                        "group_student_form": group_student_form,
                         "students": students,
                         "teacher_groups": teacher_groups
                     }.items())
@@ -42,6 +40,7 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         elif user.role == 'student':
              student = Student.objects.get(user__id = user.id)
              test_results = student.result_tests.filter(is_passed = True)
+             print(test_results)
              context = dict(
                 list({
                         "user": user,
@@ -79,3 +78,6 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
             except:
                 messages.error(request, "Неверные данные")
                 return redirect("profile")
+
+        if 'students-login' in request.POST:
+            print(request.POST)      

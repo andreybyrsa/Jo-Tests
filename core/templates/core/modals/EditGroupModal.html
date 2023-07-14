@@ -1,22 +1,48 @@
 {% load static %}
 
-<div class="edit-group-modal">
+{% comment %} <div class="edit-group-modal" id='edit-group-modal'>
    <div class="edit-group-modal__login">
       <b>Добавить студента</b>
-      <input type="text" placeholder='Логин' class="edit-group-modal__login-input"> {% comment %} Логин студента {% endcomment %}
+      <input type="text" placeholder='Логин' class="edit-group-modal__login-input">
    </div>
    <div class="edit-group-modal__group">
-      <b class="edit-group-modal__group-title">МКМБ-22-1</b> {% comment %} Группа {% endcomment %}
-
+      <b class="edit-group-modal__group-title">МКМБ-22-1</b> 
       <div class="edit-group-modal__group-list">
 
          <div class="edit-group-modal__group-student"> 
             <input type="checkbox">
             <b>Тимур</b>
-         </div> {% comment %} Студенты какойто группы {% endcomment %}
+         </div> 
 
       </div>
       
    </div>
    <button class="edit-group-modal__button">Изменить</button>
-</div>
+</div> {% endcomment %}
+
+<form method='POST' id='edit-group-modal' class="profile-page__addgroup">
+   {% csrf_token %}
+   <div class="profile-page__input">
+     {{ group_student_form }}
+   </div>
+
+   <div class="profile-page__input">
+     <b>Логин</b>
+     <input id='login-input' class='profile-page__input-login' placeholder='Ваш логин'/>
+   </div>
+
+   <div class="profile-page__addgroup-list">
+     {% for student in students %}
+     <div class="profile-page__addgroup-students">
+       <input name='students-login' type="checkbox" class="profile-page__addgroup-list-checkbox" value={{ student.user.username }}>
+       <b class="profile-page__addgroup-list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</b>
+     </div>
+     {% endfor %}
+   </div>
+
+   <div class="profile-page__addgroup-buttons">
+      <a class="profile-page__addgroup-delete" href='delete-group/'>Удалить</a>
+      <button class="profile-page__button" type='submit'>Изменить</button>
+   </div>
+   
+ </form>
