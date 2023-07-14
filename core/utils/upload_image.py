@@ -8,9 +8,9 @@ from ..settings import BASE_DIR
 
 
 image_kit = ImageKit(
-    private_key='private_IYsSrRQI7G1Nyj0CafJw5Qr+Fyc=',
-    public_key='public_YkbX+oa9OxUBkCXzLO2bfmbXilc=',
-    url_endpoint='https://ik.imagekit.io/devOPS/',
+    private_key='',
+    public_key='',
+    url_endpoint='',
 )
 
 
