@@ -17,6 +17,7 @@ const JSON_GROUPS = JSON.parse(groups)
 const nameGroup = document.getElementById('group-input')
 const nameStudents = document.querySelectorAll('.modal-edit-group__list-checkbox')
 const deleteGroup = document.getElementById('delete-group')
+const editButton = document.getElementById('edit-button')
 
 function openGroupModal(groupIndex) {
   openEditGroupModal()
@@ -32,6 +33,7 @@ function openGroupModal(groupIndex) {
     }
   })
   deleteGroup.href = 'delete-group/' + index
+  editButton.value = index
 }
 
 

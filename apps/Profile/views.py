@@ -1,11 +1,14 @@
-# views.py
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+
 from core.utils.mixins import HeaderMixin, ProfileCellMixin
 from core.utils.upload_image import upload_image
+from core.utils.get_unique_slug import get_unique_index
+
 from .forms import UpdateProfileForm, GroupStudentForm
+
 from apps.auth.models import Student, Teacher
 from apps.Courses.models import Group
 
@@ -68,8 +71,9 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         return render(request, "Profile/ProfilePage.html", context)
 
     def post(self, request):
+        user = request.user
+        teacher = Teacher.objects.get(user__id=user.id)
         if 'first_name' in request.POST:
-            user = request.user
             update_form = UpdateProfileForm(request.POST, request.FILES, instance=user)
             new_profile_picture = request.FILES or None
             if (new_profile_picture and update_form.is_valid()):
@@ -84,5 +88,56 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
                 messages.error(request, "Неверные данные")
                 return redirect("profile")
 
-        if 'students-login' in request.POST:
-            print(request.POST)      
+        elif 'register' in request.POST:
+            if user.role != 'teacher':
+                messages.error(request, 'Доступ запрещен')
+                return redirect('profile')
+            
+            try:
+                group = Group.objects.create(
+                    groupname = request.POST['groupname'],
+                    teacher = teacher,
+                    index = 'group-' + get_unique_index(Group, request.POST['groupname']),
+                )
+                teacher.groups.add(group)
+
+                for student in request.POST.getlist('students-login'):
+                    if not student:
+                        continue
+                    student = Student.objects.get(user__username = student)
+                    group.students.add(student)
+
+                messages.success(request, 'Группа успешно добавлена')
+                return redirect('profile')
+            
+            except:
+                messages.error(request, 'Ошибка добавления группы')
+                return redirect('profile')
+        
+        elif 'index' in request.POST:
+            if user.role != 'teacher':
+                messages.error(request, 'Доступ запрещен')
+                return redirect('profile')
+            
+            try:
+                group = Group.objects.get(index = request.POST['index'])
+                group.groupname = request.POST['groupname']
+                group.students.clear()
+
+                for student in request.POST.getlist('students-login'):
+                    if not student:
+                        continue
+                    student = Student.objects.get(user__username=student)
+                    group.students.add(student)
+                group.save()
+                
+                messages.success(request, 'Группа успешно изменена')
+                return redirect('profile')
+            
+            except:
+                messages.error(request, 'Ошибка изменения группы')
+                return redirect('profile')
+    
+def delete_group(request, group_index):
+     Group.objects.get(index=group_index).delete()
+     return redirect('profile')
