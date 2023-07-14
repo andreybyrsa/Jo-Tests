@@ -6,6 +6,9 @@ from django.contrib import messages
 from core.utils.mixins import HeaderMixin, ProfileCellMixin
 from core.utils.upload_image import upload_image
 from .forms import UpdateProfileForm, FindGroupStudentForm, GroupEditForm
+from apps.auth.models import Student, Teacher
+from apps.Courses.models import Group
+
 
 
 
@@ -20,16 +23,44 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
         update_profile_form = UpdateProfileForm(instance=user)
         header_def = self.get_user_header()
         cells_def = self.get_profile_cell()
-        context = dict(
-            list({
-                    "user": user,
-                    "update_profile_form": update_profile_form,
-                    "find_group_student_form": find_group_student_form,
-                    "group_edit_form": group_edit_form
-                }.items())
-            + list(header_def.items())
-            + list(cells_def.items())
-        )
+        if user.role == 'teacher':
+            students = Student.objects.all()
+            teacher = Teacher.objects.get(user__id = user.id)
+            teacher_groups = teacher.groups.all()
+            context = dict(
+                list({
+                        "user": user,
+                        "update_profile_form": update_profile_form,
+                        "find_group_student_form": find_group_student_form,
+                        "group_edit_form": group_edit_form,
+                        "students": students,
+                        "teacher_groups": teacher_groups
+                    }.items())
+                + list(header_def.items())
+                + list(cells_def.items())
+            )
+        elif user.role == 'student':
+             student = Student.objects.get(user__id = user.id)
+             test_results = student.result_tests.filter(is_passed = True)
+             context = dict(
+                list({
+                        "user": user,
+                        "update_profile_form": update_profile_form,
+                        'test_results': test_results,
+                    }.items())
+                + list(header_def.items())
+                + list(cells_def.items())
+            )
+        else:
+             context = dict(
+                list({
+                        "user": user,
+                        "update_profile_form": update_profile_form,
+                    }.items())
+                + list(header_def.items())
+                + list(cells_def.items())
+            )
+        
         return render(request, "Profile/ProfilePage.html", context)
 
     def post(self, request):
