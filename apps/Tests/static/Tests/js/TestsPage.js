@@ -5,6 +5,10 @@ const JSON_DATA = JSON.parse(dataTests);
 
 const tests = document.querySelectorAll(".tests-page__test");
 
+Array.from(tests).forEach((test, index) => {
+  test.onclick = () => openSideBar(index);
+});
+
 useInfoSideBar(JSON_DATA, tests, "tests-page__test");
 
 const searchInput = document.getElementById("search-input");

@@ -38,7 +38,7 @@ function openSideBar(itemId) {
   const { title, description, time_create, time_update, slug } = currentData;
 
   Array.from(sideBarLinks).forEach((link, index) => {
-    link.href = linksURLS[index] + slug
+    link.href = linksURLS[index] + slug;
   });
 
   sideBarImage.style.display = "none";

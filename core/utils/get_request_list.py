@@ -1,14 +1,12 @@
-base = {
-    'questions': [],
-    'points': [],
-    'answers': [],
-    'rightAnwers':[],
-    'max_points': 0,
-    'count': 0
-}
-
 def get_request_list(post):
-    d = base.copy()
+    d = {
+        'questions': [],
+        'points': [],
+        'answers': [],
+        'rightAnwers':[],
+        'max_points': 0,
+        'count': 0
+    }
     for key in post.keys():
         if 'question' in key:
             d['questions'].append(post.getlist(key)[0])
@@ -20,4 +18,5 @@ def get_request_list(post):
             d['answers'].append(post.getlist(key))
         elif 'right' in key:
             d['rightAnwers'].append(post.getlist(key))
+    print(d)
     return d

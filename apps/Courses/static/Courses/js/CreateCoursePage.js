@@ -36,10 +36,11 @@ const addTestButton = document.getElementById("add-test-button");
 const addGroupButton = document.getElementById("add-group-button");
 const submitButton = document.getElementById("submit-button");
 
-const courseModalContent = document.getElementById("course-modal-content");
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
 const saveTestSettings = document.getElementById("save-test-settings");
+
+const courseModalContent = document.getElementById("course-modal-content");
 
 let currentTests = JSON_COURSE_TESTS
   ? Array.from(JSON_COURSE_TESTS).map((test) => ({
@@ -282,7 +283,6 @@ function saveElements(data, currentData) {
   });
 
   closeCreateCourseModal();
-  closeModal();
 }
 
 function removeWrapperElements(elementWrapper) {

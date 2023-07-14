@@ -5,7 +5,6 @@
   <link rel="stylesheet/less" href="{% static 'Courses/less/CoursesPage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
@@ -26,7 +25,7 @@
   {% endif %}
 
   {% for course in courses %}
-    <div class="courses-page__course" onclick="openSideBar('{{ forloop.counter0 }}')">
+    <div class="courses-page__course">
       <div class="courses-page__course-text">
         <span class="courses-page__course-title">{{ course.title }}</span>
         <span class="courses-page__course-description">{{ course.description }}</span>

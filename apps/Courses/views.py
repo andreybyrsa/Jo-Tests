@@ -148,7 +148,7 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
             list(
                 {
                     "form": form,
-                    'course': course.get_course_info(),
+                    "course": course.get_course_info(),
                     "groups_info": groups_info,
                     "tests_info": tests_info,
                     "course_tests_info": course_tests_info,
@@ -176,7 +176,7 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
                 for student in group.students.all():
                     student.courses.remove(course)
             course.groups.clear()
-            
+
             for post_group in post["groups"].split(" "):
                 if post_group == "":
                     continue
@@ -185,7 +185,6 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
                 students = group.students.all()
                 for student in students:
                     student.courses.add(course)
-            
 
             for post_test in post["tests"].split(" "):
                 if post_test == "":
@@ -220,7 +219,7 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
     """Список тестов в курсе - Teacher, Student"""
 
     model = Course
-    template_name = ""
+    template_name = "Courses/CourseTestsPage.html"
     context_object_name = "course"
     slug_url_kwarg = "course_slug"
 
@@ -231,39 +230,59 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
 
         if current_user.role == "student":
             course_tests = context["course"].tests.filter(is_available=True)
-            json_course_tests = list(test.get_test_in_course_info() for test in course_tests)
+            json_course_tests = list(
+                test.get_test_in_course_info() for test in course_tests
+            )
 
             course_results = []
             for course_test in json_course_tests:
-                test = Test.objects.get(slug=course_test['slug'])
+                test = Test.objects.get(slug=course_test["test"]["slug"])
                 if StudentResult.objects.filter(test__id=test.id).exists():
                     result = StudentResult.objects.get(test__id=test.id)
                     course_results.append(result.get_result_info())
 
             return dict(
-                + list(header_def.items())
-                + list({'json_course_tests': json_course_tests}.items)
-                + list({'test_results': course_results}.items)
+                list(header_def.items())
+                + list(
+                    {
+                        "json_course_tests": json_course_tests,
+                        "tests_results": course_results,
+                    }.items()
+                )
             )
 
         elif current_user.role == "teacher":
             course_tests = context["course"].tests.all()
-            json_course_tests = []
-            for course_test in course_tests:
-                json_course_tests.append(course_test.get_test_in_course_info())
+            json_course_tests = list(
+                test.get_test_in_course_info() for test in course_tests
+            )
+
             groups = context["course"].groups.all()
             results = []
             json_groups = []
+
             for group in groups:
                 json_groups.append(group.get_group_info())
                 for student in group.students.all():
                     for course_test in json_course_tests:
-                        if StudentResult.objects.filter(student__id=student.id, test__slug = course_test['test']['slug']).exists():
-                            result = StudentResult.objects.get(student__id=student.id, test__slug = course_test['test']['slug'])
+                        if StudentResult.objects.filter(
+                            student__id=student.id,
+                            test__slug=course_test["test"]["slug"],
+                        ).exists():
+                            result = StudentResult.objects.get(
+                                student__id=student.id,
+                                test__slug=course_test["test"]["slug"],
+                                group__index=group.index
+                            )
                             results.append(result.get_result_info())
+
             return dict(
-                list({"json_course_tests": course_tests}.items())
-                + list({"json_groups": json_groups}.items())
-                + list(header_def.items())
-                + list({"results": results}.items())
+                list(header_def.items())
+                + list(
+                    {
+                        "json_course_tests": json_course_tests,
+                        "json_groups": json_groups,
+                        "results": results,
+                    }.items()
+                )
             )
