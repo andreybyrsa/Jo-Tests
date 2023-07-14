@@ -64,12 +64,20 @@ function openTestSideBar(itemId, currentTest) {
 
   const currentTestInfo = JSON_COURSE_TESTS[itemId];
   const { test, test_time } = currentTestInfo;
-  const { title, description, questions_amount, slug } = test;
+  const { title, description, questions_amount, max_result, slug } = test;
 
-  const currentTestResult = Array.from(JSON_TESTS_RESULTS).find(
-    (test) => test.test_slug === slug
-  );
-  const { result, max_result, result_slug } = currentTestResult;
+  const currentTestResult = JSON_TESTS_RESULTS
+    ? Array.from(JSON_TESTS_RESULTS).find((test) => test.test_slug === slug)
+    : null;
+
+  let studentResult = null;
+  let resultSlug = null;
+
+  if (currentTestResult) {
+    const { result, result_slug } = currentTestResult;
+    studentResult = result;
+    resultSlug = result_slug;
+  }
 
   sideBarImage.style.display = "none";
   sidebarButton.style.display = "flex";
@@ -80,15 +88,15 @@ function openTestSideBar(itemId, currentTest) {
 
   sideBarQuestionsAmount.textContent = questions_amount;
   sideBarTestTime.textContent = `${test_time} минут`;
-  sideBarTestResult.textContent = result
-    ? `${result}/${max_result}`
+  sideBarTestResult.textContent = studentResult
+    ? `${studentResult}/${max_result}`
     : "не начато";
 
-  if (result) {
+  if (studentResult) {
     sidebarButton.classList.add(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Просмотреть";
 
-    sidebarButton.href = sidebarButton.getAttribute("href") + result_slug;
+    sidebarButton.href = sidebarButton.getAttribute("href") + resultSlug;
   } else {
     sidebarButton.classList.remove(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Начать тест";

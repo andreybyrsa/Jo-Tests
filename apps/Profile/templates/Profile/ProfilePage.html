@@ -89,19 +89,22 @@
   <form method='POST' id='addgroup' class="profile-page__addgroup">
     {% csrf_token %}
     <div class="profile-page__input">
-      {{ group_student_form }}
+      {% for input in group_student_form %}
+        {{ input.label }}
+        {{ input }}
+      {% endfor %}
     </div>
 
     <div class="profile-page__input">
-      <b>Логин</b>
+      <span>Логин</span>
       <input id='create-input' class='profile-page__input-login' placeholder='Поиск студентов'/>
     </div>
 
     <div class="profile-page__addgroup-list">
       {% for student in students %}
       <div class="profile-page__addgroup-students">
-        <input name='students-login' type="checkbox" class="profile-page__addgroup-list-checkbox" value={{ student.user.username }}>
-        <b class="profile-page__addgroup-list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</b>
+        <input name='students-login' type="checkbox" class="profile-page__addgroup-list-checkbox" value={{ student.user.username }} />
+        <span class="profile-page__addgroup-list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</span>
       </div>
       {% endfor %}
     </div>

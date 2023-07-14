@@ -41,15 +41,13 @@
   }
 
   &__button {
-    width: 100%;
-    max-width: 150px;
-    font-size: 18px;
-    font-weight: 500;
-
-    padding: 10px 15px;
+    padding: 0 20px;
+    height: 45px;
     background-color: @secondary-color;
     border-radius: 12px;
+
     color: @white-color;
+    font-size: 20px;
 
     transition: all @default-transition-settings;
   }
@@ -64,7 +62,6 @@
 
     color: @primary-color;
     font-size: 18px;
-    font-weight: 300;
 
     &-lighted {
       width: 100%;
@@ -151,7 +148,7 @@
       color: @success-color;
       font-size: 25px;
 
-      display: flex; 
+      display: flex;
     }
   }
 
@@ -181,9 +178,8 @@
         @border-radii: 0px 0px 12px 12px,
       );
 
-      &-name {
-        font-weight: 500;
-      }
+      color: @black-color;
+      font-size: 18px;
 
       &-checkbox {
         width: 15px;
@@ -217,39 +213,42 @@
         @border-color: @lighted-color,
         @border-widths: 2px,
         @border-radii: 12px,
-      )
+      );
+
+      color: @primary-color;
+      font-size: 18px;
     }
   }
 
   &--opened {
     animation: openEditGroupModal @default-animation-settings;
- }
+  }
 
- &--closed {
+  &--closed {
     animation: closeEditGroupModal @default-animation-settings;
- }
+  }
 }
 
 @keyframes openEditGroupModal {
   0% {
-     opacity: 0;
-     transform: scale(0.9)
+    opacity: 0;
+    transform: scale(0.9)
   }
 
   100% {
-     opacity: 1;
-     transform: scale(1)
+    opacity: 1;
+    transform: scale(1)
   }
 }
 
 @keyframes closeEditGroupModal {
   0% {
-     opacity: 1;
-     transform: scale(1)
+    opacity: 1;
+    transform: scale(1)
   }
 
   100% {
-     opacity: 0;
-     transform: scale(0.9)
+    opacity: 0;
+    transform: scale(0.9)
   }
 }
