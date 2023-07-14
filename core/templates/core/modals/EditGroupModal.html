@@ -1,28 +1,28 @@
 {% load static %}
 
-<form method='POST' id='edit-group-modal' class="profile-page__addgroup">
+<form method='POST' id='edit-group-modal' class="modal-edit-group">
    {% csrf_token %}
-   <div class="profile-page__input">
+   <div class="modal-edit-group__input">
      {{ group_student_form }}
    </div>
 
-   <div class="profile-page__input">
+   <div class="modal-edit-group__input">
      <b>Логин</b>
-     <input id='login-input' class='profile-page__input-login' placeholder='Ваш логин'/>
+     <input id='edit-input' class='modal-edit-group__input-login' placeholder='Поиск студентов'/>
    </div>
 
-   <div class="profile-page__addgroup-list">
+   <div class="modal-edit-group__list">
      {% for student in students %}
-     <div class="profile-page__addgroup-students">
-       <input name='students-login' type="checkbox" class="profile-page__addgroup-list-checkbox" value={{ student.user.username }}>
-       <b class="profile-page__addgroup-list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</b>
+     <div class="modal-edit-group__list-students">
+       <input name='students-login' type="checkbox" class="modal-edit-group__list-checkbox" value={{ student.user.username }}>
+       <b class="modal-edit-group__list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</b>
      </div>
      {% endfor %}
    </div>
 
-   <div class="profile-page__addgroup-buttons">
-      <a id='delete-group' class="profile-page__addgroup-delete">Удалить</a>
-      <button class="profile-page__button" type='submit'>Изменить</button>
+   <div class="modal-edit-group__buttons">
+      <a id='delete-group' class="modal-edit-group__delete">Удалить</a>
+      <button class="modal-edit-group__button" type='submit'>Изменить</button>
    </div>
    
  </form>

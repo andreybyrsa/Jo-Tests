@@ -7,7 +7,7 @@ const [profileModal, openProfileModal, closeProfileModal] = useModal(
 );
 
 const [editGroupModal, openEditGroupModal, closeEditGroupModal] = useModal(
-  "profile-page__addgroup",
+  "modal-edit-group",
   null,
   null
 );
@@ -15,7 +15,7 @@ const [editGroupModal, openEditGroupModal, closeEditGroupModal] = useModal(
 const groups = document.getElementById('data-groups').textContent
 const JSON_GROUPS = JSON.parse(groups)
 const nameGroup = document.getElementById('group-input')
-const nameStudents = document.querySelectorAll('.profile-page__addgroup-list-checkbox')
+const nameStudents = document.querySelectorAll('.modal-edit-group__list-checkbox')
 const deleteGroup = document.getElementById('delete-group')
 
 function openGroupModal(groupIndex) {
@@ -136,9 +136,15 @@ fileInput.addEventListener("change", function (event) {
   }
 });
 
-const searchInput = document.getElementById("login-input");
-const students = document.querySelectorAll('.profile-page__addgroup-students')
+const createInput = document.getElementById("create-input");
+const editInput = document.getElementById("edit-input");
+const addStudents = document.querySelectorAll('.profile-page__addgroup-students')
+const editStudents = document.querySelectorAll('.modal-edit-group__list-students')
 
-searchInput.addEventListener("input", (event) => {
-  searchByChildNodes(event, students, "profile-page__addgroup-list-name");
+createInput.addEventListener("input", (event) => {
+  searchByChildNodes(event, addStudents, "profile-page__addgroup-list-name");
+});
+
+editInput.addEventListener("input", (event) => {
+  searchByChildNodes(event, editStudents, "modal-edit-group__list-name");
 });
