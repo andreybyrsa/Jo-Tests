@@ -1,0 +1,105 @@
+@import '../main.less';
+
+.profile-modal {
+  width: 100%;
+  max-width: 500px;
+
+  align-self: center;
+  justify-self: center;
+  display: none;
+
+  &__form {
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    .flexible(center, @flex-direction: column, @gap: 20px);
+  }
+
+  &__image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    &-input {
+      display: none;
+    }
+  }
+
+  &__input {
+    width: 100%;
+
+    color: @primary-color;
+    font-size: 18px;
+
+    .flexible(@flex-direction: column, @gap: 5px);
+
+    &--lighted {
+      padding: 12px 20px;
+      width: 100%;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      color: @black-color;
+
+      ::placeholder {
+        color: @lighted-color;
+      }
+    }
+  }
+
+  &__submit-button {
+    padding: 15px;
+    width: 100%;
+    background-color: @secondary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    transition: backgroud-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+
+  &--opened {
+    animation: openProfileModal @default-animation-settings;
+  }
+
+  &--closed {
+    animation: closeProfileModal @default-animation-settings;
+  }
+}
+
+@keyframes openProfileModal {
+  0% {
+    opacity: 0;
+
+    transform: scale(0.9)
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1)
+  }
+}
+
+@keyframes closeProfileModal {
+  0% {
+    opacity: 1;
+
+    transform: scale(1)
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: scale(0.9)
+  }
+}

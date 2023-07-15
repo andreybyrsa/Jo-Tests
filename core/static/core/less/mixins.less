@@ -45,7 +45,7 @@
   @align-items: flex-start,
   @justify-content: flex-start,
   @flex-direction: row,
-  @aling-self: none,
+  @align-self: none,
   @justify-self: none,
   @flex-wrap: nowrap,
   @gap: 0
@@ -56,8 +56,8 @@
   align-items: @align-items;
   flex-wrap: @flex-wrap;
 
-  & when not (@aling-self = none) {
-    align-self: @aling-self;
+  & when not (@align-self = none) {
+    align-self: @align-self;
   }
   & when not (@justify-self = none) {
     justify-self: @justify-self;

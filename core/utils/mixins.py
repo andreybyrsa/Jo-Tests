@@ -1,18 +1,3 @@
-# InfoSidebarMixin
-# icons:
-# view: bi bi-eye
-# change: bi bi-pencil-square
-# delete: bi bi-trash3
-# colors:
-# pirmary
-# danger
-# success
-
-# HeaderMixin
-# create: 'bi bi-plus'
-# list: 'bi bi-list'
-# profile: 'bi bi-person-gear'
-
 header = [
     {
         "name": "Список тестов",
