@@ -96,12 +96,12 @@ function openTestSideBar(itemId, currentTest) {
     sidebarButton.classList.add(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Просмотреть";
 
-    sidebarButton.href = sidebarButton.getAttribute("href") + resultSlug;
+    sidebarButton.href = "/tests/" + resultSlug;
   } else {
     sidebarButton.classList.remove(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Начать тест";
 
-    sidebarButton.href = sidebarButton.getAttribute("href") + slug;
+    sidebarButton.href = "/tests/" + slug;
   }
 }
 
