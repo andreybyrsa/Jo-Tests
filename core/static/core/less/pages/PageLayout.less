@@ -145,21 +145,25 @@ p {
 
 @keyframes openModalLayout {
   from {
-    background-color: transparent;
+    opacity: 0;
   }
 
   to {
     background-color: @black-color--blured;
+
+    opacity: 1;
   }
 }
 
 @keyframes closeModalLayout {
   from {
     background-color: @black-color--blured;
+
+    opacity: 1;
   }
 
   to {
-    background-color: transparent;
+    opacity: 0;
   }
 }
 

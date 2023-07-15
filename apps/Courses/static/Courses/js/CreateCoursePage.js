@@ -1,21 +1,3 @@
-import {
-  addPageClassName,
-  getCurrentDate,
-} from "/static/core/js/PageLayout.js";
-
-import {
-  courseModalContent,
-  openCreateCourseModal,
-  closeCreateCourseModal,
-  createModalTest,
-  createModalGroup,
-} from "/static/core/js/CreateCourseModal.js";
-
-import {
-  openTestModal,
-  closeTestSettingsModal,
-} from "/static/core/js/TestSettingsModal.js";
-
 addPageClassName("create-course-page");
 
 const dataCourse = document.getElementById("data-course").textContent;
@@ -34,9 +16,9 @@ const JSON_COURSE_GROUPS = JSON.parse(dataCourseGroups);
 
 const form = document.getElementById("form");
 
-const courseTitleInput = document.getElementById("input-course-title");
+const courseTitleInput = document.getElementById("input-title");
 const courseDescriptionInput = document.getElementById(
-  "input-course-description"
+  "input-description"
 );
 
 const courseTitle = document.getElementById("course-title");
@@ -57,6 +39,8 @@ const submitButton = document.getElementById("submit-button");
 const saveTestsButton = document.getElementById("save-tests-button");
 const saveGroupsButton = document.getElementById("save-groups-button");
 const saveTestSettings = document.getElementById("save-test-settings");
+
+const courseModalContent = document.getElementById("course-modal-content");
 
 let currentTests = JSON_COURSE_TESTS
   ? Array.from(JSON_COURSE_TESTS).map((test) => ({

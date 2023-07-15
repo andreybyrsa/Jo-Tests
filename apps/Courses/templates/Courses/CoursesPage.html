@@ -3,9 +3,9 @@
 
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'Courses/less/CoursesPage.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/SideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/InfoSideBar.less' %}" />
 {% endblock %}
 
 {% block modal %}
@@ -47,5 +47,6 @@
 
 {% block script-files %}
   {{ json_courses|json_script:"data-courses" }}
-  <script type="module" src="{% static 'Courses/js/CoursesPage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/InfoSideBar.js' %}"></script>
+  <script type="text/javascript" src="{% static 'Courses/js/CoursesPage.js' %}"></script>
 {% endblock %}

@@ -1,10 +1,3 @@
-import {
-  addPageClassName,
-  searchByChildNodes,
-} from "/static/core/js/PageLayout.js";
-
-import { useInfoSideBar, openSideBar } from "/static/core/js/InfoSideBar.js";
-
 addPageClassName("tests-page");
 
 const dataTests = document.getElementById("data-tests").textContent;

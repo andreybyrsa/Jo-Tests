@@ -1,6 +1,6 @@
 @import '../main.less';
 
-.info-side-bar {
+.side-bar {
   padding: 20px;
   width: 400px;
   height: 100%;
@@ -14,52 +14,23 @@
   }
 
   &__content {
+    overflow-y: scroll;
+
     .flexible(flex-start, flex-start, column, @gap: 30px);
     display: none;
   }
 
   &__title {
     color: @black-color;
-    font-size: 29px;
+    font-size: 25px;
   }
 
   &__text {
     color: @black-color;
-    font-size: 21px;
+    font-size: 18px;
 
     &--lighted {
       color: @lighted-color;
-    }
-  }
-
-  &__time-created,
-  &__time-updated {
-    .flexible(flex-start, flex-start, column, @gap: 4px);
-  }
-
-  &__buttons {
-    .flexible(flex-start, flex-start, column, @gap: 10px);
-  }
-
-  &__button {
-    font-size: 24px;
-
-    .flexible(center, flex-start, @gap: 8px);
-
-    &-icon {
-      display: flex;
-    }
-
-    &--primary {
-      color: @primary-color;
-    }
-
-    &--success {
-      color: @success-color;
-    }
-
-    &--danger {
-      color: @danger-color;
     }
   }
 

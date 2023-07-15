@@ -1,8 +1,3 @@
-import {
-  addPageClassName,
-  getCurrentDate,
-} from "/static/core/js/PageLayout.js";
-
 addPageClassName("create-test-page");
 
 const dataTest = document.getElementById("data-test").textContent;
@@ -11,8 +6,8 @@ const dataQuestions = document.getElementById("data-questions").textContent;
 const JSON_TEST = JSON.parse(dataTest);
 const JSON_QUESTIONS = JSON.parse(dataQuestions);
 
-const inputTestTitle = document.getElementById("input-test-title");
-const inputTestDescription = document.getElementById("input-test-description");
+const inputTestTitle = document.getElementById("input-title");
+const inputTestDescription = document.getElementById("input-description");
 const testTitle = document.getElementById("test-title");
 const testDescription = document.getElementById("test-descriprion");
 
@@ -59,7 +54,7 @@ if (JSON_TEST) {
   }, 10000);
 }
 
-if (JSON_QUESTIONS) {
+if (JSON_QUESTIONS.length) {
   activateDisabledButtons();
 
   JSON_QUESTIONS.forEach((questionInfo) => {

@@ -1,34 +1,21 @@
 @import '/static/core/less/main.less';
 
-
 .profile-page {
   background-color: @white-color;
-
-  &__nickname {
-    font-size: 60px;
-  }
-
-  &__names {
-    font-size: 30px;
-  }
-
-  &__edit {
-    font-size: 45px;
-  }
 
   &__left-side-bar {
     width: 50%;
 
-    .flexible(flex-start, flex-start, column, @gap: 20px);
+    .flexible(flex-start, flex-start, column, @gap: 10px);
   }
 
-  &__content {
-    width: 50%;
+  &-header {
+    .flexible(center, center, @gap: 40px);
   }
 
   &__cell {
     padding: 0 30px;
-    width: 400px;
+    width: 100%;
     height: 80px;
     background-color: @white-color;
     border-radius: 20px;
@@ -36,10 +23,246 @@
     color: @black-color;
     font-size: 25px;
 
+    cursor: pointer;
+
     .flexible(center, space-between);
+
+    transition: opacity @default-transition-settings;
 
     &--active {
       .border(solid, @primary-color, 1px, 20px);
+
+      opacity: 1;
     }
+
+    &--disabled {
+      opacity: @disable-opacity;
+    }
+  }
+
+  &__button {
+    padding: 0 20px;
+    height: 45px;
+    background-color: @secondary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+
+    transition: backgroud-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+
+  &__input {
+    .flexible(flex-start, flex-start, column, @gap: 4px);
+    width: 100%;
+
+    color: @primary-color;
+    font-size: 18px;
+
+    &-lighted {
+      width: 100%;
+      padding: 12px 20px;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      color: @black-color;
+    }
+
+    &-login {
+      width: 100%;
+      padding: 12px 20px;
+      .border(solid, @lighted-color, 2px 2px 0px 2px, 12px 12px 0px 0px);
+
+      color: @black-color;
+    }
+  }
+
+  &__image-input {
+    display: flex;
+  }
+
+  &__user {
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    height: min-content;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    .flexible(center, flex-start, column, @gap: 20px);
+
+    &-username {
+      width: 100%;
+      max-width: 450px;
+
+      font-size: 35px;
+
+      .flexible(center, space-between, @gap: 20px);
+    }
+
+    &-img {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+    }
+
+    &-edit {
+      width: 200px;
+
+      .flexible(center, flex-start, column, @gap: 10px);
+    }
+  }
+
+  &__tests {
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    height: min-content;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    .flexible(center, flex-start, column, @gap: 10px);
+    display: none;
+
+    &-test {
+      padding: 8px 20px;
+      width: 100%;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      color: @black-color;
+      font-size: 18px;
+
+      .flexible(center, space-between, @gap: 20px);
+    }
+
+    &-placeholder {
+      width: 100%;
+      height: 100%;
+
+      color: @primary-color;
+      font-size: 25px;
+
+      .flexible(center, center);
+    }
+
+    &-name {
+      .flexible(center, space-between, @gap: 20px);
+    }
+
+    &-icon {
+      color: @success-color;
+      font-size: 25px;
+
+      display: flex;
+    }
+  }
+
+  &__addgroup {
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    height: min-content;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    font-size: 20px;
+
+    .flexible(
+      flex-end,
+      flex-start,
+      column,
+      center,
+      center,
+      @gap: 20px
+    );
+    display: none;
+
+    &-list {
+      margin: -20px 0px 0px 0px;
+      padding: 12px 20px;
+      width: 100%;
+      height: 200px;
+
+      .border(solid, @lighted-color, 2px, 0px 0px 12px 12px);
+
+      color: @black-color;
+      font-size: 18px;
+
+      .flexible(flex-start, flex-start, column, @gap: 10px);
+
+      &-checkbox {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    &-students {
+      .flexible(center, flex-start, @gap: 8px);
+    }
+  }
+
+  &__listgroup {
+    padding: 18px 20px;
+    width: 100%;
+    max-width: 600px;
+    background-color: @white-color;
+    border-radius: 20px;
+
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+    display: none;
+
+    &-group {
+      padding: 10px 20px;
+      width: 100%;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      cursor: pointer;
+
+      color: @primary-color;
+      font-size: 18px;
+
+      .flexible(center, space-between, @gap: 20px);
+    }
+  }
+
+  &--opened {
+    animation: openEditGroupModal @default-animation-settings;
+  }
+
+  &--closed {
+    animation: closeEditGroupModal @default-animation-settings;
+  }
+}
+
+@keyframes openEditGroupModal {
+  0% {
+    opacity: 0;
+
+    transform: scale(0.9)
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1)
+  }
+}
+
+@keyframes closeEditGroupModal {
+  0% {
+    opacity: 1;
+
+    transform: scale(1)
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: scale(0.9)
   }
 }

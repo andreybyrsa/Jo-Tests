@@ -1,5 +1,3 @@
-import { addPageClassName } from "/static/core/js/PageLayout.js";
-
 addPageClassName("auth-page");
 
 const selection = document.querySelectorAll("#selection");

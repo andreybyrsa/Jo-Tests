@@ -1,0 +1,54 @@
+{% extends 'core/blocks/SideBar.html' %}
+{% load static %}
+
+{% block side-bar-content %}
+  <div class="test-start-side-bar__content">
+    <div class="test-start-side-bar__questions-amount">
+      <span
+        class="test-start-side-bar__text test-start-side-bar__text--lighted"
+      >
+        Количество вопросов:
+      </span>
+      <span
+        id="test-question-amount"
+        class="test-start-side-bar__text test-start-side-bar__text--primary"
+      ></span>
+    </div>
+
+    <div class="test-start-side-bar__test-time">
+      <span
+        class="test-start-side-bar__text test-start-side-bar__text--lighted"
+      >
+        Время тестирования:
+      </span>
+      <span
+        id="test-time"
+        class="test-start-side-bar__text test-start-side-bar__text--primary"
+      ></span>
+    </div>
+
+    <div class="test-start-side-bar__test-result">
+      <span
+          class="test-start-side-bar__text test-start-side-bar__text--lighted"
+      >
+        Результат теста:
+      </span>
+      <span
+        id="test-result"
+        class="test-start-side-bar__text test-start-side-bar__text--primary"
+      >
+        не начат
+      </span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block side-bar-buttons %}
+  <a
+    id="test-button"
+    class="test-start-side-bar__button"
+    href="/tests/"
+  >
+    Начать тест
+  </a>
+{% endblock %}

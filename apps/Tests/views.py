@@ -134,7 +134,6 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
 
     def post(self, request, test_slug):
         test = Test.objects.get(slug=test_slug)
-        print(request.POST)
         post = get_request_list(request.POST)
         try:
             test.title = request.POST["title"]

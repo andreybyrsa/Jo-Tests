@@ -1,20 +1,39 @@
 {% load static %}
 
-<div class="profile-modal">
-   <img src="{% static 'core\images\profileFoto.png' %}" alt="profile" class="profile-modal-img">
-
-   <div class="profile-modal-input">
-      <b class="">Логин</b>
-      <input type="text" class="profile-modal-input--lighted" placeholder='Логин студента'>
+<form
+   id='profile-modal'
+   method="post"
+   enctype="multipart/form-data"
+   class='profile-modal'
+>
+   {% csrf_token %}
+   <div class="profile-modal__form">
+      {% for input in update_profile_form %}
+         {% if not forloop.first %}
+            <div class="profile-modal__input">
+               {{ input.label }}
+               {{ input }}
+            </div>
+         {% else %}
+            {{ input }}
+            {% if user.profile_picture %}
+               <img
+                  id="profile-picture"
+                  class="profile-modal__image"
+                  src="{{ user.profile_picture }}" 
+                  alt="profile" 
+               >
+            {% else %}
+               <img
+                  id="profile-picture"
+                  class="profile-modal__image"
+                  src="{% static 'core/images/profileFoto.png' %}" 
+                  alt="profile" 
+               >
+            {% endif %}
+         {% endif %}
+      {% endfor %}
+      
+      <button class="profile-modal__submit-button" type='submit'>Сохранить</button>
    </div>
-   <div class="profile-modal-input">
-      <b class="">Имя</b>
-      <input type="text" class="profile-modal-input--lighted" placeholder='Имя студента'>
-   </div>
-   <div class="profile-modal-input">
-      <b class="">Фамилия</b>
-      <input type="text" class="profile-modal-input--lighted" placeholder='Фамилия студента'>
-   </div>
-
-   <button class="profile-modal-button">Сохранить</button>
-</div>
+</form>

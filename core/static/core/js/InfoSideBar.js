@@ -1,5 +1,3 @@
-import { getCurrentDate } from "/static/core/js/PageLayout.js";
-
 const sideBarContent = document.getElementById("side-bar-content");
 const sideBarTitle = document.getElementById("side-bar-title");
 const sideBarDescription = document.getElementById("side-bar-description");
@@ -64,5 +62,3 @@ function openSideBar(itemId) {
     sideBarTimeUpdated.textContent = currentUpdateDate;
   }
 }
-
-export { useInfoSideBar, openSideBar };

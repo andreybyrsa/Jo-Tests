@@ -1,9 +1,5 @@
-import { useModal, searchByChildNodes } from "/static/core/js/PageLayout.js";
-
 const [createCourseModal, openCreateCourseModal, closeCreateCourseModal] =
   useModal("create-course-modal", null, "close-course-modal-button");
-
-const courseModalContent = document.getElementById("course-modal-content");
 
 const searchInput = document.getElementById("search-input");
 
@@ -86,11 +82,3 @@ function checkData(currentCheckbox) {
     currentCheckbox.checked = true;
   }
 }
-
-export {
-  courseModalContent,
-  openCreateCourseModal,
-  closeCreateCourseModal,
-  createModalTest,
-  createModalGroup,
-};

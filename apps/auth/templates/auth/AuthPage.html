@@ -3,7 +3,6 @@
 
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'auth/less/AuthPage.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
@@ -71,5 +70,5 @@
 {% endblock content %}
 
 {% block script-files %}
-  <script type="module" src="{% static 'auth/js/AuthPage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'auth/js/AuthPage.js' %}"></script>
 {% endblock %}

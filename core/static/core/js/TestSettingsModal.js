@@ -1,5 +1,3 @@
-import { useModal } from "/static/core/js/PageLayout.js";
-
 const [testSettingsModal, openTestSettingsModal, closeTestSettingsModal] =
   useModal("test-settings-modal", null, "close-test-modal-button");
 
@@ -55,5 +53,3 @@ function removeToggleClassNames() {
   toggleAvailable.classList.remove(ACTIVE_TOGGLE_CLASS);
   toggleAvailable.classList.remove(DISABEL_TOGGLE_CLASS);
 }
-
-export { openTestModal, closeTestSettingsModal };

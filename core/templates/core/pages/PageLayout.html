@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- styles -->
-    <link rel="stylesheet/less" href="{% static 'core/less/styles/PageLayout.less' %}" />
+    <link rel="stylesheet/less" href="{% static 'core/less/pages/PageLayout.less' %}" />
+    <link rel="stylesheet/less" href="{% static 'core/less/modals/AlertModal.less' %}" />
     {% block style-files %}{% endblock %}
 
     <!-- icons https://icons.getbootstrap.com -->
@@ -46,8 +47,8 @@
     </div>
 
     <!-- scripts -->
-    <script type="module" src="{% static 'core/js/PageLayout.js' %}"></script>
-    <script type="module" src="{% static 'core/js/AlertModal.js' %}"></script>
+    <script type="text/javascript" src="{% static 'core/js/PageLayout.js' %}"></script>
+    <script type="text/javascript" src="{% static 'core/js/AlertModal.js' %}"></script>
     {% block script-files %}{% endblock %}
   </body>
 </html>

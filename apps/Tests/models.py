@@ -17,8 +17,8 @@ class Test(models.Model):
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     def get_absolute_url(self):
-        return reverse('inspect-test', kwargs={'test_slug': self.slug})
-    
+        return reverse("inspect-test", kwargs={"test_slug": self.slug})
+
     def get_test_info(self):
         return {
             "title": self.title,
@@ -27,32 +27,38 @@ class Test(models.Model):
             "time_update": self.time_update,
             "questions_amount": self.count,
             "max_result": self.max_result,
-            'slug': self.slug,
+            "slug": self.slug,
         }
 
     def __str__(self):
         return self.title
 
     class Meta:
-        ordering = ("time_update", "title",)
+        ordering = (
+            "time_update",
+            "title",
+        )
         verbose_name = "Тест"
         verbose_name_plural = "Тесты"
 
+
 class StudentResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    group = models.ForeignKey("CoursesApp.Group", default=1, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     result = models.FloatField(default=0.0)
-    is_passed = models.BooleanField(default=False, verbose_name='Пройден')
+    is_passed = models.BooleanField(default=False, verbose_name="Пройден")
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
 
     def get_result_info(self):
         return {
-            'student': self.student,
-            'max_result': self.test.max_result,
-            'test_slug': self.test.slug,
-            'result': self.result,
-            'is_passed': self.is_passed,
-            'slug': self.slug,
+            "student": self.student.user.get_user_info(),
+            "group_index": self.group.index,
+            "max_result": self.test.max_result,
+            "test_slug": self.test.slug,
+            "result": self.result,
+            "is_passed": self.is_passed,
+            "result_slug": self.slug,
         }
 
     class Meta:
@@ -75,11 +81,11 @@ class Question(models.Model):
 
     def get_question_info(self):
         return {
-            'question': self.question,
-            'max_points': self.max_points,
-            'qtype': self.qtype,
-            'answers': list(answer.get_answer_info() for answer in self.answers.all())
-    }
+            "question": self.question,
+            "max_points": self.max_points,
+            "qtype": self.qtype,
+            "answers": list(answer.get_answer_info() for answer in self.answers.all()),
+        }
 
     def __str__(self):
         return self.question
@@ -96,10 +102,10 @@ class Answer(models.Model):
 
     def get_answer_info(self):
         return {
-            'answer': self.answer,
-            'is_correct': self.is_correct,
-    }
-    
+            "answer": self.answer,
+            "is_correct": self.is_correct,
+        }
+
     def __str__(self):
         return self.answer
 

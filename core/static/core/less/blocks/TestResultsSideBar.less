@@ -1,0 +1,118 @@
+@import '../main.less';
+
+.test-results-side-bar {
+  &__group {
+    &-wrapper {
+      width: 100%;
+      height: fit-content;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      color: @primary-color;
+      font-size: 18px;
+
+      .flexible(center, flex-start, column);
+    }
+
+    width: 100%;
+    .border(solid, @lighted-color, 2px 0 0);
+
+    overflow-y: scroll;
+
+    .flexible(center, flex-start, column, @gap: 10px);
+    display: none;
+
+    &-header {
+      padding: 0 20px;
+      width: 100%;
+      height: 52px;
+
+      cursor: pointer;
+
+      .flexible(center, space-between);
+    }
+
+    &-icon {
+      font-size: 22px;
+
+      display: flex;
+
+      &--active {
+        transform: rotate(180deg);
+      }
+    }
+
+    &--opened {
+      animation: openGroup @default-animation-settings;
+    }
+
+    &--closed {
+      animation: closeGroup @default-animation-settings;
+    }
+  }
+
+  &__result {
+    &-wrapper {
+      width: 100%;
+
+      .flexible(center, flex-start, column, @gap: 10px);
+    }
+
+    &-student {
+      width: 100%;
+
+      color: @black-color;
+      font-size: 18px;
+
+      .flexible(center, space-between);
+    }
+
+    &-progressbar {
+      width: 100%;
+      height: 10px;
+      .border(solid, @primary-color, 1px, 20px);
+    }
+
+    &-progress {
+      height: 100%;
+    }
+
+    &-percents {
+      height: 100%;
+      background-color: @primary-color;
+
+      animation: progressbar 0.8s forwards ease-out;
+    }
+  }
+}
+
+@keyframes openGroup {
+  from {
+    height: 0;
+  }
+
+  to {
+    padding: 20px;
+    height: 150px;
+  }
+}
+
+@keyframes closeGroup {
+  from {
+    height: 150px;
+  }
+
+  to {
+    padding: 0;
+    height: 0;
+  }
+}
+
+@keyframes progressbar {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}

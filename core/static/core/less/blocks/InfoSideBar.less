@@ -1,0 +1,43 @@
+@import '../main.less';
+
+.info-side-bar {
+  &__text {
+    color: @black-color;
+    font-size: 18px;
+
+    &--lighted {
+      color: @lighted-color;
+    }
+  }
+
+  &__time-created,
+  &__time-updated {
+    .flexible(flex-start, flex-start, column, @gap: 4px);
+  }
+
+  &__buttons {
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+  }
+
+  &__button {
+    font-size: 18px;
+
+    .flexible(center, flex-start, @gap: 8px);
+
+    &-icon {
+      display: flex;
+    }
+
+    &--primary {
+      color: @primary-color;
+    }
+
+    &--success {
+      color: @success-color;
+    }
+
+    &--danger {
+      color: @danger-color;
+    }
+  }
+}

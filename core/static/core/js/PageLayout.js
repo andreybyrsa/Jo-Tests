@@ -149,12 +149,3 @@ function searchByChildNodes(event, childNodes, searchedItem) {
     }
   });
 }
-
-export {
-  addPageClassName,
-  openModal,
-  closeModal,
-  useModal,
-  getCurrentDate,
-  searchByChildNodes,
-};

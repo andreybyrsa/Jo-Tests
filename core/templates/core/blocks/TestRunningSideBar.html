@@ -1,0 +1,42 @@
+{% extends 'core/blocks/SideBar.html' %}
+{% load static %}
+
+{% block side-bar-content %}
+  <div class="testing-side-bar__condition">
+    <span>
+      Дата тестирования:
+    </span>
+    <span id="test-date" class="testing-side-bar__condition-date">
+      15.15.2022
+    </span>
+  </div>
+
+  <div class="testing-side-bar__condition">
+    <span>
+      Количество вопросов:
+    </span>
+    <span id="test-questions-amount" class="testing-side-bar__condition-date">
+      25
+    </span>
+  </div>
+
+  <div class="testing-side-bar__condition"> 
+    <span>
+      Осталось времени:
+    </span>
+    <span id="test-time" class="testing-side-bar__condition-date">
+      60:00
+    </span>
+  </div>
+{% endblock %}
+
+{% block side-bar-buttons %}
+  <div class="testing-side-bar__buttons">
+    <a class="testing-side-bar__buttons-save">
+      Сохранить тест
+    </a>
+    <a class="testing-side-bar__buttons-complete">
+      Завершить тест
+    </a>
+  </div>
+{% endblock %}

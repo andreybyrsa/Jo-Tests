@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "debug_toolbar",
     'pytils',
+    "imagekitio",
     
     "apps.auth",
     'apps.Tests',

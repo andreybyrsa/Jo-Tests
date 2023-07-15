@@ -3,9 +3,9 @@
 
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'Tests/less/CreateTestPage.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateSideBar.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/CreateSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/CreateTestSideBar.less' %}" />
 {% endblock %}
 
 {% block modal %}
@@ -34,5 +34,5 @@
 {% block script-files %}
   {{ test|json_script:'data-test' }}
   {{ questions_info|json_script:'data-questions' }}
-  <script type="module" src="{% static 'Tests/js/CreateTestPage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'Tests/js/CreateTestPage.js' %}"></script>
 {% endblock %}
