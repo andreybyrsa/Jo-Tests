@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block style-files %}
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'Profile/less/ProfilePage.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/ProfileModal.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/EditGroupModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/modals/ProfileModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/modals/EditGroupModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
@@ -72,17 +72,23 @@
   </div>
 
   <div id='tests' class="profile-page__tests">
+    {% if not test_results %}
+      <span class="profile-page__tests-placeholder">
+        Пройденных тестов пока нет
+      </span>
+    {% endif %}
+
     {% for result in test_results %}
-    <div class="profile-page__tests-test">
-      <div class="profile-page__tests-name">
-        <i class="bi bi-check2 profile-page__tests-icon"></i>
-        {{ result.test.title }}
+      <div class="profile-page__tests-test">
+        <div class="profile-page__tests-name">
+          <i class="bi bi-check2 profile-page__tests-icon"></i>
+          {{ result.test.title }}
+        </div>
+        <div class="profile-page__tests-name">
+          {{ result.result|round }}/{{ result.test.max_result }}
+          <a href='/test/{{ result.slug }}' class= "profile-page__button">Просмотреть</a>
+        </div> 
       </div>
-      <div class="profile-page__tests-name">
-        {{ result.result|round }}/{{ result.test.max_result }}
-        <a href='/test/{{ result.slug }}' class= "profile-page__button">Просмотреть</a>
-      </div> 
-    </div>
     {% endfor %}
   </div> 
 

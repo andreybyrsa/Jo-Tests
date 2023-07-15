@@ -1,31 +1,9 @@
 @import '../main.less';
 
 .info-side-bar {
-  padding: 20px;
-  width: 400px;
-  height: 100%;
-  background-color: @white-color;
-  border-radius: 20px;
-
-  .flexible(stretch, flex-start, column, @gap: 20px);
-
-  &__header {
-    .flexible(flex-start, flex-start, column, @gap: 8px);
-  }
-
-  &__content {
-    .flexible(flex-start, flex-start, column, @gap: 30px);
-    display: none;
-  }
-
-  &__title {
-    color: @black-color;
-    font-size: 29px;
-  }
-
   &__text {
     color: @black-color;
-    font-size: 21px;
+    font-size: 18px;
 
     &--lighted {
       color: @lighted-color;
@@ -42,7 +20,7 @@
   }
 
   &__button {
-    font-size: 24px;
+    font-size: 18px;
 
     .flexible(center, flex-start, @gap: 8px);
 
@@ -61,16 +39,5 @@
     &--danger {
       color: @danger-color;
     }
-  }
-
-  &__image {
-
-    &-wrapper {
-      width: 100%;
-
-      .flexible(center, center);
-    }
-
-    height: 300px;
   }
 }

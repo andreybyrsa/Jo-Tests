@@ -1,0 +1,43 @@
+{% load static %}
+
+<div class="create-side-bar">
+  <div class="create-side-bar__content">
+    <div class="create-side-bar__input-wrapper">
+      <span>{% block side-bar-title %}{% endblock %}</span>
+      <input
+        id="input-title"
+        class="create-side-bar__input"
+        placeholder="Введите название"
+      />
+    </div>
+
+    <div class="create-side-bar__input-wrapper">
+      <span>{% block side-bar-description %}{% endblock %}</span>
+      <input
+        id="input-description"
+        class="create-side-bar__input"
+        placeholder="Введите описание"
+      />
+    </div>
+
+    {% block side-bar-content %}{% endblock %}
+
+    <div class="create-side-bar__text">
+      <span class="create-side-bar__text-light">Дата создания:</span>
+      <span id="date-created"></span>
+    </div>
+
+    <div class="create-side-bar__text">
+      <span class="create-side-bar__text-light">Дата редактирования:</span>
+      <span id="date-updated">Не изменено</span>
+    </div>
+  </div>
+
+  <button
+    id="submit-button"
+    type="submit"
+    class="create-side-bar__submit-button"
+  >
+    {% block side-bar-button-text %}{% endblock %}
+  </button>
+</div>

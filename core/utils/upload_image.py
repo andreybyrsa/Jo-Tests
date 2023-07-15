@@ -39,6 +39,5 @@ def upload_image(file: str, user_id: str) -> str:
     os.remove(image_path)
 
     current_image_url = uploaded_image[0].response_metadata.raw["url"]
-    print(current_image_url)
 
     return current_image_url

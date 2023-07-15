@@ -1,0 +1,148 @@
+@import '../main.less';
+
+.modal-edit-group {
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  height: min-content;
+  border-radius: 20px;
+  background-color: @white-color;
+
+  font-size: 20px;
+
+  .flexible(
+    flex-end,
+    flex-start,
+    column,
+    @align-self: center,
+    @justify-self: center,
+    @gap: 20px
+  );
+  display: none;
+
+  &__input {
+    width: 100%;
+
+    color: @primary-color;
+    font-size: 18px;
+
+    .flexible(flex-start, flex-start, column, @gap: 4px);
+
+    &-lighted {
+      padding: 12px 20px;
+      width: 100%;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      color: @black-color;
+    }
+
+    &-login {
+      padding: 12px 20px;
+      width: 100%;
+      .border(solid, @lighted-color, 2px 2px 0px 2px, 12px 12px 0px 0px);
+
+      color: @black-color;
+    }
+  }
+
+  &__list {
+    margin: -20px 0px 0px 0px;
+    padding: 12px 20px;
+    width: 100%;
+    height: 200px;
+    .border(solid, @lighted-color, 2px, 0px 0px 12px 12px);
+
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+
+    &-students {
+      .flexible(center, flex-start, @gap: 8px);
+    }
+
+    &-checkbox {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  &__buttons {
+    width: 100%;
+    
+    .flexible(center, space-between, @gap: 20px);
+  }
+
+  &__delete {
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 150px;
+    height: 40px;
+    background-color: @danger-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+
+    transition: backgroud-color @default-transition-settings;
+
+    &:active {
+      background-color: @secondary-color;
+    }
+  }
+
+  &__button {
+    padding: 10px 15px;
+    width: 100%;
+    max-width: 150px;
+    background-color: @secondary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+
+  &--opened {
+    animation: openEditGroupModal @default-animation-settings;
+  }
+
+  &--closed {
+    animation: closeEditGroupModal @default-animation-settings;
+  }
+}
+
+@keyframes openEditGroupModal {
+  0% {
+    opacity: 0;
+
+    transform: scale(0.9)
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1)
+  }
+}
+
+@keyframes closeEditGroupModal {
+  0% {
+    opacity: 1;
+
+    transform: scale(1)
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: scale(0.9)
+  }
+}

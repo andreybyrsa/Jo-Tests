@@ -47,13 +47,15 @@
     border-radius: 12px;
 
     color: @white-color;
-    font-size: 20px;
+    font-size: 18px;
 
-    transition: all @default-transition-settings;
-  }
+    .flexible(center, center);
 
-  &__button:active {
-    background-color: @primary-color;
+    transition: backgroud-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
   }
 
   &__input {
@@ -66,11 +68,7 @@
     &-lighted {
       width: 100%;
       padding: 12px 20px;
-      .border(@border-style: solid,
-        @border-color: @lighted-color,
-        @border-widths: 2px,
-        @border-radii: 12px,
-      );
+      .border(solid, @lighted-color, 2px, 12px);
 
       color: @black-color;
     }
@@ -78,12 +76,9 @@
     &-login {
       width: 100%;
       padding: 12px 20px;
+      .border(solid, @lighted-color, 2px 2px 0px 2px, 12px 12px 0px 0px);
+
       color: @black-color;
-      .border(@border-style: solid,
-        @border-color: @lighted-color,
-        @border-widths: 2px 2px 0px 2px,
-        @border-radii: 12px 12px 0px 0px,
-      );
     }
   }
 
@@ -92,19 +87,22 @@
   }
 
   &__user {
-    .flexible(center, flex-start, column, @gap: 20px);
+    padding: 20px;
     width: 100%;
     max-width: 600px;
     height: min-content;
-    padding: 20px;
-    border-radius: 20px;
     background-color: @white-color;
+    border-radius: 20px;
+
+    .flexible(center, flex-start, column, @gap: 20px);
 
     &-username {
-      .flexible(center, space-between, @gap: 20px);
       width: 100%;
       max-width: 450px;
-      font-size: 36px;
+
+      font-size: 35px;
+
+      .flexible(center, space-between, @gap: 20px);
     }
 
     &-img {
@@ -114,34 +112,46 @@
     }
 
     &-edit {
-      .flexible(center, flex-start, column, @gap: 10px);
       width: 200px;
+
+      .flexible(center, flex-start, column, @gap: 10px);
     }
   }
 
   &__tests {
-    .flexible(center, flex-start, column, @gap: 10px);
-    display: none;
+    padding: 20px;
     width: 100%;
     max-width: 600px;
     height: min-content;
-    padding: 20px;
-    border-radius: 20px;
     background-color: @white-color;
+    border-radius: 20px;
+
+    .flexible(center, flex-start, column, @gap: 10px);
+    display: none;
 
     &-test {
-      .flexible(center, space-between, @gap: 20px);
-      width: 100%;
       padding: 8px 20px;
-      .border(@border-style: solid,
-        @border-color: @lighted-color,
-        @border-widths: 2px,
-        @border-radii: 12px,
-      );
+      width: 100%;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      color: @black-color;
+      font-size: 18px;
+
+      .flexible(center, space-between, @gap: 20px);
+    }
+
+    &-placeholder {
+      width: 100%;
+      height: 100%;
+
+      color: @primary-color;
+      font-size: 25px;
+
+      .flexible(center, center);
     }
 
     &-name {
-      .flexible(center, space-between, @gap: 16px);
+      .flexible(center, space-between, @gap: 20px);
     }
 
     &-icon {
@@ -153,33 +163,37 @@
   }
 
   &__addgroup {
-    .flexible(flex-end, flex-start, column, @gap: 20px);
-    display: none;
-    align-self: center;
-    justify-self: center;
-
+    padding: 20px;
     width: 100%;
     max-width: 600px;
     height: min-content;
-    padding: 20px;
-    border-radius: 20px;
     background-color: @white-color;
+    border-radius: 20px;
+
     font-size: 20px;
 
+    .flexible(
+      flex-end,
+      flex-start,
+      column,
+      center,
+      center,
+      @gap: 20px
+    );
+    display: none;
+
     &-list {
-      .flexible(flex-start, flex-start, column, @gap: 10px);
-      width: 100%;
-      height: 200px;
       margin: -20px 0px 0px 0px;
       padding: 12px 20px;
-      .border(@border-style: solid,
-        @border-color: @lighted-color,
-        @border-widths: 2px,
-        @border-radii: 0px 0px 12px 12px,
-      );
+      width: 100%;
+      height: 200px;
+
+      .border(solid, @lighted-color, 2px, 0px 0px 12px 12px);
 
       color: @black-color;
       font-size: 18px;
+
+      .flexible(flex-start, flex-start, column, @gap: 10px);
 
       &-checkbox {
         width: 15px;
@@ -193,30 +207,26 @@
   }
 
   &__listgroup {
-    .flexible(flex-start, flex-start, column, @gap: 10px);
-    display: none;
-
+    padding: 18px 20px;
     width: 100%;
     max-width: 600px;
     background-color: @white-color;
     border-radius: 20px;
-    padding: 18px 20px;
-    font-weight: 400;
-    cursor: pointer;
+
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+    display: none;
 
     &-group {
-      .flexible(center, space-between, @gap: 20px);
-      width: 100%;
-      color: @primary-color;
       padding: 10px 20px;
-      .border(@border-style: solid,
-        @border-color: @lighted-color,
-        @border-widths: 2px,
-        @border-radii: 12px,
-      );
+      width: 100%;
+      .border(solid, @lighted-color, 2px, 12px);
+
+      cursor: pointer;
 
       color: @primary-color;
       font-size: 18px;
+
+      .flexible(center, space-between, @gap: 20px);
     }
   }
 
@@ -232,11 +242,13 @@
 @keyframes openEditGroupModal {
   0% {
     opacity: 0;
+
     transform: scale(0.9)
   }
 
   100% {
     opacity: 1;
+
     transform: scale(1)
   }
 }
@@ -244,11 +256,13 @@
 @keyframes closeEditGroupModal {
   0% {
     opacity: 1;
+
     transform: scale(1)
   }
 
   100% {
     opacity: 0;
+
     transform: scale(0.9)
   }
 }

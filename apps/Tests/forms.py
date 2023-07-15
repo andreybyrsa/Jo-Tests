@@ -1,6 +1,8 @@
 from django import forms
 from .models import Test
 
+from core.utils.get_field_widgets import get_field_widgets
+
 create_test_input_class = "create-test-page__input create-test-page__input--hidden"
 
 
@@ -10,10 +12,10 @@ class TestCreateForm(forms.ModelForm):
         fields = ["title", "description"]
         labels = {"title": "", "description": ""}
         widgets = {
-            "title": forms.TextInput(
-                attrs={"class": create_test_input_class, "id": "test-title"}
+            "title": get_field_widgets(
+                field_class=create_test_input_class, id="test-title"
             ),
-            "description": forms.TextInput(
-                attrs={"class": create_test_input_class, "id": "test-descriprion"}
+            "description": get_field_widgets(
+                field_class=create_test_input_class, id="test-descriprion"
             ),
         }

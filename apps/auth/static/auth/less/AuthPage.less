@@ -1,244 +1,238 @@
 @import '/static/core/less/main.less';
 
-
-.input {
-   width: 100%;
-   max-width: 450px;
-}
-
-
 .auth-page {
 
-   &__content {
-      .flexible(center, center);
-   }
+  &__content {
+    .flexible(center, center);
+  }
 
-   &__toogle {
-      .position(absolute, @top: -50px, @right: -50px);
+  &__toogle {
+    .position(absolute, @top: -50px, @right: -50px);
 
-      padding: 40px;
-      background-color: @primary-color;
-      border-radius: 40px;
+    padding: 40px;
+    background-color: @primary-color;
+    border-radius: 40px;
 
-      cursor: pointer;
+    cursor: pointer;
 
-      .flexible(center, center);
+    .flexible(center, center);
 
-      &-icon {
-         color: @white-color;
-         font-size: 50px;
+    &-icon {
+      color: @white-color;
+      font-size: 50px;
 
-         display: flex;
-      }
-   }
+      display: flex;
+    }
+  }
 
-   &__form {
-      .position(relative);
+  &__form {
+    .position(relative);
 
-      width: 400px;
+    padding: 40px;
+    width: 400px;
+    background-color: @white-color;
+    border-radius: 40px;
+    box-shadow: 1px 1px 40px @lighted-color;
 
-      background-color: @white-color;
-      padding: 40px;
-      border-radius: 40px;
-      box-shadow: 1px 1px 40px @lighted-color;
+    .flexible(@flex-direction: column, @gap: 20px);
 
-      .flexible(@flex-direction: column, @gap: 20px);
+    &-title {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    &-input {
+      width: 100%;
+
+      font-size: 18px;
+      color: @black-color;
+
+      .flexible(@flex-direction: column, @gap: 5px);
 
       &-title {
-         font-size: 30px;
-         font-weight: bold;
+        font-weight: bold;
       }
 
-      &-input {
-         width: 100%;
+      &-data {
+        padding: 13px 20px;
+        width: 100%;
+        .border(solid, @lighted-color, 2px, 12px);
 
-         font-size: 18px;
-         color: @black-color;
+        &::placeholder {
+          color: @lighted-color;
+          font-weight: 300;
+        }
+      }
+    }
 
-         .flexible(@flex-direction: column, @gap: 5px);
 
-         &-title {
-            font-weight: bold;
-         }
+    &-links {
+      width: 100%;
 
-         &-data {
-            width: 100%;
-            .border(solid, @lighted-color, 2px, 12px);
-            padding: 13px 20px;
+      .flexible(center, center, column, @gap: 5px);
 
-            &::placeholder {
-               color: @lighted-color;
-               font-weight: 300;
-            }
-         }
+      &-button {
+        padding: 15px;
+        width: 100%;
+        background-color: @secondary-color;
+        .border(solid, transparent, 2px, 12px);
+
+        color: @white-color;
+        font-size: 20px;
+
+        transition: backgroud-color @default-transition-settings;
+
+        &:active {
+          background-color: @primary-color;
+        }
       }
 
+      &-link {
+        width: 112px;
+        background-color: transparent;
 
-      &-links {
-         width: 100%;
-
-         .flexible(center, center, column, @gap: 5px);
-
-         &-button {
-            width: 100%;
-            padding: 15px;
-            background-color: @secondary-color;
-            .border(solid, transparent, 2px, 12px);
-
-            color: @white-color;
-            font-size: 20px;
-
-            transition: all @default-transition-settings;
-         }
-
-         &-button:active {
-            background-color: @primary-color;
-         }
-
-         &-link {
-            width: 112px;
-            background-color: transparent;
-
-            font-size: 18px;
-            text-decoration: underline;
-         }
+        font-size: 18px;
+        text-decoration: underline;
       }
-   }
+    }
+  }
 }
 
 
 .reg-page__form {
-   .position(absolute, 0, 0, 0, 0, 1);
+  .position(absolute, 0, 0, 0, 0, 1);
 
-   .flexible(center, center);
+  .flexible(center, center);
+  display: none;
 
-   display: none;
+  &-content {
+    .flexible(none, none, column, @gap: 20px);
 
-   &--open {
-      display: flex;
-      animation: reg-page__open @default-animation-settings;
-   }
+    padding: 40px;
+    width: 400px;
+    height: min-content;
+    background-color: @primary-color;
+    border-radius: 40px;
+    box-shadow: 1px 1px 40px @lighted-color;
 
-   &--close {
-      animation: reg-page__close @default-animation-settings;
-   }
+    &-header {
+      .flexible(center, space-between);
 
-   &-content {
-      .flexible(none, none, column, @gap: 20px);
-
-      width: 400px;
-      height: min-content;
-
-      padding: 40px;
-      background-color: @primary-color;
-      border-radius: 40px;
-
-      box-shadow: 1px 1px 40px @lighted-color;
-
-      &-header {
-         .flexible(center, space-between);
-
-         &-title {
-            font-size: 30px;
-            font-weight: 700;
-            color: @white-color;
-         }
-
-         &-icon {
-            color: @white-color;
-            font-size: 40px;
-
-            cursor: pointer;
-
-            display: flex;
-         }
+      &-title {
+        color: @white-color;
+        font-size: 30px;
+        font-weight: 700;
       }
 
-      &-input {
-         width: 100%;
+      &-icon {
+        color: @white-color;
+        font-size: 40px;
 
-         font-size: 18px;
-         color: @white-color;
+        cursor: pointer;
 
-         .flexible(@flex-direction: column, @gap: 5px);
-
-         &-title {
-            color: @white-color;
-            font-weight: bold;
-         }
+        display: flex;
       }
+    }
 
-      &-links {
-         width: 100%;
-
-         .flexible(center, center, column, @gap: 5px);
-
-         &-button {
-            width: 100%;
-            padding: 15px;
-            background-color: @secondary-color;
-            .border(solid, transparent, 2px, 12px);
-
-            color: @white-color;
-            font-size: 20px;
-
-            transition: all @default-transition-settings;
-         }
-
-         &-button:active {
-            background-color: @white-color;
-            color: @black-color;
-         }
-
-         &-link {
-            width: 124px;
-            background-color: transparent;
-            color: @white-color;
-            background-color: @primary-color;
-
-
-
-            font-size: 18px;
-            text-decoration: underline;
-         }
-      }
-   }
-
-   &-input-data {
+    &-input {
       width: 100%;
-      .border(solid, @white-color, 2px, 12px);
-      background-color: @primary-color;
-      padding: 13px 20px;
-      color: @white-color;
 
-      &::placeholder {
-         color: @white-color;
-         font-weight: 300;
+      color: @white-color;
+      font-size: 18px;
+
+      .flexible(@flex-direction: column, @gap: 5px);
+
+      &-title {
+        color: @white-color;
+        font-weight: bold;
       }
-   }
+    }
+
+    &-links {
+      width: 100%;
+
+      .flexible(center, center, column, @gap: 5px);
+
+      &-button {
+        padding: 15px;
+        width: 100%;
+        background-color: @secondary-color;
+        .border(solid, transparent, 2px, 12px);
+
+        color: @white-color;
+        font-size: 20px;
+
+        transition: all @default-transition-settings;
+
+        &:active {
+          background-color: @white-color;
+
+          color: @black-color;
+        }
+      }
+
+      &-link {
+        width: 124px;
+        background-color: transparent;
+        background-color: @primary-color;
+
+        color: @white-color;
+        font-size: 18px;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &-input-data {
+    padding: 13px 20px;
+    width: 100%;
+    .border(solid, @white-color, 2px, 12px);
+    background-color: @primary-color;
+
+    color: @white-color;
+
+    &::placeholder {
+      color: @white-color;
+      font-weight: 300;
+    }
+  }
+
+  &--open {
+    display: flex;
+
+    animation: reg-page__open @default-animation-settings;
+  }
+
+  &--close {
+    animation: reg-page__close @default-animation-settings;
+  }
 
 }
 
 @keyframes reg-page__open {
-   0% {
-      transform: scale(0.9);
-      opacity: 0;
-   }
+  0% {
+    opacity: 0;
 
-   100% {
-      transform: scale(1.0);
-      opacity: 1;
-   }
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: scale(1.0);
+  }
 }
 
 @keyframes reg-page__close {
-   0% {
-      transform: scale(1.0);
-      opacity: 1;
-   }
+  0% {
+    opacity: 1;
 
-   100% {
-      transform: scale(0.9);
-      opacity: 0;
-   }
+    transform: scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: scale(0.9);
+  }
 }
