@@ -268,6 +268,7 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
                         if StudentResult.objects.filter(
                             student__id=student.id,
                             test__slug=course_test["test"]["slug"],
+                            group__index=group.index,
                         ).exists():
                             result = StudentResult.objects.get(
                                 student__id=student.id,
