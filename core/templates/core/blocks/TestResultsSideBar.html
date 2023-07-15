@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="test-results-side-bar">
+  <div class="test-results-side-bar__header">
+    <span id="side-bar-title" class="test-results-side-bar__title">
+        Нет открытых тестов
+    </span>
+    <span
+      id="side-bar-description"
+      class="test-results-side-bar__text test-results-side-bar__text--lighted"
+    >
+      Нажмите на тест, который хотите просмотреть
+    </span>
+  </div>
+
+  <div id="side-bar-content" class="test-results-side-bar__content">
+    {% for group in groups %}
+      <div class="test-results-side-bar__group-wrapper">
+        <div class="test-results-side-bar__group-header">
+          <span>{{ group.groupname }}</span>
+          <i
+            id="{{ group.index }}-icon"
+            class="bi bi-chevron-down test-results-side-bar__group-icon"
+          ></i>
+        </div>
+        <div id="{{ group.index }}-results" class="test-results-side-bar__group"></div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div id="side-bar-image" class="test-results-side-bar__image-wrapper">
+    <img
+      class="test-results-side-bar__image"
+      src="{% static 'core/images/sideBarImage.webp' %}"
+      alt="side bar image"
+    />
+  </div>
+</div>

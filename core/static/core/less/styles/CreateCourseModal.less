@@ -1,0 +1,146 @@
+@import '../main.less';
+
+.create-course-modal {
+  padding: 20px;
+  width: 500px;
+  background-color: @white-color;
+  border-radius: 20px;
+
+  .flexible(
+    flex-end,
+    flex-start,
+    column,
+    @aling-self: center,
+    @justify-self: center
+  );
+  
+  display: none;
+
+  &__icon {
+    color: @primary-color;
+    font-size: 35px;
+
+    display: flex;
+  }
+
+  &__content {
+    &-wrapper {
+      padding-bottom: 20px;
+      width: 100%;
+      height: 400px;
+
+      .flexible(center, flex-start, column, @gap: 10px);
+    }
+
+    width: 100%;
+    height: 100%;
+
+    overflow-y: scroll;
+
+    .flexible(center, flex-start, column, @gap: 10px);
+  }
+
+  &__search-input {
+    padding: 0 20px;
+    width: 100%;
+    height: 52px;
+    .border(solid, @lighted-color, 0 0 1px);
+
+    color: @black-color;
+    font-size: 18px;
+
+    &::placeholder {
+      color: @lighted-color;
+    }
+  }
+
+  &__test {
+    &-wrapper {
+      padding: 0 20px;
+      width: 100%;
+      .fixedHeight(52px);
+      .border(solid, @lighted-color, 1px, 12px);
+
+      cursor: pointer;
+
+      color: @black-color;
+      font-size: 18px;
+
+      .flexible(center, space-between);
+    }
+
+    .flexible(center, flex-start, @gap: 4px);
+  }
+
+  &__group {
+    padding: 0 20px;
+    width: 100%;
+    .fixedHeight(52px);
+    .border(solid, @lighted-color, 1px, 12px);
+
+    cursor: pointer;
+
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(center, flex-start);
+
+    &-content {
+      .flexible(center, flex-start, @gap: 4px);
+    }
+  }
+
+  &__save-button {
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+    background-color: @secondary-color;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+
+  &--opened {
+    animation: openCreateCourseModal @default-animation-settings;
+  }
+
+  &--closed {
+    animation: closeCreateCourseModal @default-animation-settings;
+  }
+}
+
+@keyframes openCreateCourseModal {
+  from {
+    opacity: 0;
+
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+}
+
+@keyframes closeCreateCourseModal {
+  from {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+
+    transform: scale(0.95);
+  }
+}

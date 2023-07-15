@@ -7,3 +7,7 @@ register = template.Library()
 def split(value, key):
     value.split(f"{key}")
     return value.split(key)
+
+@register.filter(name='round')
+def rounded(value):
+    return round(value)

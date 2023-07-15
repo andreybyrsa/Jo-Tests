@@ -1,31 +1,40 @@
+from apps.Courses.models import Group
 from core.utils.get_field_widgets import get_field_widgets
 from django import forms
 
 from django.contrib.auth import get_user_model
 
+from apps.Courses.models import Group
+
 User = get_user_model()
 
-profile_field_class = "profile-page__input"
+profile_field_class = "profile-modal__input--lighted"
 
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "profile_picture"]
+        fields = ["profile_picture", "username", "first_name", "last_name"]
+        labels = {
+            "username": "Логин",
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+            "profile_picture": "",
+        }
         widgets = {
             "username": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Логин"
+                field_class=profile_field_class, placeholder="Новый логин"
             ),
             "first_name": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Имя"
+                field_class=profile_field_class, placeholder="Новое имя"
             ),
             "last_name": get_field_widgets(
-                field_class = profile_field_class, placeholder = "Фамилия"
+                field_class=profile_field_class, placeholder="Новая фамилия"
             ),
             "profile_picture": get_field_widgets(
-                type = "file",
-                id = "image-input",
-                field_class = "profile-page__image-input",
+                type="file",
+                id="image-input",
+                field_class="profile-modal__image-input",
             ),
         }
 
@@ -38,4 +47,20 @@ class UpdateProfileForm(forms.ModelForm):
         UserDB.last_name = form_data["last_name"]
         UserDB.profile_picture = form_data["profile_picture"]
 
-        UserDB.save() 
+        UserDB.save()
+
+
+class GroupStudentForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ["groupname"]
+        labels = {
+            "groupname": "Название группы"
+        }
+        widgets = {
+            "groupname": get_field_widgets(
+                    field_class= "profile-page__input-lighted",
+                    placeholder= "Введите название группы",
+                    id= 'group-input'
+                ),
+        }

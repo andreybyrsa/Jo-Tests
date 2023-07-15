@@ -15,8 +15,8 @@
 
 header = [
     {
-        "name": "Список тестов", 
-        "url_name": "tests", 
+        "name": "Список тестов",
+        "url_name": "tests",
         "icon_name": "bi bi-list"
     },
     {
@@ -25,8 +25,8 @@ header = [
         "icon_name": "bi bi-file-earmark-plus",
     },
     {
-        "name": "Список курсов", 
-        "url_name": "courses", 
+        "name": "Список курсов",
+        "url_name": "courses",
         "icon_name": "bi bi-list"
     },
     {
@@ -35,23 +35,23 @@ header = [
         "icon_name": "bi bi-file-earmark-plus",
     },
     {
-        "name": "Профиль", 
-        "url_name": "profile", 
+        "name": "Профиль",
+        "url_name": "profile",
         "icon_name": "bi bi-person"
     },
 ]
 
 profile_cell = [
-    {'name':'Настройки профиля'},
-    {'name':'Пройденные тесты'},
-    {'name':'Добавить группу'},
-    {'name':'Список групп'},
+    {"name": "Настройки профиля"},
+    {"name": "Пройденные тесты"},
+    {"name": "Добавить группу"},
+    {"name": "Список групп"},
 ]
 
 info_course_student = [
     {
         "name": "Посмотреть курс",
-        "url_name": "inspect-test",
+        "url_name": "",
         "icon_name": "bi bi-eye",
         "color": "success",
     },
@@ -60,19 +60,19 @@ info_course_student = [
 info_course_teacher = [
     {
         "name": "Посмотреть курс",
-        "url_name": "inspect-course",
+        "url_name": "",
         "icon_name": "bi bi-eye",
         "color": "success",
     },
     {
         "name": "Редактировать курс",
-        "url_name": "change-course",
+        "url_name": "change_course/",
         "icon_name": "bi bi-pencil-square",
         "color": "primary",
     },
     {
         "name": "Удалить курс",
-        "url_name": "delete-course",
+        "url_name": "delete_course/",
         "icon_name": "bi bi-trash",
         "color": "danger",
     },
@@ -81,7 +81,7 @@ info_course_teacher = [
 info_test_teacher = [
     {
         "name": "Посмотреть тест",
-        "url_name": "inspect-course",
+        "url_name": "",
         "icon_name": "bi bi-eye",
         "color": "success",
     },
@@ -90,17 +90,18 @@ info_test_teacher = [
 info_test_author = [
     {
         "name": "Редактировать тест",
-        "url_name": "change-test",
+        "url_name": "change_test/",
         "icon_name": "bi bi-pencil-square",
         "color": "primary",
     },
     {
         "name": "Удалить тест",
-        "url_name": "delete-test",
+        "url_name": "delete_test/",
         "icon_name": "bi bi-trash",
         "color": "danger",
     },
 ]
+
 
 class HeaderMixin:
     def get_user_header(self):
@@ -118,21 +119,21 @@ class HeaderMixin:
             user_header.pop(0)
         context["header"] = user_header
         return context
-    
+
+
 class ProfileCellMixin:
     def get_profile_cell(self):
         context = {}
         current_user = self.request.user
         user_cells = profile_cell.copy()
-        if current_user.role == 'author':
-            context['cells'] = user_cells[0:1]
-        elif current_user.role == 'teacher':
+        if current_user.role == "author":
+            context["cells"] = user_cells[0:1]
+        elif current_user.role == "teacher":
             user_cells.pop(1)
-            context['cells'] = user_cells
+            context["cells"] = user_cells
         else:
-            context['cells'] = user_cells[0:2]
+            context["cells"] = user_cells[0:2]
         return context
-            
 
 
 class InfoSidebarMixin:
@@ -145,8 +146,6 @@ class InfoSidebarMixin:
                 context["info"] = info_test_teacher
         elif current_user.role == "student":
             context["info"] = info_course_student
-        else:
+        elif current_user.role == "author":
             context["info"] = info_test_author
         return context
-
-

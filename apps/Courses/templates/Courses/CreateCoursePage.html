@@ -1,0 +1,55 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'Courses/less/CreateCoursePage.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/CreateCourseModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/TestSettingsModal.less' %}" />
+{% endblock %}
+
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+  {% include 'core/modals/CreateCourseModal.html' %}
+  {% include 'core/modals/TestSettingsModal.html' %}
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' with header=header %}
+{% endblock %}
+
+{% block left-side-bar %}
+  {% include 'core/blocks/CreateCourseSideBar.html' %}
+{% endblock %}
+
+{% block content %}
+  <form
+    id="form"
+    class="create-course-page__form"
+    method="POST"
+  >
+    {% csrf_token %}
+    {{ form }}
+    <div class="create-course-page__tests-wrapper">
+      <span class="create-course-page__form-title">Тесты</span>  
+      <div id="tests" class="create-course-page__tests"></div>
+    </div>
+
+    <div class="create-course-page__groups-wrapper">
+      <span class="create-course-page__form-title">Группы</span>
+      <div id="groups" class="create-course-page__groups"></div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block script-files %}
+  {{ course|json_script:"data-course" }}
+  {{ tests_info|json_script:"data-tests" }}
+  {{ groups_info|json_script:"data-groups" }}
+  {{ course_tests_info|json_script:"data-course-tests" }}
+  {{ course_groups_info|json_script:"data-course-groups" }}
+  <script type="text/javascript" src="{% static 'Courses/js/CreateCoursePage.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/CreateCourseModal.js' %}"></script>
+  <script type="text/javascript" src="{% static 'core/js/TestSettingsModal.js' %}"></script>
+{% endblock %}

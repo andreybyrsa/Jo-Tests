@@ -1,0 +1,35 @@
+<div class="test-settings-modal">
+  <button id="close-test-modal-button">
+    <i class="bi bi-x-circle test-settings-modal__icon"></i>
+  </button>
+
+  <div class="test-settings-modal__date-setting">
+    <span>Время выполнения теста (минуты):</span>
+    <input
+      type="number"
+      id="test-time"
+      value="60"
+      min="1"
+      class="test-settings-modal__date-input"
+    />
+  </div>
+
+  <div class="test-settings-modal__available-setting">
+    <span>Видимость теста (для групп):</span>
+    <button id="toggle-button" class="test-settings-modal__toggle-button">
+      <input
+        id="test-available"
+        class="test-settings-modal__toggle"
+        value="false"
+        disabled
+      />
+    </button>
+  </div>
+
+  <button
+    id="save-test-settings"
+    class="test-settings-modal__save-button"
+  >
+    Сохранить настройки
+  </button>
+</div>

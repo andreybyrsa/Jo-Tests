@@ -1,0 +1,84 @@
+{% load static %}
+
+<div class="create-test-side-bar">
+  <div class="create-test-side-bar__content">
+    <div class="create-test-side-bar__input-wrapper">
+      <span>Название теста</span>
+      <input
+        id="input-test-title"
+        class="create-test-side-bar__input"
+        placeholder="Это новый тест"
+      />
+    </div>
+
+    <div class="create-test-side-bar__input-wrapper">
+      <span>Описание теста</span>
+      <input
+        id="input-test-description"
+        class="create-test-side-bar__input"
+        placeholder="Это описание теста"
+      />
+    </div>
+
+    <button
+      id="add-question-button"
+      class="create-test-side-bar__button"
+    >
+      <i class="bi bi-plus create-test-side-bar__button-icon"></i>
+      <span>Вопрос</span>
+    </button>
+
+    <button
+      id="add-answer-button"
+      class="create-test-side-bar__button create-test-side-bar__button--disabled"
+      disabled
+    >
+      <i class="bi bi-plus create-test-side-bar__button-icon"></i>
+      <span>Ответ</span>
+    </button>
+
+    <button
+      id="toggle-answer-type-button"
+      class="create-test-side-bar__toggle-button create-test-side-bar__toggle-button--disabled"
+      disabled
+    >
+      Поменять тип вопроса
+    </button>
+
+    <button
+      id="delete-question-button"
+      class="create-test-side-bar__delete-button"
+    >
+      Удалить вопрос
+    </button>
+
+    <div class="create-test-side-bar__text">
+      <span class="create-test-side-bar__text-light">Дата создания:</span>
+      <span id="date-created"></span>
+    </div>
+
+    <div class="create-test-side-bar__text">
+      <span class="create-test-side-bar__text-light">Дата редактирования:</span>
+      <span id="date-updated">Не изменено</span>
+    </div>
+
+    <div class="create-test-side-bar__text">
+      <span class="create-test-side-bar__text-light">Количество вопросов:</span>
+      <input
+        id="questions-amount"
+        name="questions-amount"
+        class="create-test-side-bar__text"
+        value="0"
+        disabled
+      />
+    </div>
+  </div>
+
+  <button
+    id="submit-button"
+    type="submit"
+    class="create-test-side-bar__submit-button"
+  >
+    Cохранить тест
+  </button>
+</div>

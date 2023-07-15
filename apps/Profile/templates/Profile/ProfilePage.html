@@ -4,11 +4,14 @@
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'Profile/less/ProfilePage.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/ProfileModal.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/styles/EditGroupModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
   {% include 'core/modals/AlertModal.html' %}
+  {% include 'core/modals/ProfileModal.html' %}
+  {% include 'core/modals/EditGroupModal.html' %}
 {% endblock %}
 
 {% block header %}
@@ -17,7 +20,7 @@
 
 {% block left-side-bar %}
   {% for cell in cells %}
-    <div class="profile-page__cell">
+    <div class="profile-page__cell" onclick="changeContent( '{{ forloop.counter0 }}' )">
       <span>{{ cell.name }}</span>
       <i class="bi bi-chevron-right profile-page__cell-icon"></i>
     </div>
@@ -25,36 +28,102 @@
 {% endblock %}
 
 {% block content %}
-  <h1></h1>
-  
-  <form method="post" enctype="multipart/form-data" class="profile-page">
-      {% csrf_token %}
-      
-      <div>
-          <input type="text" name="username" id="id_username" value="{{ user.username }}" class="profile-page__nickname" placeholder="Логин">
-      </div>
+  <div class='profile-page__user' id='form'>
+    <div class="profile-page__user-username" >
+      {% if user.profile_picture %}
+        <img
+          class="profile-page__user-img"
+          src="{{ user.profile_picture }}" 
+          alt="profile" 
+        >
+      {% else %}
+        <img
+          class="profile-page__user-img"
+          src="{% static 'core/images/profileFoto.png' %}" 
+          alt="profile" 
+        >
+      {% endif %}
 
-      <button class= "profile-page__edit" type="submit">Редактировать</button>
+      <div class="profile-page__user-edit">
+        {{ user.username }}
+        <button
+          id='buttonProfileModal'
+          class= "profile-page__button"
+          onclick="openProfileModal()"
+        >
+          Редактировать
+        </button>
+      </div>
+    </div> 
+ 
+    {% for input in update_profile_form %}
+      {% if forloop.first %}
+      {% else %}
+        <div class="profile-page__input">
+          {{ input.label }}
+          <input
+            class='profile-page__input-lighted' 
+            value="{{ input.value }}"
+            disabled
+          >
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 
-      <div>
-          <input type="text" name="username" id="id_username" value="{{ user.username }}" class="profile-page__names" placeholder="Логин">
+  <div id='tests' class="profile-page__tests">
+    {% for result in test_results %}
+    <div class="profile-page__tests-test">
+      <div class="profile-page__tests-name">
+        <i class="bi bi-check2 profile-page__tests-icon"></i>
+        {{ result.test.title }}
       </div>
-      
-      <div>
-          <input type="text" name="first_name" id="id_first_name" value="{{ user.first_name }}" class="profile-page__names" placeholder="Имя">
+      <div class="profile-page__tests-name">
+        {{ result.result|round }}/{{ result.test.max_result }}
+        <a href='/test/{{ result.slug }}' class= "profile-page__button">Просмотреть</a>
+      </div> 
+    </div>
+    {% endfor %}
+  </div> 
+
+  <form method='POST' id='addgroup' class="profile-page__addgroup">
+    {% csrf_token %}
+    <div class="profile-page__input">
+      {% for input in group_student_form %}
+        {{ input.label }}
+        {{ input }}
+      {% endfor %}
+    </div>
+
+    <div class="profile-page__input">
+      <span>Логин</span>
+      <input id='create-input' class='profile-page__input-login' placeholder='Поиск студентов'/>
+    </div>
+
+    <div class="profile-page__addgroup-list">
+      {% for student in students %}
+      <div class="profile-page__addgroup-students">
+        <input name='students-login' type="checkbox" class="profile-page__addgroup-list-checkbox" value={{ student.user.username }} />
+        <span class="profile-page__addgroup-list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</span>
       </div>
-      
-      <div>
-          <input type="text" name="last_name" id="id_last_name" value="{{ user.last_name }}" class="profile-page__names" placeholder="Фамилия">
-      </div>
-      
-      <div>
-          <input type="file" name="profile_picture" id="id_profile_picture" class="profile-page__image-input">
-      </div>
-      
+      {% endfor %}
+    </div>
+
+    <button class="profile-page__button" type='submit' name = 'register'>Добавить</button>
   </form>
+
+  <div id='listgroup' class="profile-page__listgroup">
+    {% for group in teacher_groups %}
+    <div class="profile-page__listgroup-group" onclick="openGroupModal( '{{group.index}}' )">
+      {{ group.groupname }}
+      <i class="bi bi-eye"></i>
+    </div>
+    {% endfor %}
+  </div>
+
 {% endblock content %}
 
 {% block script-files %}
+  {{ json_groups_info|json_script:"data-groups" }}
   <script type="text/javascript" src="{% static 'Profile/js/ProfilePage.js' %}"></script>
 {% endblock %}

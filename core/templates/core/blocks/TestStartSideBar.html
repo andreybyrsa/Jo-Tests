@@ -1,0 +1,71 @@
+{% load static %}
+
+<div class="test-start-side-bar">
+  <div class="test-start-side-bar__header">
+    <span id="side-bar-title" class="test-start-side-bar__title">
+        Нет открытых тестов
+    </span>
+    <span
+      id="side-bar-description"
+      class="test-start-side-bar__text test-start-side-bar__text--lighted"
+    >
+      Нажмите на тест, который хотите просмотреть
+    </span>
+  </div>
+
+  <div id="side-bar-content" class="test-start-side-bar__content">
+    <div class="test-start-side-bar__questions-amount">
+      <span
+        class="test-start-side-bar__text test-start-side-bar__text--lighted"
+      >
+        Количество вопросов:
+      </span>
+      <span
+        id="test-question-amount"
+        class="test-start-side-bar__text test-start-side-bar__text--primary"
+      ></span>
+    </div>
+
+    <div class="test-start-side-bar__test-time">
+      <span
+        class="test-start-side-bar__text test-start-side-bar__text--lighted"
+      >
+        Время тестирования:
+      </span>
+      <span
+        id="test-time"
+        class="test-start-side-bar__text test-start-side-bar__text--primary"
+      ></span>
+    </div>
+
+    <div class="test-start-side-bar__test-result">
+      <span
+         class="test-start-side-bar__text test-start-side-bar__text--lighted"
+      >
+        Результат теста:
+      </span>
+      <span
+        id="test-result"
+        class="test-start-side-bar__text test-start-side-bar__text--primary"
+      >
+        не начат
+      </span>
+    </div>
+  </div>
+
+  <a
+    id="test-button"
+    class="test-start-side-bar__button"
+    href="/tests/"
+  >
+    Начать тест
+  </a>
+
+  <div id="side-bar-image" class="test-start-side-bar__image-wrapper">
+    <img
+      class="test-start-side-bar__image"
+      src="{% static 'core/images/sideBarImage.webp' %}"
+      alt="side bar image"
+    />
+  </div>
+</div>

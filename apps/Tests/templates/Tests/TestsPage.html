@@ -5,7 +5,6 @@
   <link rel="stylesheet/less" href="{% static 'Tests/less/TestsPage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/styles/InfoSideBar.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/styles/AlertModal.less' %}" />
 {% endblock %}
 
 {% block modal %}
@@ -21,17 +20,28 @@
 {% endblock %}
 
 {% block content %}
-  {% if not tests %}
-    <span class="tests-page__placeholder">Тестов пока нет...</span>
-  {% endif %}
+  <div class="tests-page__search">
+    <input
+      id="search-input"
+      class="tests-page__search-input"
+      placeholder="Поиск по названию"
+    />
+    <i id="search-icon" class="bi bi-search tests-page__search-icon"></i>
+  </div>
 
-  {% for test in tests %}
-    <div class="tests-page__test" onclick="openSideBar('{{ forloop.counter0 }}')">
-      <span class="tests-page__test-title">{{ test.title }}</span>
+  <div class="tests-page__tests">
+    {% if not tests %}
+      <span class="tests-page__placeholder">Тестов пока нет...</span>
+    {% endif %}
 
-      <span class="tests-page__test-description">{{ test.description }}</span>
-    </div>
-  {% endfor %}
+    {% for test in tests %}
+      <div class="tests-page__test">
+        <span class="tests-page__test-title">{{ test.title }}</span>
+
+        <span class="tests-page__test-description">{{ test.description }}</span>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
 
 {% block script-files %}

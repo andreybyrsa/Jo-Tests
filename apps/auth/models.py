@@ -1,71 +1,91 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
     class RoleType(models.TextChoices):
-        STUDENT = "student"
-        AUTHOR = "author"
-        TEACHER = "teacher"
+        student = "student"
+        author = "author"
+        teacher = "teacher"
 
     profile_picture = models.FileField(
-        null=True, blank=True, verbose_name="Аватар"
+        null=True, blank=True, max_length=500, verbose_name="Аватар"
     )
     role = models.CharField(
         choices=RoleType.choices,
-        default=RoleType.STUDENT,
+        default="student",
         max_length=50,
         verbose_name="Роль",
     )
     slug = models.SlugField(
-        max_length=255, db_index=True, blank=True, verbose_name="URL"
+        max_length=255, db_index=True, verbose_name="URL", blank=True
     )
+    groups = None
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
+    def get_user_info(self):
+        return {
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+        }
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     tests = models.ManyToManyField(
-        "TestsApp.Test", verbose_name="Тесты", related_name="authors", blank=True
+        "TestsApp.Test", verbose_name="Тесты", related_name="+", blank=True
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Автор {self.user}"
+
+    class Meta:
+        verbose_name = "Автор"
+        verbose_name_plural = "Авторы"
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     courses = models.ManyToManyField(
         "CoursesApp.Course",
         verbose_name="Курсы студента",
-        related_name="students",
+        related_name="+",
         blank=True,
-        help_text="Select the courses for the student.",
     )
     result_tests = models.ManyToManyField(
         "TestsApp.StudentResult",
-        verbose_name="Результаты тестов",
-        related_name="students",
+        verbose_name="Результат теста",
+        related_name="+",
         blank=True,
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Студент {self.user}"
+
+    class Meta:
+        verbose_name = "Студент"
+        verbose_name_plural = "Студенты"
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     courses = models.ManyToManyField(
-        "CoursesApp.Course",
-        verbose_name="Курсы",
-        related_name="teachers",
-        blank=True,
+        "CoursesApp.Course", verbose_name="Курсы", related_name="+", blank=True
     )
     groups = models.ManyToManyField(
-        "CoursesApp.Group",
-        verbose_name="Группы",
-        related_name="teachers",
-        blank=True,
+        "CoursesApp.Group", verbose_name="Группы", related_name="+", blank=True
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Преподаватель {self.user}"
+
+    class Meta:
+        verbose_name = "Преподаватель"
+        verbose_name_plural = "Преподаватели"

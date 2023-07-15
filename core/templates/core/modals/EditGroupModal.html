@@ -1,0 +1,28 @@
+{% load static %}
+
+<form method='POST' id='edit-group-modal' class="modal-edit-group">
+   {% csrf_token %}
+   <div class="modal-edit-group__input">
+     {{ group_student_form }}
+   </div>
+
+   <div class="modal-edit-group__input">
+     <span>Логин</span>
+     <input id='edit-input' class='modal-edit-group__input-login' placeholder='Поиск студентов'/>
+   </div>
+
+   <div class="modal-edit-group__list">
+     {% for student in students %}
+     <div class="modal-edit-group__list-students">
+       <input name='students-login' type="checkbox" class="modal-edit-group__list-checkbox" value={{ student.user.username }}>
+       <b class="modal-edit-group__list-name">{{ student.user.username }} ({{student.user.first_name}} {{student.user.last_name}})</b>
+     </div>
+     {% endfor %}
+   </div>
+
+   <div class="modal-edit-group__buttons">
+      <a id='delete-group' class="modal-edit-group__delete">Удалить</a>
+      <button class="modal-edit-group__button" type='submit' name="index" id="edit-button">Изменить</button>
+   </div>
+   
+ </form>
