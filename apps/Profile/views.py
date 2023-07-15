@@ -72,7 +72,8 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
 
     def post(self, request):
         user = request.user
-        teacher = Teacher.objects.get(user__id=user.id)
+        if user.role == 'teacher':
+            teacher = Teacher.objects.get(user__id=user.id)
         if 'first_name' in request.POST:
             update_form = UpdateProfileForm(request.POST, request.FILES, instance=user)
             new_profile_picture = request.FILES or None
@@ -81,7 +82,8 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
                         new_profile_picture["profile_picture"], user.id
                     )
             try:
-                update_form.save(user.username)
+                if update_form.is_valid():
+                    update_form.save(user.username)
                 messages.success(request, "Данные сохранены")
                 return redirect("profile")
             except:
