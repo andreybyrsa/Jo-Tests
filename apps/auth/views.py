@@ -74,3 +74,12 @@ def user_logout(request):
         logout(request)
 
     return redirect("auth")
+
+
+def index(request):
+    current_user = request.user
+
+    if current_user.is_authenticated:
+        return redirect(get_current_redirect_name(current_user))
+
+    return redirect("auth")

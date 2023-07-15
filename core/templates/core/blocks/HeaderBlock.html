@@ -1,14 +1,14 @@
 {% load static %}
 
 <div class="header">
-  <div class="header__logo">
+  <a class="header__logo" href="{% url 'index' %}">
     <b><span>Jo Tests</span></b>
     <img
       class="header__logo-image"
       src="{% static 'core/images/logo.webp' %}"
       alt="header logo"
     />
-  </div>
+  </a>
 
   <div id="header-tabs" class="header__tabs">
     {% for tab in header %}
