@@ -54,7 +54,7 @@ if (JSON_TEST) {
   }, 10000);
 }
 
-if (JSON_QUESTIONS) {
+if (JSON_QUESTIONS.length) {
   activateDisabledButtons();
 
   JSON_QUESTIONS.forEach((questionInfo) => {
