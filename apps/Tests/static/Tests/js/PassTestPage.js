@@ -107,9 +107,20 @@ function createAnswer(question, answers, answer, answerType) {
   answerText.textContent = answer ? answer : "";
   answerText.className = "pass-test-page__question-answer";
 
-  choosenAnswer.addEventListener("input", () =>
-    chooseAnswer(answers, answerText)
-  );
+  answerWrapper.addEventListener("click", (event) => {
+    if (event.target.type !== "checkbox" && event.target.type !== "radio") {
+      if (choosenAnswer.checked) {
+        choosenAnswer.checked = false;
+      } else {
+        choosenAnswer.checked = true;
+        answerText.classList.add(ACTIVE_ANSWER_CLASS);
+      }
+    } else {
+      answerText.classList.add(ACTIVE_ANSWER_CLASS);
+    }
+
+    removeActiveAnswers(answers, answerText);
+  });
 
   const answerInput = document.createElement("input");
   answerInput.hidden = true;
@@ -124,16 +135,15 @@ function createAnswer(question, answers, answer, answerType) {
   return answerWrapper;
 }
 
-function chooseAnswer(answers, answerText) {
-  Array.from(answers.childNodes).forEach((text) => {
-    const currentText = text.childNodes[1];
+function removeActiveAnswers(answers) {
+  Array.from(answers.childNodes).forEach((answer) => {
+    const currentText = answer.childNodes[1];
+    const currentInput = answer.childNodes[0];
 
-    if (currentText.classList.contains(ACTIVE_ANSWER_CLASS)) {
+    if (currentInput.checked === false) {
       currentText.classList.remove(ACTIVE_ANSWER_CLASS);
     }
   });
-
-  answerText.classList.add(ACTIVE_ANSWER_CLASS);
 }
 
 function getDoubleInsideChild(nodeElement) {
