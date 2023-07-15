@@ -1,0 +1,53 @@
+@import '../main.less';
+
+.create-course-side-bar {
+  &__button {
+    width: 50%;
+    height: 52px;
+    background-color: @primary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(center, center);
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @secondary-color;
+    }
+
+    &--disabled {
+      background-color: @lighted-color;
+
+      transition: none;
+
+      &:active {
+        background-color: @lighted-color;
+      }
+    }
+
+    &-icon {
+      font-size: 30px;
+
+      display: flex;
+    }
+  }
+
+  &__text {
+    color: @black-color;
+    font-size: 18px;
+
+    .flexible(center, flex-start, @gap: 4px);
+
+    &-light {
+      color: @lighted-color;
+    }
+
+    input {
+      width: 50px;
+      background-color: transparent;
+    }
+  }
+}

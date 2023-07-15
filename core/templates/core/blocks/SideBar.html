@@ -1,0 +1,37 @@
+{% load static %}
+
+<div class="side-bar">
+  <div class="side-bar__header">
+    <span id="side-bar-title" class="side-bar__title">
+      {% if side_bar_name == 'test' %}
+        Нет открытых тестов
+      {% else %}
+        Нет открытых курсов
+      {% endif %}
+    </span>
+    <span
+      id="side-bar-description"
+      class="side-bar__text side-bar__text--lighted"
+    >
+      {% if side_bar_name == 'test' %}
+        Нажмите на тест, который хотите просмотреть
+      {% else %}
+        Нажмите на курс, который хотите просмотреть
+      {% endif %}
+    </span>
+  </div>
+
+  <div id="side-bar-content" class="side-bar__content">
+    {% block side-bar-content %}{% endblock %}
+  </div>
+
+  {% block side-bar-buttons %}{% endblock %}
+
+  <div id="side-bar-image" class="side-bar__image-wrapper">
+    <img
+      class="side-bar__image"
+      src="{% static 'core/images/sideBarImage.webp' %}"
+      alt="side bar image"
+    />
+  </div>
+</div>

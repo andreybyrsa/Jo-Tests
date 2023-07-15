@@ -16,9 +16,9 @@ const JSON_COURSE_GROUPS = JSON.parse(dataCourseGroups);
 
 const form = document.getElementById("form");
 
-const courseTitleInput = document.getElementById("input-course-title");
+const courseTitleInput = document.getElementById("input-title");
 const courseDescriptionInput = document.getElementById(
-  "input-course-description"
+  "input-description"
 );
 
 const courseTitle = document.getElementById("course-title");

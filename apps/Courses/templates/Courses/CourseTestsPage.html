@@ -4,6 +4,7 @@
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'Courses/less/CourseTestsPage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/SideBar.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/TestStartSideBar.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/TestResultsSideBar.less' %}" />
 {% endblock %}
@@ -14,9 +15,9 @@
 
 {% block left-side-bar %}
   {% if user.role == 'student' %}
-    {% include 'core/blocks/TestStartSideBar.html' %}
+    {% include 'core/blocks/TestStartSideBar.html' with side_bar_name='test' %}
   {% else %}
-    {% include 'core/blocks/TestResultsSideBar.html' with groups=json_groups %}
+    {% include 'core/blocks/TestResultsSideBar.html' with side_bar_name='test' groups=json_groups %}
   {% endif %}
 {% endblock %}
 

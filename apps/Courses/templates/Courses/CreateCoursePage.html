@@ -5,6 +5,7 @@
   <link rel="stylesheet/less" href="{% static 'Courses/less/CreateCoursePage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/CreateSideBar.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/CreateCourseSideBar.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/modals/CreateCourseModal.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/modals/TestSettingsModal.less' %}" />
 {% endblock %}
@@ -31,6 +32,7 @@
   >
     {% csrf_token %}
     {{ form }}
+
     <div class="create-course-page__tests-wrapper">
       <span class="create-course-page__form-title">Тесты</span>  
       <div id="tests" class="create-course-page__tests"></div>

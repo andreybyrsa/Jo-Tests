@@ -1,26 +1,16 @@
 @import '../main.less';
 
-.testing-side-bar {
-  padding: 20px;
-  width: 400px;
-  height: 100%;
-  background-color: @white-color;
-  border-radius: 20px;
-
-  .flexible(stretch, flex-start, column, @gap: 30px);
-
-  &__header {
-    color: @black-color;
-    font-size: 25px;
-
-    .flexible(flex-start, flex-start, column, @gap: 8px);
-
-    &-description {
-      color: @lighted-color;
-      font-size: 20px;
-    }
+.side-bar {
+  &__content {
+    display: flex;
   }
 
+  &__image {
+    display: none;
+  }
+}
+
+.testing-side-bar {
   &__conditions {
     .flexible(flex-start, flex-start, column, @gap: 10px);
   }

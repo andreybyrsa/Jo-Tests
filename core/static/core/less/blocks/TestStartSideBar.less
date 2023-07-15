@@ -1,26 +1,10 @@
 @import '../main.less';
 
 .test-start-side-bar {
-  padding: 20px;
-  width: 400px;
-  height: 100%;
-  background-color: @white-color;
-  border-radius: 20px;
-
-  .flexible(stretch, flex-start, column, @gap: 20px);
-
-  &__header {
-    .flexible(flex-start, flex-start, column, @gap: 8px);
-  }
-
-  &__title {
-    color: @black-color;
-    font-size: 25px;
-  }
-
   &__content {
-    .flexible(flex-start, flex-start, column, @gap: 10px);
-    display: none;
+    width: 100%;
+
+    .flexible(flex-start, flex-start, column, @gap: 8px);
   }
 
   &__text {
@@ -53,16 +37,5 @@
     &--disabled {
       background-color: @primary-color;
     }
-  }
-
-  &__image {
-
-    &-wrapper {
-      width: 100%;
-
-      .flexible(center, center);
-    }
-
-    height: 300px;
   }
 }

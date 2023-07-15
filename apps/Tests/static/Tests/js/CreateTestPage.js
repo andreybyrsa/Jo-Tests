@@ -6,8 +6,8 @@ const dataQuestions = document.getElementById("data-questions").textContent;
 const JSON_TEST = JSON.parse(dataTest);
 const JSON_QUESTIONS = JSON.parse(dataQuestions);
 
-const inputTestTitle = document.getElementById("input-test-title");
-const inputTestDescription = document.getElementById("input-test-description");
+const inputTestTitle = document.getElementById("input-title");
+const inputTestDescription = document.getElementById("input-description");
 const testTitle = document.getElementById("test-title");
 const testDescription = document.getElementById("test-descriprion");
 

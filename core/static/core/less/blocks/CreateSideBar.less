@@ -1,7 +1,6 @@
 @import '../main.less';
 
-.create-test-side-bar,
-.create-course-side-bar {
+.create-side-bar {
   padding: 20px;
   width: 400px;
   height: 100%;
@@ -40,74 +39,6 @@
     }
   }
 
-  &__button {
-    width: 50%;
-    height: 52px;
-    background-color: @primary-color;
-    border-radius: 12px;
-
-    color: @white-color;
-    font-size: 18px;
-
-    .flexible(center, center);
-
-    transition: background-color @default-transition-settings;
-
-    &:active {
-      background-color: @secondary-color;
-    }
-
-    &--disabled {
-      background-color: @lighted-color;
-
-      transition: none;
-
-      &:active {
-        background-color: @lighted-color;
-      }
-    }
-
-    &-icon {
-      font-size: 30px;
-
-      display: flex;
-    }
-  }
-
-  &__toggle-button {
-    color: @primary-color;
-    font-size: 18px;
-
-    transition: color @default-transition-settings;
-
-    &:active {
-      color: @secondary-color;
-    }
-
-    &--disabled {
-      color: @lighted-color;
-
-      transition: none;
-
-      &:active {
-        color: @lighted-color;
-      }
-    }
-  }
-
-  &__delete-button {
-    color: @danger-color;
-    font-size: 18px;
-
-    transition: color @default-transition-settings;
-
-    display: none;
-
-    &:active {
-      color: @primary-color;
-    }
-  }
-
   &__text {
     color: @black-color;
     font-size: 18px;
@@ -116,11 +47,6 @@
 
     &-light {
       color: @lighted-color;
-    }
-
-    input {
-      width: 50px;
-      background-color: transparent;
     }
   }
 
