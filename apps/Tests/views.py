@@ -12,7 +12,8 @@ from .forms import TestCreateForm
 from uuid import uuid4
 
 from apps.auth.models import Author
-from .models import Test, Question, Answer
+from apps.Courses.models import CourseTest
+from .models import Test, Question, Answer, StudentResult
 
 
 class ViewTests(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
@@ -175,3 +176,34 @@ def delete_test(request, test_slug):
 
     Test.objects.get(slug=test_slug).delete()
     return redirect("tests")
+
+
+class PassTest(HeaderMixin, LoginRequiredMixin, View):
+    def get(self, request, test_slug):
+        current_user = request.user
+        if current_user.role != 'student':
+            messages.error(request, 'Тест могут проходить только студенты')
+            return redirect('profile')
+        course_slug = self.request.META.get('HTTP_REFERER').split('/')[-1]
+        test = Test.objects.get(slug=test_slug)
+        course_test = CourseTest.objects.get(test=test, course__slug=course_slug)
+        if StudentResult.objects.filter(
+            test=test,
+            student__user = current_user,
+            ).exists():
+            messages.error(request, 'Тест уже пройден')
+            return redirect('profile')
+        questions = test.questions.all()
+        json_questions_info = list(question.get_question_info() for question in questions)
+        header_def = self.get_user_header()
+        context = dict(
+            list(header_def.items())
+            + list({
+                'json_questions_info': json_questions_info,
+                'test_time': course_test.test_time,
+            }.items())
+        )
+        print(context)
+        return render(request, "Tests/PassTest.html", context)
+        
+        
