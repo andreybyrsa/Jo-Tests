@@ -209,9 +209,12 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
             + list(
                 {
                     "json_questions_info": json_questions_info,
-                    "test_time": course_test.test_time,
+                    "json_test": course_test.get_test_in_course_info(),
                 }.items()
             )
         )
 
-        return render(request, "Tests/PassTest.html", context)
+        return render(request, "Tests/PassTestPage.html", context)
+
+    def post(self, request, test_slug):
+        print(request.POST)
