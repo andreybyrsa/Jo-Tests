@@ -17,7 +17,7 @@ testTitle.textContent = title;
 testDescription.textContent = description;
 testDate.textContent = getCurrentDate().slice(0, -6);
 testQuestionsAmount.textContent = questions_amount;
-testTime.textContent = `${test_time}:00`;
+startTimer(1);
 
 const questionsWrapper = document.getElementById("questions");
 
@@ -52,6 +52,34 @@ submitButton.addEventListener("click", () => {
   questionsWrapper.submit();
 });
 
+function startTimer(minutes) {
+  testTime.textContent =
+    String(minutes).length > 1 ? `${minutes}:00` : `0${minutes}:00`;
+
+  let seconds = minutes * 60;
+
+  let currentMinutes = null;
+  let currentSeconds = null;
+
+  const timerId = setInterval(() => {
+    seconds--;
+
+    currentMinutes = Math.floor(seconds / 60);
+    currentSeconds = Math.abs(currentMinutes * 60 - seconds);
+
+    currentMinutes =
+      String(currentMinutes).length > 1 ? currentMinutes : `0${currentMinutes}`;
+    currentSeconds =
+      String(currentSeconds).length > 1 ? currentSeconds : `0${currentSeconds}`;
+
+    testTime.textContent = `${currentMinutes}:${currentSeconds}`;
+
+    if (seconds === 0) {
+      clearInterval(timerId);
+    }
+  }, 1000);
+}
+
 function createQuestion(question) {
   const currentId = currentQuestions.length + 1;
   const questionId = `question-${currentId}`;
@@ -64,14 +92,14 @@ function createQuestion(question) {
   questionName.className = "pass-test-page__question-name";
   questionName.textContent = `Вопрос ${currentId}`;
 
-  const questionText = document.createElement("div");
+  const questionText = document.createElement("pre");
   questionText.className = "pass-test-page__question-text";
-  questionText.innerText = question ? question : "";
+  questionText.innerHTML = question ? question : "";
 
   const questionInput = document.createElement("input");
   questionInput.hidden = true;
   questionInput.name = `question-${currentId}`;
-  questionInput.value = question ? question : "";
+  questionInput.value = currentId;
 
   const answersWrapper = document.createElement("div");
   answersWrapper.className = "pass-test-page__question-answers";
