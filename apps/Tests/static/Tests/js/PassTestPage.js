@@ -11,13 +11,13 @@ const testQuestionsAmount = document.getElementById("test-questions-amount");
 const testTime = document.getElementById("test-time");
 
 const { test, test_time } = JSON_TEST;
-const { title, description, questions_amount } = test;
+const { title, description, questions_amount, slug } = test;
 
 testTitle.textContent = title;
 testDescription.textContent = description;
 testDate.textContent = getCurrentDate().slice(0, -6);
 testQuestionsAmount.textContent = questions_amount;
-startTimer(1);
+startTimer(test_time, slug);
 
 const questionsWrapper = document.getElementById("questions");
 
@@ -52,32 +52,60 @@ submitButton.addEventListener("click", () => {
   questionsWrapper.submit();
 });
 
-function startTimer(minutes) {
-  testTime.textContent =
-    String(minutes).length > 1 ? `${minutes}:00` : `0${minutes}:00`;
+function startTimer(minutes, slug) {
+  const currentTime = new Date().getTime();
+  const startedTime = localStorage.getItem(slug);
 
-  let seconds = minutes * 60;
+  let seconds = null;
 
-  let currentMinutes = null;
-  let currentSeconds = null;
+  if (startedTime) {
+    const timeInProcess = Math.floor((currentTime - startedTime) / 1000);
+
+    seconds = minutes * 60 - timeInProcess;
+
+    if (seconds <= 0) {
+      submitButton.click();
+
+      return;
+    }
+  } else {
+    localStorage.setItem(slug, currentTime);
+
+    seconds = minutes * 60;
+  }
+
+  const { time } = getCurrentTime(seconds);
+  testTime.textContent = time;
 
   const timerId = setInterval(() => {
     seconds--;
 
-    currentMinutes = Math.floor(seconds / 60);
-    currentSeconds = Math.abs(currentMinutes * 60 - seconds);
-
-    currentMinutes =
-      String(currentMinutes).length > 1 ? currentMinutes : `0${currentMinutes}`;
-    currentSeconds =
-      String(currentSeconds).length > 1 ? currentSeconds : `0${currentSeconds}`;
+    const { currentMinutes, currentSeconds } = getCurrentTime(seconds);
 
     testTime.textContent = `${currentMinutes}:${currentSeconds}`;
 
     if (seconds === 0) {
       clearInterval(timerId);
+
+      submitButton.click();
     }
   }, 1000);
+}
+
+function getCurrentTime(seconds) {
+  let currentMinutes = Math.floor(seconds / 60);
+  let currentSeconds = Math.abs(currentMinutes * 60 - seconds);
+
+  currentMinutes =
+    String(currentMinutes).length > 1 ? currentMinutes : `0${currentMinutes}`;
+  currentSeconds =
+    String(currentSeconds).length > 1 ? currentSeconds : `0${currentSeconds}`;
+
+  return {
+    currentMinutes,
+    currentSeconds,
+    time: `${currentMinutes}:${currentSeconds}`,
+  };
 }
 
 function createQuestion(question) {

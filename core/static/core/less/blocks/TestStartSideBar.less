@@ -1,6 +1,8 @@
 @import '../main.less';
 
 .test-start-side-bar {
+  @parent: .test-start-side-bar;
+
   &__content {
     width: 100%;
 
@@ -34,7 +36,17 @@
     .flexible(center, center);
     display: none;
 
+    transition: background-color @default-transition-settings;
+
     &--disabled {
+      background-color: @primary-color;
+
+      @{parent}__button:active {
+        background-color: @secondary-color;
+      }
+    }
+
+    &:active {
       background-color: @primary-color;
     }
   }

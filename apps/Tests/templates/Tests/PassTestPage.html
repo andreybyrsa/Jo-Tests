@@ -31,6 +31,7 @@
 {% endblock %}
 
 {% block script-files %}
+  {{ current_user|json_script:"data-user" }}
   {{ json_test|json_script:"data-test" }}
   {{ json_questions_info|json_script:"data-questions" }}
   <script type="text/javascript" src="{% static 'Tests/js/PassTestPage.js' %}"></script>
