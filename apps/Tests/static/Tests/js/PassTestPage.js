@@ -17,7 +17,6 @@ testTitle.textContent = title;
 testDescription.textContent = description;
 testDate.textContent = getCurrentDate().slice(0, -6);
 testQuestionsAmount.textContent = questions_amount;
-startTimer(test_time, slug);
 
 const questionsWrapper = document.getElementById("questions");
 
@@ -51,6 +50,8 @@ if (JSON_QUESTIONS.length) {
 submitButton.addEventListener("click", () => {
   questionsWrapper.submit();
 });
+
+startTimer(test_time, slug);
 
 function startTimer(minutes, slug) {
   const currentTime = new Date().getTime();
