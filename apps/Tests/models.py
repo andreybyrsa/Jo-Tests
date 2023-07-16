@@ -44,7 +44,7 @@ class Test(models.Model):
 
 class StudentResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    group = models.ForeignKey("CoursesApp.Group", default=1, on_delete=models.CASCADE)
+    course = models.ForeignKey('CoursesApp.Course', default=1, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     choises = models.ManyToManyField('Choice')
     result = models.FloatField(default=0.0)
@@ -54,7 +54,6 @@ class StudentResult(models.Model):
     def get_result_info(self):
         return {
             "student": self.student.user.get_user_info(),
-            "group_index": self.group.index,
             "max_result": self.test.max_result,
             "test_slug": self.test.slug,
             "result": self.result,

@@ -267,13 +267,13 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
                     for course_test in json_course_tests:
                         if StudentResult.objects.filter(
                             student__id=student.id,
+                            course=context["course"],
                             test__slug=course_test["test"]["slug"],
-                            group__index=group.index,
                         ).exists():
                             result = StudentResult.objects.get(
                                 student__id=student.id,
+                                course=context["course"],
                                 test__slug=course_test["test"]["slug"],
-                                group__index=group.index
                             )
                             results.append(result.get_result_info())
 
