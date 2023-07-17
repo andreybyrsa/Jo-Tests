@@ -95,7 +95,7 @@ function openTestSideBar(itemId, currentTest) {
   sideBarQuestionsAmount.textContent = questions_amount;
   sideBarTestTime.textContent = `${test_time} минут`;
   sideBarTestResult.textContent = studentResult
-    ? `${Math.round(studentResult)}/${max_result}`
+    ? `${Math.round(+studentResult)}/${max_result}`
     : "не начато";
 
   if (studentResult) {
