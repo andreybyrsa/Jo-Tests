@@ -6,13 +6,11 @@ const dataCourseTests =
 const dataTestsResults =
   document.getElementById("data-tests-results").textContent;
 const dataGroups = document.getElementById("data-groups").textContent;
-const dataResults = document.getElementById("data-results").textContent;
 
 const JSON_USER = JSON.parse(dataUser);
 const JSON_COURSE_TESTS = JSON.parse(dataCourseTests);
 const JSON_TESTS_RESULTS = JSON.parse(dataTestsResults);
 const JSON_GROUPS = JSON.parse(dataGroups);
-const JSON_RESULTS = JSON.parse(dataResults);
 
 const sideBarTitle = document.getElementById("side-bar-title");
 const sideBarDescription = document.getElementById("side-bar-description");
@@ -38,7 +36,7 @@ const CLOSED_GROUP_CLASS = "test-results-side-bar__group--closed";
 
 const ACTIVE_ICON_GROUP_CLASS = "test-results-side-bar__group-icon--active";
 
-if (JSON_RESULTS) {
+if (JSON_GROUPS) {
   Array.from(tests).forEach((test, index) => {
     test.onclick = () => openResultsSideBar(index, test);
   });
@@ -133,13 +131,10 @@ function openResultsSideBar(itemId, currentTest) {
 }
 
 function openGroup(itemId) {
-  const currentGroupInfo = JSON_GROUPS[itemId];
-  const { index } = currentGroupInfo;
+  const { test } = currentOpenedTest;
+  const currentGroupInfo = JSON_GROUPS[test.slug];
 
-  const { slug } = currentOpenedTest.test;
-  const currentResults = Array.from(JSON_RESULTS).filter(
-    (result) => result.test_slug === slug && result.group_index === index
-  );
+  const { index, students_result } = currentGroupInfo[itemId];
 
   const groupResults = document.getElementById(`${index}-results`);
   const groupIcon = document.getElementById(`${index}-icon`);
@@ -161,7 +156,7 @@ function openGroup(itemId) {
     groupResults.style.display = "flex";
     groupResults.classList.add(OPENED_GROUP_CLASS);
 
-    currentResults.forEach((studentResult) => {
+    students_result.forEach((studentResult) => {
       const { result, max_result, student, result_slug } = studentResult;
       const { first_name, last_name } = student;
       const currentStudent = `${first_name} ${last_name}`;
@@ -185,7 +180,7 @@ function createGroupResult(studentName, testResult, testMaxPoints, resultSlug) {
   student.textContent = studentName;
 
   const studentResult = document.createElement("span");
-  studentResult.textContent = `${testResult}/${testMaxPoints}`;
+  studentResult.textContent = `${Math.round(testResult)}/${testMaxPoints}`;
 
   studentWrapper.appendChild(student);
   studentWrapper.appendChild(studentResult);

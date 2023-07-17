@@ -240,9 +240,15 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
             for course_test in json_course_tests:
                 test = Test.objects.get(slug=course_test["test"]["slug"])
                 if StudentResult.objects.filter(
-                    student=student, test__id=test.id
+                    student=student,
+                    test__id=test.id,
+                    course__slug=context["course"].slug,
                 ).exists():
-                    result = StudentResult.objects.get(student=student, test__id=test.id)
+                    result = StudentResult.objects.get(
+                        student=student,
+                        test__id=test.id,
+                        course__slug=context["course"].slug,
+                    )
                     course_results.append(result.get_result_info())
 
             return dict(
@@ -261,17 +267,25 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
             groups = context["course"].groups.all()
             json_groups = {}
             json_course_tests = []
+
             for course_test in course_tests:
                 json_course_tests.append(course_test.get_test_in_course_info())
-                json_groups[f'{course_test.test.slug}'] = list(
-                    group.get_group_info(test_slug = course_test.test.slug, 
-                                         course_slug = context["course"].slug) for group in groups
+                json_groups[
+                    f"{course_test.get_test_in_course_info()['test']['slug']}"
+                ] = list(
+                    group.get_group_info(
+                        test_slug=course_test.get_test_in_course_info()["test"]["slug"],
+                        course_slug=context["course"].slug,
                     )
+                    for group in groups
+                )
+
             return dict(
                 list(header_def.items())
                 + list(
                     {
                         "json_course_tests": json_course_tests,
+                        'groups': groups,
                         "json_groups": json_groups,
                     }.items()
                 )
