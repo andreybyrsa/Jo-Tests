@@ -258,37 +258,21 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
 
         elif current_user.role == "teacher":
             course_tests = context["course"].tests.all()
-            json_course_tests = list(
-                test.get_test_in_course_info() for test in course_tests
-            )
-
             groups = context["course"].groups.all()
-            results = []
-            json_groups = []
-
-            for group in groups:
-                json_groups.append(group.get_group_info())
-                for student in group.students.all():
-                    for course_test in json_course_tests:
-                        if StudentResult.objects.filter(
-                            student__id=student.id,
-                            course=context["course"],
-                            test__slug=course_test["test"]["slug"],
-                        ).exists():
-                            result = StudentResult.objects.get(
-                                student__id=student.id,
-                                course=context["course"],
-                                test__slug=course_test["test"]["slug"],
-                            )
-                            results.append(result.get_result_info())
-
+            json_groups = {}
+            json_course_tests = []
+            for course_test in course_tests:
+                json_course_tests.append(course_test.get_test_in_course_info())
+                json_groups[f'{course_test.test.slug}'] = list(
+                    group.get_group_info(test_slug = course_test.test.slug, 
+                                         course_slug = context["course"].slug) for group in groups
+                    )
             return dict(
                 list(header_def.items())
                 + list(
                     {
                         "json_course_tests": json_course_tests,
                         "json_groups": json_groups,
-                        "results": results,
                     }.items()
                 )
             )
