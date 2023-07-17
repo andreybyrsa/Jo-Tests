@@ -1,4 +1,4 @@
-function createQuestion(className, currentQuestions, question, id) {
+function createQuestion(className, currentQuestions, question, id, max_points) {
   const currentId = currentQuestions.length + 1;
   const questionId = `question-${currentId}`;
 
@@ -6,9 +6,21 @@ function createQuestion(className, currentQuestions, question, id) {
   newQuestion.id = questionId;
   newQuestion.className = className;
 
+  const questionHeader = document.createElement("div");
+  questionHeader.className = `${className}-header`;
+
   const questionName = document.createElement("span");
-  questionName.className = `${className}-name`;
   questionName.textContent = `Вопрос ${currentId}`;
+
+  questionHeader.appendChild(questionName);
+
+  if (max_points) {
+    const questionPoints = document.createElement("span");
+    questionPoints.id = `points-${id}`
+    questionPoints.textContent = `/${max_points} балл`;
+
+    questionHeader.appendChild(questionPoints);
+  }
 
   const questionText = document.createElement("pre");
   questionText.className = `${className}-text`;
@@ -22,7 +34,7 @@ function createQuestion(className, currentQuestions, question, id) {
   const answersWrapper = document.createElement("div");
   answersWrapper.className = `${className}-answers`;
 
-  newQuestion.appendChild(questionName);
+  newQuestion.appendChild(questionHeader);
   newQuestion.appendChild(questionText);
   newQuestion.appendChild(questionInput);
   newQuestion.appendChild(answersWrapper);

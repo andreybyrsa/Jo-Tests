@@ -17,11 +17,13 @@
 
     .flexible(flex-start, flex-start, column, @gap: 20px);
 
-    &-name {
+    &-header {
       width: 100%;
 
       color: @primary-color;
       font-size: 25px;
+
+      .flexible(center, space-between);
     }
 
     &-text {
