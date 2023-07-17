@@ -11,11 +11,27 @@ class Group(models.Model):
     )
     index = models.CharField(max_length=127, blank=True)
 
-    def get_group_info(self):
-        return {
-            "groupname": self.groupname,
-            "index": self.index,
-        }
+    def get_group_info(self, test_slug=None, course_slug=None):
+        if test_slug == None and course_slug == None:
+            return {
+                "groupname": self.groupname,
+                "index": self.index,
+            }
+
+        students = list(student for student in self.students.all())
+        students_result = []
+
+        for student in students:
+            if student.result_tests.filter(
+                test__slug=test_slug, course__slug=course_slug
+            ).exists():
+                students_result.append(
+                    student.result_tests.get(
+                        test__slug=test_slug, course__slug=course_slug
+                    ).get_result_info()
+                )
+
+        return {"index": self.index, "students_result": students_result,}
 
     def __str__(self):
         return self.groupname
