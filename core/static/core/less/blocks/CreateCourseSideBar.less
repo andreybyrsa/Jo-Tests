@@ -12,10 +12,15 @@
 
     .flexible(center, center);
 
-    transition: background-color @default-transition-settings;
+    transition: all @default-transition-settings;
 
     &:active {
       background-color: @secondary-color;
+    }
+
+    &:hover {
+      box-shadow: 0px 0px 18px 0px @secondary-color inset;
+      transform: scale(1.02);
     }
 
     &--disabled {
