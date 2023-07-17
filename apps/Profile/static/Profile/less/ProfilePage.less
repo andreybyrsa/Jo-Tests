@@ -161,6 +161,14 @@
       .flexible(center, space-between, @gap: 20px);
     }
 
+    &-info {
+      .flexible(flex-start, flex-start, column);
+
+      p:last-of-type {
+        color: @primary-color;
+      }
+    }
+
     &-icon {
       color: @success-color;
       font-size: 25px;
@@ -179,14 +187,12 @@
 
     font-size: 20px;
 
-    .flexible(
-      flex-end,
+    .flexible(flex-end,
       flex-start,
       column,
       center,
       center,
-      @gap: 20px
-    );
+      @gap: 20px);
     display: none;
 
     &-list {

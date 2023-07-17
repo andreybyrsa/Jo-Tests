@@ -1,0 +1,26 @@
+{% extends 'core/pages/PageLayout.html' %}
+{% load static %}
+
+{% block style-files %}
+  <link rel="stylesheet/less" href="{% static 'Tests/less/InspectTestPage.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/InspectTestSideBar.less' %}" />
+{% endblock %}
+
+{% block header %}
+  {% include 'core/blocks/HeaderBlock.html' with header=header %}
+{% endblock %}
+
+{% block left-side-bar %}
+  {% include 'core/blocks/InspectTestSideBar.html' with test=test %}
+{% endblock %}
+
+{% block content %}
+  <div id="questions" class="inspect-test-page__questions"></div>
+{% endblock %}
+
+{% block script-files %}
+  {{ json_question_info|json_script:"data-questions" }}
+  <script type="text/javascript" src="{% static 'core/js/InspectTest.js' %}"></script>
+  <script type="text/javascript" src="{% static 'Tests/js/InspectTestPage.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,52 @@
+@import '../main.less';
+
+.side-bar {
+  &__content {
+    height: 100%;
+
+    display: flex;
+  }
+
+  &__image-wrapper {
+    display: none;
+  }
+}
+
+.pass-test-side-bar {
+  &__conditions {
+    width: 100%;
+
+    .flexible(flex-start, flex-start, column, @gap: 10px);
+  }
+
+  &__condition {
+    color: @lighted-color;
+    font-size: 18px;
+
+    .flexible(@gap: 4px);
+
+    &-date {
+      color: @primary-color;
+    }
+  }
+
+  &__complete-button {
+    width: 100%;
+    .fixedHeight(52px);
+    background-color: @secondary-color;
+    border-radius: 12px;
+
+    color: @white-color;
+    font-size: 18px;
+
+    cursor: pointer;
+
+    .flexible(center, center);
+
+    transition: background-color @default-transition-settings;
+
+    &:active {
+      background-color: @primary-color;
+    }
+  }
+}

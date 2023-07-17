@@ -44,8 +44,9 @@ class Test(models.Model):
 
 class StudentResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    group = models.ForeignKey("CoursesApp.Group", default=1, on_delete=models.CASCADE)
+    course = models.ForeignKey("CoursesApp.Course", default=1, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    choises = models.ManyToManyField("Choice")
     result = models.FloatField(default=0.0)
     is_passed = models.BooleanField(default=False, verbose_name="Пройден")
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
@@ -53,7 +54,6 @@ class StudentResult(models.Model):
     def get_result_info(self):
         return {
             "student": self.student.user.get_user_info(),
-            "group_index": self.group.index,
             "max_result": self.test.max_result,
             "test_slug": self.test.slug,
             "result": self.result,
@@ -81,6 +81,7 @@ class Question(models.Model):
 
     def get_question_info(self):
         return {
+            "id": self.id,
             "question": self.question,
             "max_points": self.max_points,
             "qtype": self.qtype,
@@ -117,8 +118,18 @@ class Answer(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student_result = models.ForeignKey(
+        "StudentResult", default=0, on_delete=models.CASCADE
+    )
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     is_selected = models.BooleanField(default=False)
+
+    def get_choice_info(self):
+        return {
+            "question_id": self.question.id,
+            "answer__id": self.answer.id,
+            "is_selected": self.is_selected,
+        }
 
     class Meta:
         verbose_name = "Ответ студента"

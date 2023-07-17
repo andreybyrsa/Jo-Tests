@@ -66,7 +66,7 @@ info_course_teacher = [
 info_test_teacher = [
     {
         "name": "Посмотреть тест",
-        "url_name": "",
+        "url_name": "inspect_test/",
         "icon_name": "bi bi-eye",
         "color": "success",
     },

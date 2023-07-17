@@ -1,16 +1,16 @@
 addPageClassName("course-tests-page");
 
+const dataUser = document.getElementById("data-user").textContent;
 const dataCourseTests =
   document.getElementById("data-course-tests").textContent;
 const dataTestsResults =
   document.getElementById("data-tests-results").textContent;
 const dataGroups = document.getElementById("data-groups").textContent;
-const dataResults = document.getElementById("data-results").textContent;
 
+const JSON_USER = JSON.parse(dataUser);
 const JSON_COURSE_TESTS = JSON.parse(dataCourseTests);
 const JSON_TESTS_RESULTS = JSON.parse(dataTestsResults);
 const JSON_GROUPS = JSON.parse(dataGroups);
-const JSON_RESULTS = JSON.parse(dataResults);
 
 const sideBarTitle = document.getElementById("side-bar-title");
 const sideBarDescription = document.getElementById("side-bar-description");
@@ -36,7 +36,7 @@ const CLOSED_GROUP_CLASS = "test-results-side-bar__group--closed";
 
 const ACTIVE_ICON_GROUP_CLASS = "test-results-side-bar__group-icon--active";
 
-if (JSON_RESULTS) {
+if (JSON_GROUPS) {
   Array.from(tests).forEach((test, index) => {
     test.onclick = () => openResultsSideBar(index, test);
   });
@@ -62,12 +62,18 @@ function openTestSideBar(itemId, currentTest) {
   removeActiveTests();
   currentTest.classList.add(ACTIVE_TEST_CLASS);
 
+  const { username } = JSON_USER;
+
   const currentTestInfo = JSON_COURSE_TESTS[itemId];
   const { test, test_time } = currentTestInfo;
   const { title, description, questions_amount, max_result, slug } = test;
 
   const currentTestResult = JSON_TESTS_RESULTS
-    ? Array.from(JSON_TESTS_RESULTS).find((test) => test.test_slug === slug)
+    ? Array.from(JSON_TESTS_RESULTS).find((test) => {
+        const { test_slug, student } = test;
+
+        return test_slug === slug && student.username === username;
+      })
     : null;
 
   let studentResult = null;
@@ -75,7 +81,7 @@ function openTestSideBar(itemId, currentTest) {
 
   if (currentTestResult) {
     const { result, result_slug } = currentTestResult;
-    studentResult = result;
+    studentResult = String(result);
     resultSlug = result_slug;
   }
 
@@ -89,19 +95,19 @@ function openTestSideBar(itemId, currentTest) {
   sideBarQuestionsAmount.textContent = questions_amount;
   sideBarTestTime.textContent = `${test_time} минут`;
   sideBarTestResult.textContent = studentResult
-    ? `${studentResult}/${max_result}`
+    ? `${Math.round(+studentResult)}/${max_result}`
     : "не начато";
 
   if (studentResult) {
     sidebarButton.classList.add(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Просмотреть";
 
-    sidebarButton.href = sidebarButton.getAttribute("href") + resultSlug;
+    sidebarButton.href = "/tests/inspect_result/" + resultSlug;
   } else {
     sidebarButton.classList.remove(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Начать тест";
 
-    sidebarButton.href = sidebarButton.getAttribute("href") + slug;
+    sidebarButton.href = "/tests/" + slug;
   }
 }
 
@@ -125,13 +131,10 @@ function openResultsSideBar(itemId, currentTest) {
 }
 
 function openGroup(itemId) {
-  const currentGroupInfo = JSON_GROUPS[itemId];
-  const { index } = currentGroupInfo;
+  const { test } = currentOpenedTest;
+  const currentGroupInfo = JSON_GROUPS[test.slug];
 
-  const { slug } = currentOpenedTest.test;
-  const currentResults = Array.from(JSON_RESULTS).filter(
-    (result) => result.test_slug === slug && result.group_index === index
-  );
+  const { index, students_result } = currentGroupInfo[itemId];
 
   const groupResults = document.getElementById(`${index}-results`);
   const groupIcon = document.getElementById(`${index}-icon`);
@@ -153,7 +156,7 @@ function openGroup(itemId) {
     groupResults.style.display = "flex";
     groupResults.classList.add(OPENED_GROUP_CLASS);
 
-    currentResults.forEach((studentResult) => {
+    students_result.forEach((studentResult) => {
       const { result, max_result, student, result_slug } = studentResult;
       const { first_name, last_name } = student;
       const currentStudent = `${first_name} ${last_name}`;
@@ -168,7 +171,7 @@ function openGroup(itemId) {
 function createGroupResult(studentName, testResult, testMaxPoints, resultSlug) {
   const resultWrapper = document.createElement("a");
   resultWrapper.className = "test-results-side-bar__result-wrapper";
-  resultWrapper.href = "/test/" + resultSlug;
+  resultWrapper.href = "/tests/inspect_result/" + resultSlug;
 
   const studentWrapper = document.createElement("div");
   studentWrapper.className = "test-results-side-bar__result-student";
@@ -177,7 +180,7 @@ function createGroupResult(studentName, testResult, testMaxPoints, resultSlug) {
   student.textContent = studentName;
 
   const studentResult = document.createElement("span");
-  studentResult.textContent = `${testResult}/${testMaxPoints}`;
+  studentResult.textContent = `${Math.round(testResult)}/${testMaxPoints}`;
 
   studentWrapper.appendChild(student);
   studentWrapper.appendChild(studentResult);

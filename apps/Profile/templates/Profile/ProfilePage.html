@@ -82,11 +82,19 @@
       <div class="profile-page__tests-test">
         <div class="profile-page__tests-name">
           <i class="bi bi-check2 profile-page__tests-icon"></i>
-          {{ result.test.title }}
+          <div class="profile-page__tests-info">
+            <p>{{ result.test.title }}</p>
+            <p>{{ result.course.title }}</p>
+          </div>
         </div>
         <div class="profile-page__tests-name">
           {{ result.result|round }}/{{ result.test.max_result }}
-          <a href='/test/{{ result.slug }}' class= "profile-page__button">Просмотреть</a>
+          <a
+            href='/tests/inspect_result/{{ result.slug }}'
+            class= "profile-page__button"
+          >
+            Просмотреть
+          </a>
         </div> 
       </div>
     {% endfor %}
