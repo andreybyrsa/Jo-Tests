@@ -122,6 +122,14 @@ class Choice(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     is_selected = models.BooleanField(default=False)
 
+    def get_choice_info(self):
+        return {
+            "question_id": self.question.id,
+            "answer__id": self.answer.id,
+            "is_selected": self.is_selected,
+
+        }
+
     class Meta:
         verbose_name = "Ответ студента"
         verbose_name_plural = "Ответы студентов"
