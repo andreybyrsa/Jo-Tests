@@ -1,4 +1,5 @@
 from typing import Any, Dict
+from django.db.models import F
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, View, DetailView
@@ -203,7 +204,7 @@ class InspectTest(LoginRequiredMixin, HeaderMixin, DetailView):
 
 class IspectResult(LoginRequiredMixin, HeaderMixin, DetailView):
     model = StudentResult
-    template_name = "Tests/PassTestPage.html"
+    template_name = "Tests/TestResultPage.html"
     login_url = "/auth/"
     slug_url_kwarg = "result_slug"
     context_object_name = "result"
@@ -217,21 +218,24 @@ class IspectResult(LoginRequiredMixin, HeaderMixin, DetailView):
 
         header_def = self.get_user_header()
         context = super().get_context_data(**kwargs)
-        test = Test.objects.get(slug=context["result"].test__slug)
+        test = Test.objects.get(slug=context["result"].test.slug)
         json_questions_info = list(
-            question.get_question_info for question in test.questions.all()
+            question.get_question_info() for question in test.questions.all()
         )
         json_choices = {}
+
         for json_question_info in json_questions_info:
             json_choices[f'{json_question_info["id"]}'] = []
-            choices = context["result"].choices.filter(
+            choices = context["result"].choises.filter(
                 question__id=json_question_info["id"]
             )
             result = 0
             right_answers = 0
+
             for answer in json_question_info["answers"]:
                 if answer["is_correct"]:
                     right_answers += 1
+            
             wrong_answers = len(json_question_info["answers"]) - right_answers
             for choice in choices:
                 if choice.is_selected:
@@ -242,6 +246,7 @@ class IspectResult(LoginRequiredMixin, HeaderMixin, DetailView):
                 json_choices[f'{json_question_info["id"]}'].append(
                     choice.get_choice_info()
                 )
+
             json_choices[f'{json_question_info["id"]}'].append(
                 result if result > 0 else 0
             )
@@ -251,7 +256,8 @@ class IspectResult(LoginRequiredMixin, HeaderMixin, DetailView):
             + list(header_def.items())
             + list(
                 {
-                    "json_question_info": json_question_info,
+                    "test": test,
+                    "json_question_info": json_questions_info,
                     "json_choices": json_choices,
                 }.items()
             )
@@ -306,18 +312,18 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
         course = Course.objects.get(slug=course_slug)
         test = Test.objects.get(slug=test_slug)
 
-        test_result = StudentResult.objects.create(
-            student=student,
-            course=course,
-            test=test,
-            is_passed=True,
-            slug="result-" + get_unique_slug(StudentResult, test_slug),
-        )
-
-        post_questions = get_student_choices(request.POST)
-        result = 0
-
         try:
+            test_result = StudentResult.objects.create(
+                student=student,
+                course=course,
+                test=test,
+                is_passed=True,
+                slug="result-" + get_unique_slug(StudentResult, test_slug),
+            )
+
+            post_questions = get_student_choices(request.POST)
+            result = 0
+
             for post_question in post_questions:
                 question = Question.objects.get(id=int(post_question["question"]))
                 answers = question.answers.all()
@@ -335,6 +341,7 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
                         if answer.answer in post_question["choosen"]
                         else False,
                     )
+                    test_result.choises.add(choice)
 
                     if choice.is_selected:
                         if choice.answer.is_correct:
@@ -345,13 +352,14 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
 
             test_result.result = result
             test_result.save()
+            course.progress = F("progress") + result
             student.result_tests.add(test_result)
 
             messages.success(request, f'Вы успешно прошли тест "{test.title}"')
             return redirect("inspect-course", course_slug=course_slug)
 
         except:
-            messages.error(request, f"Ошибка прохождения теста '{test.title}'")
+            messages.error(request, f'Ошибка прохождения теста "{test.title}"')
             return redirect("inspect-course", course_slug=course_slug)
 
 

@@ -42,6 +42,8 @@ function createAnswer(
   choice
 ) {
   const activeClassName = `${className}--active`;
+  const successClassName = `${className}--success`;
+  const dangerClassName = `${className}--danger`;
 
   const currentId = question.id.split("-")[1];
   const currentAnswer = getDoubleInsideChild(answers);
@@ -82,7 +84,15 @@ function createAnswer(
   });
 
   if (isRightAnswer) {
+    answerText.classList.add(successClassName);
+  }
+
+  if (choice) {
     answerWrapper.click();
+
+    if (choice !== isRightAnswer) {
+      answerText.classList.add(dangerClassName);
+    }
   }
 
   if (isRightAnswer !== undefined) {

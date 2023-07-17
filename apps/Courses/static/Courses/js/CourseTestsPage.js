@@ -102,7 +102,7 @@ function openTestSideBar(itemId, currentTest) {
     sidebarButton.classList.add(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Просмотреть";
 
-    sidebarButton.href = "/tests/" + resultSlug;
+    sidebarButton.href = "/tests/inspect_result/" + resultSlug;
   } else {
     sidebarButton.classList.remove(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Начать тест";
@@ -171,7 +171,7 @@ function openGroup(itemId) {
 function createGroupResult(studentName, testResult, testMaxPoints, resultSlug) {
   const resultWrapper = document.createElement("a");
   resultWrapper.className = "test-results-side-bar__result-wrapper";
-  resultWrapper.href = "/test/" + resultSlug;
+  resultWrapper.href = "/tests/inspect_result/" + resultSlug;
 
   const studentWrapper = document.createElement("div");
   studentWrapper.className = "test-results-side-bar__result-student";

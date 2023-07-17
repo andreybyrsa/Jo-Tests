@@ -89,7 +89,12 @@
         </div>
         <div class="profile-page__tests-name">
           {{ result.result|round }}/{{ result.test.max_result }}
-          <a href='/test/{{ result.slug }}' class= "profile-page__button">Просмотреть</a>
+          <a
+            href='/tests/inspect_result/{{ result.slug }}'
+            class= "profile-page__button"
+          >
+            Просмотреть
+          </a>
         </div> 
       </div>
     {% endfor %}
