@@ -74,10 +74,10 @@
   }
 
   &__delete {
-    padding: 10px 15px;
+    padding: 0px 15px;
+    height: 45px;
     width: 100%;
     max-width: 150px;
-    height: 40px;
     background-color: @danger-color;
     border-radius: 12px;
 
@@ -86,15 +86,21 @@
 
     .flexible(center, center);
 
-    transition: backgroud-color @default-transition-settings;
+    transition: all @default-transition-settings;
 
     &:active {
       background-color: @secondary-color;
     }
+
+    &:hover {
+      box-shadow: 0px 0px 18px 0px @secondary-color inset;
+      transform: scale(1.02);
+    }
   }
 
   &__button {
-    padding: 10px 15px;
+    padding: 0px 15px;
+    height: 45px;
     width: 100%;
     max-width: 150px;
     background-color: @secondary-color;
@@ -103,10 +109,17 @@
     color: @white-color;
     font-size: 18px;
 
-    transition: background-color @default-transition-settings;
+    .flexible(center, center);
+
+    transition: all @default-transition-settings;
 
     &:active {
       background-color: @primary-color;
+    }
+
+    &:hover {
+      box-shadow: 0px 0px 18px 0px @primary-color inset;
+      transform: scale(1.02);
     }
   }
 

@@ -61,10 +61,15 @@
 
     .flexible(center, center);
 
-    transition: background-color @default-transition-settings;
+    transition: all @default-transition-settings;
 
     &:active {
       background-color: @black-color--blured;
+    }
+
+    &:hover {
+      box-shadow: 0px 0px 8px 0px @primary-color inset;
+      transform: scale(1.02);
     }
   }
 }

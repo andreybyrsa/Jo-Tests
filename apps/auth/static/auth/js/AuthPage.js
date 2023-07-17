@@ -21,15 +21,15 @@ const modal = document.getElementById("modal");
 const close_modal = document.getElementById("close modal");
 
 open_modal.addEventListener("click", (event) => {
-  modal.classList.remove("reg-page__form--close");
-  modal.classList.add("reg-page__form--open");
+  modal.classList.remove("reg-modal__form--close");
+  modal.classList.add("reg-modal__form--open");
   open_modal.style.display = "none";
 });
 
 function closeRegPageModal() {
-  modal.classList.add("reg-page__form--close");
+  modal.classList.add("reg-modal__form--close");
   setTimeout(() => {
-    modal.classList.remove("reg-page__form--open");
+    modal.classList.remove("reg-modal__form--open");
     open_modal.style.display = "flex";
   }, 250);
 }

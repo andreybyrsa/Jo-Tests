@@ -65,41 +65,33 @@
       }
     }
 
-
-    &-links {
+    &-button {
+      padding: 0px 15px;
+      height: 52px;
       width: 100%;
+      background-color: @secondary-color;
+      .border(solid, transparent, 2px, 12px);
 
-      .flexible(center, center, column, @gap: 5px);
+      color: @white-color;
+      font-size: 20px;
 
-      &-button {
-        padding: 15px;
-        width: 100%;
-        background-color: @secondary-color;
-        .border(solid, transparent, 2px, 12px);
+      transition: all @default-transition-settings;
 
-        color: @white-color;
-        font-size: 20px;
-
-        transition: backgroud-color @default-transition-settings;
-
-        &:active {
-          background-color: @primary-color;
-        }
+      &:active {
+        background-color: @primary-color;
       }
 
-      &-link {
-        width: 112px;
-        background-color: transparent;
-
-        font-size: 18px;
-        text-decoration: underline;
+      &:hover {
+        box-shadow: 0px 0px 18px 0px @primary-color inset;
+        border-color: @primary-color;
+        transform: scale(1.02);
       }
     }
   }
 }
 
 
-.reg-page__form {
+.reg-modal__form {
   .position(absolute, 0, 0, 0, 0, 1);
 
   .flexible(center, center);
@@ -113,103 +105,122 @@
     height: min-content;
     background-color: @primary-color;
     border-radius: 40px;
-    box-shadow: 1px 1px 40px @lighted-color;
+    box-shadow: 1px 1px 40px @lighted-color; 
+  }
 
-    &-header {
-      .flexible(center, space-between);
+  &-header {
+    .flexible(center, space-between);
 
-      &-title {
-        color: @white-color;
-        font-size: 30px;
-        font-weight: 700;
-      }
-
-      &-icon {
-        color: @white-color;
-        font-size: 40px;
-
-        cursor: pointer;
-
-        display: flex;
-      }
-    }
-
-    &-input {
-      width: 100%;
-
+    &-title {
       color: @white-color;
-      font-size: 18px;
-
-      .flexible(@flex-direction: column, @gap: 5px);
-
-      &-title {
-        color: @white-color;
-        font-weight: bold;
-      }
+      font-size: 30px;
+      font-weight: 700;
     }
 
-    &-links {
+    &-icon {
+      color: @white-color;
+      font-size: 40px;
+
+      cursor: pointer;
+
+      display: flex;
+    }
+  }
+
+  &-input {
+    width: 100%;
+
+    color: @white-color;
+    font-size: 18px;
+
+    .flexible(@flex-direction: column, @gap: 5px);
+
+    &-title {
+      color: @white-color;
+      font-weight: bold;
+    }
+
+    &-data {
+      padding: 13px 20px;
       width: 100%;
+      .border(solid, @white-color, 2px, 12px);
+      background-color: @primary-color;
+  
+      color: @white-color;
 
-      .flexible(center, center, column, @gap: 5px);
-
-      &-button {
-        padding: 15px;
-        width: 100%;
-        background-color: @secondary-color;
-        .border(solid, transparent, 2px, 12px);
-
-        color: @white-color;
-        font-size: 20px;
-
-        transition: all @default-transition-settings;
-
-        &:active {
-          background-color: @white-color;
-
-          color: @black-color;
-        }
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover, 
+      &:-webkit-autofill:focus, 
+      &:-webkit-autofill:active{
+        box-shadow: inset 50px 50px 0 0 @primary-color;
       }
-
-      &-link {
-        width: 124px;
-        background-color: transparent;
-        background-color: @primary-color;
-
+  
+      &::placeholder {
         color: @white-color;
-        font-size: 18px;
-        text-decoration: underline;
+        font-weight: 300;
       }
     }
   }
 
-  &-input-data {
-    padding: 13px 20px;
+  &-links {
     width: 100%;
-    .border(solid, @white-color, 2px, 12px);
-    background-color: @primary-color;
 
-    color: @white-color;
+    .flexible(center, center, column, @gap: 5px);
 
-    &::placeholder {
+    &-button {
+      padding: 15px;
+      width: 100%;
+      background-color: @secondary-color;
+      .border(solid, transparent, 2px, 12px);
+
       color: @white-color;
-      font-weight: 300;
+      font-size: 20px;
+
+      transition: all @default-transition-settings;
+
+      &:active {
+        background-color: @white-color;
+
+        color: @black-color;
+      }
+
+      &:hover {
+        box-shadow: 0px 0px 8px 0px @white-color inset;
+        border-color: @white-color;
+        transform: scale(1.02);
+      }
+    }
+
+    &-link {
+      width: 124px;
+      background-color: transparent;
+      background-color: @primary-color;
+
+      color: @white-color;
+      font-size: 18px;
+      text-decoration: underline;
+
+      option {
+        background-color: @white-color;
+        color: @black-color;
+      }
+      
     }
   }
 
   &--open {
     display: flex;
 
-    animation: reg-page__open @default-animation-settings;
+    animation: reg-modal__open @default-animation-settings;
   }
 
   &--close {
-    animation: reg-page__close @default-animation-settings;
+    animation: reg-modal__close @default-animation-settings;
   }
 
 }
 
-@keyframes reg-page__open {
+@keyframes reg-modal__open {
   0% {
     opacity: 0;
 
@@ -223,7 +234,7 @@
   }
 }
 
-@keyframes reg-page__close {
+@keyframes reg-modal__close {
   0% {
     opacity: 1;
 
