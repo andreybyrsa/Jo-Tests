@@ -175,84 +175,87 @@ class EditTest(LoginRequiredMixin, HeaderMixin, View):
 
 class InspectTest(LoginRequiredMixin, HeaderMixin, DetailView):
     model = Test
-    template_name = 'Tests/PassTestPage.html'
+    template_name = "Tests/InspectTestPage.html"
     login_url = "/auth/"
-    redirect_field_name = 'tests'
-    slug_url_kwarg = 'test_slug'
-    context_object_name = 'test'
+    redirect_field_name = "tests"
+    slug_url_kwarg = "test_slug"
+    context_object_name = "test"
 
-    def get_context_data(self, *, object_list = None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         current_user = self.request.user
 
-        if current_user.role != 'teacher':
-            messages.error(self.request, 'Доступ запрещен')
-            return redirect('profile')
-        
+        if current_user.role != "teacher":
+            messages.error(self.request, "Доступ запрещен")
+            return redirect("profile")
+
         header_def = self.get_user_header()
         context = super().get_context_data(**kwargs)
-        json_question_info = list(question.get_question_info for question in context['test'].questions.all())
-        return dict(
-            list(context.items()) 
-            + list(header_def.items()) 
-            + list({
-                'json_question_info': json_question_info
-                }.items())
+        json_question_info = list(
+            question.get_question_info() for question in context["test"].questions.all()
         )
-    
+
+        return dict(
+            list(context.items())
+            + list(header_def.items())
+            + list({"json_question_info": json_question_info}.items())
+        )
+
 
 class IspectResult(LoginRequiredMixin, HeaderMixin, DetailView):
     model = StudentResult
-    template_name = 'Tests/PassTestPage.html'
+    template_name = "Tests/PassTestPage.html"
     login_url = "/auth/"
-    slug_url_kwarg = 'result_slug'
-    context_object_name = 'result'
+    slug_url_kwarg = "result_slug"
+    context_object_name = "result"
 
-    def get_context_data(self, *, object_list = None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         current_user = self.request.user
 
-        if current_user.role not in ('teacher', 'student'):
-            messages(self.request, 'Доступ запрещен')
-            return redirect('')
-        
+        if current_user.role not in ("teacher", "student"):
+            messages(self.request, "Доступ запрещен")
+            return redirect("")
+
         header_def = self.get_user_header()
         context = super().get_context_data(**kwargs)
-        test = Test.objects.get(slug = context['result'].test__slug)
-        json_questions_info = list(question.get_question_info for question in test.questions.all())
+        test = Test.objects.get(slug=context["result"].test__slug)
+        json_questions_info = list(
+            question.get_question_info for question in test.questions.all()
+        )
         json_choices = {}
         for json_question_info in json_questions_info:
             json_choices[f'{json_question_info["id"]}'] = []
-            choices = context['result'].choices.filter(question__id = json_question_info["id"])
+            choices = context["result"].choices.filter(
+                question__id=json_question_info["id"]
+            )
             result = 0
             right_answers = 0
-            for answer in json_question_info['answers']:
+            for answer in json_question_info["answers"]:
                 if answer["is_correct"]:
                     right_answers += 1
-            wrong_answers = len(json_question_info['answers']) - right_answers
+            wrong_answers = len(json_question_info["answers"]) - right_answers
             for choice in choices:
                 if choice.is_selected:
                     if choice.answer.is_correct:
-                        result += json_question_info['max_points']/right_answers
+                        result += json_question_info["max_points"] / right_answers
                     else:
-                        result -= json_question_info['max_points']/wrong_answers
-                json_choices[f'{json_question_info["id"]}'].append(choice.get_choice_info())
-            json_choices[f'{json_question_info["id"]}'].append(result)
+                        result -= json_question_info["max_points"] / wrong_answers
+                json_choices[f'{json_question_info["id"]}'].append(
+                    choice.get_choice_info()
+                )
+            json_choices[f'{json_question_info["id"]}'].append(
+                result if result > 0 else 0
+            )
 
         return dict(
-            list(context.items()) 
-            + list(header_def.items()) 
-            + list({
-                'json_question_info': json_question_info,
-                'json_choices': json_choices,
-                }.items())
+            list(context.items())
+            + list(header_def.items())
+            + list(
+                {
+                    "json_question_info": json_question_info,
+                    "json_choices": json_choices,
+                }.items()
+            )
         )
-        
-        
-
-
-
-        
-        
-
 
 
 class PassTest(HeaderMixin, LoginRequiredMixin, View):
@@ -275,6 +278,7 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
         if StudentResult.objects.filter(
             test=test,
             student__user=current_user,
+            course__slug=course_slug
         ).exists():
             messages.error(request, "Тест уже пройден")
             return redirect("profile")
@@ -338,14 +342,14 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
                         question_result += question.max_points / right_answers
                     else:
                         question_result -= question.max_points / wrong_answers
-            result += abs(question_result)
+            result += question_result if question_result > 0 else 0
 
         test_result.result = result
         test_result.save()
         student.result_tests.add(test_result)
 
         return redirect("profile")
-    
+
 
 def delete_test(request, test_slug):
     """Удаление теста - Author"""

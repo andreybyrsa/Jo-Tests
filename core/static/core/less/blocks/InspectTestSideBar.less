@@ -1,0 +1,39 @@
+@import '../main.less';
+
+.inspect-side-bar {
+  padding: 20px;
+  width: 400px;
+  height: 100%;
+  background-color: @white-color;
+  border-radius: 20px;
+
+  .flexible(stretch, flex-start, column, @gap: 20px);
+
+  &__header {
+    .flexible(flex-start, flex-start, column, @gap: 8px);
+  }
+
+  &__content {
+    overflow-y: scroll;
+
+    .flexible(flex-start, flex-start, column, @gap: 8px);
+  }
+
+  &__title {
+    color: @primary-color;
+    font-size: 25px;
+  }
+
+  &__text {
+    color: @primary-color;
+    font-size: 18px;
+
+    &--lighted {
+      color: @lighted-color;
+    }
+
+    &--primary {
+      color: @primary-color;
+    }
+  }
+}

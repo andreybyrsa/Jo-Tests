@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="inspect-side-bar">
+  <div class="inspect-side-bar__header">
+    <span class="inspect-side-bar__title">
+      {{ test.title }}
+    </span>
+    <span class="inspect-side-bar__text inspect-side-bar__text--lighted">
+      {{ test.description }}
+    </span>
+  </div>
+
+  <div class="inspect-side-bar__content">
+    <div class="inspect-side-bar__questions-amount">
+      <span
+        class="inspect-side-bar__text inspect-side-bar__text--lighted"
+      >
+        Количество вопросов:
+      </span>
+      <span class="inspect-side-bar__text inspect-side-bar__text--primary"
+      >
+        {{ test.count }}
+      </span>
+    </div>
+
+    <div class="inspect-side-bar__max-result">
+      <span
+        class="inspect-side-bar__text inspect-side-bar__text--lighted"
+      >
+        Максимальный результат:
+      </span>
+      <span class="inspect-side-bar__text inspect-side-bar__text--primary"
+      >
+        {{ test.max_result }}
+      </span>
+    </div>
+  </div>
+</div>

@@ -27,6 +27,8 @@ function createQuestion(className, currentQuestions, question, id) {
   newQuestion.appendChild(questionInput);
   newQuestion.appendChild(answersWrapper);
 
+  currentQuestions.push(newQuestion);
+
   return [newQuestion, answersWrapper];
 }
 
@@ -39,8 +41,8 @@ function createAnswer(
   isRightAnswer,
   choice
 ) {
-  const activeClassName = `${className}--active`
-  
+  const activeClassName = `${className}--active`;
+
   const currentId = question.id.split("-")[1];
   const currentAnswer = getDoubleInsideChild(answers);
   let currentAnswerType = null;
@@ -78,6 +80,15 @@ function createAnswer(
 
     removeActiveAnswers(answers, activeClassName);
   });
+
+  if (isRightAnswer) {
+    answerWrapper.click();
+  }
+
+  if (isRightAnswer !== undefined) {
+    answerWrapper.disabled = true;
+    choosenAnswer.disabled = true;
+  }
 
   const answerInput = document.createElement("input");
   answerInput.hidden = true;

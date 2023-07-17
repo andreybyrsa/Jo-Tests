@@ -56,7 +56,6 @@ if (JSON_QUESTIONS.length) {
     });
 
     questionsWrapper.appendChild(newQuestion);
-    currentQuestions.push(newQuestion);
   });
 }
 

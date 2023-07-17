@@ -4,8 +4,7 @@
 {% block style-files %}
   <link rel="stylesheet/less" href="{% static 'Tests/less/InspectTestPage.less' %}" />
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/HeaderBlock.less' %}" />
-  <link rel="stylesheet/less" href="{% static 'core/less/blocks/SideBar.less' %}" />
-  
+  <link rel="stylesheet/less" href="{% static 'core/less/blocks/InspectTestSideBar.less' %}" />
 {% endblock %}
 
 {% block header %}
@@ -13,18 +12,15 @@
 {% endblock %}
 
 {% block left-side-bar %}
-  
+  {% include 'core/blocks/InspectTestSideBar.html' with test=test %}
 {% endblock %}
 
 {% block content %}
-  <div id="questions" class="pass-test-page__questions">
-  </div>
+  <div id="questions" class="inspect-test-page__questions"></div>
 {% endblock %}
 
 {% block script-files %}
-  {{ current_user|json_script:"data-user" }}
-  {{ json_test|json_script:"data-test" }}
-  {{ json_questions_info|json_script:"data-questions" }}
+  {{ json_question_info|json_script:"data-questions" }}
+  <script type="text/javascript" src="{% static 'core/js/InspectTest.js' %}"></script>
   <script type="text/javascript" src="{% static 'Tests/js/InspectTestPage.js' %}"></script>
-  <script type="text/javascript" src="{% static 'Tests/js/PassTestPage.js' %}"></script>
 {% endblock %}
