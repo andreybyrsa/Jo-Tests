@@ -1,0 +1,1 @@
+addPageClassName("inspect-test-page");

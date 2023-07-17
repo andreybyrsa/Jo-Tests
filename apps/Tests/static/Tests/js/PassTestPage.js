@@ -1,3 +1,5 @@
+addPageClassName("pass-test-page");
+
 const dataTest = document.getElementById("data-test").textContent;
 const dataQuestions = document.getElementById("data-questions").textContent;
 
@@ -32,13 +34,24 @@ if (JSON_QUESTIONS.length) {
     const { question, id, qtype, answers } = questionInfo;
     const answersType = qtype == "single" ? "radio" : "checkbox";
 
-    const [newQuestion, answerWrapper] = createQuestion(question, id);
+    const [newQuestion, answerWrapper] = createQuestion(
+      "pass-test-page__question",
+      currentQuestions,
+      question,
+      id
+    );
 
     Array.from(answers).forEach((answerInfo) => {
       const { answer } = answerInfo;
 
       answerWrapper.appendChild(
-        createAnswer(newQuestion, answerWrapper, answer, answersType)
+        createAnswer(
+          "pass-test-page__question-answer",
+          newQuestion,
+          answerWrapper,
+          answer,
+          answersType
+        )
       );
     });
 
@@ -48,7 +61,7 @@ if (JSON_QUESTIONS.length) {
 }
 
 submitButton.addEventListener("click", () => {
-  localStorage.removeItem(slug)
+  localStorage.removeItem(slug);
 
   questionsWrapper.submit();
 });
@@ -113,102 +126,4 @@ function getCurrentTime(seconds) {
     currentSeconds,
     time: `${currentMinutes}:${currentSeconds}`,
   };
-}
-
-function createQuestion(question, id) {
-  const currentId = currentQuestions.length + 1;
-  const questionId = `question-${currentId}`;
-
-  const newQuestion = document.createElement("div");
-  newQuestion.id = questionId;
-  newQuestion.className = "pass-test-page__question";
-
-  const questionName = document.createElement("span");
-  questionName.className = "pass-test-page__question-name";
-  questionName.textContent = `Вопрос ${currentId}`;
-
-  const questionText = document.createElement("pre");
-  questionText.className = "pass-test-page__question-text";
-  questionText.innerHTML = question ? question : "";
-
-  const questionInput = document.createElement("input");
-  questionInput.hidden = true;
-  questionInput.name = `question-${currentId}`;
-  questionInput.value = id;
-
-  const answersWrapper = document.createElement("div");
-  answersWrapper.className = "pass-test-page__question-answers";
-
-  newQuestion.appendChild(questionName);
-  newQuestion.appendChild(questionText);
-  newQuestion.appendChild(questionInput);
-  newQuestion.appendChild(answersWrapper);
-
-  return [newQuestion, answersWrapper];
-}
-
-function createAnswer(question, answers, answer, answerType) {
-  const currentId = question.id.split("-")[1];
-  const currentAnswer = getDoubleInsideChild(answers);
-  let currentAnswerType = null;
-
-  if (answerType) {
-    currentAnswerType = answerType;
-  } else {
-    currentAnswerType = currentAnswer?.type == "radio" ? "radio" : "checkbox";
-  }
-
-  const answerWrapper = document.createElement("div");
-  answerWrapper.className = "pass-test-page__question-answer-wrapper";
-
-  const choosenAnswer = document.createElement("input");
-  choosenAnswer.type = currentAnswerType;
-  choosenAnswer.name = `choosenAnswer-${currentId}`;
-  choosenAnswer.value = answer ? answer : "";
-
-  const answerText = document.createElement("div");
-  answerText.textContent = answer ? answer : "";
-  answerText.className = "pass-test-page__question-answer";
-
-  answerWrapper.addEventListener("click", (event) => {
-    if (event.target.type !== "checkbox" && event.target.type !== "radio") {
-      if (choosenAnswer.checked) {
-        choosenAnswer.checked = false;
-      } else {
-        choosenAnswer.checked = true;
-        answerText.classList.add(ACTIVE_ANSWER_CLASS);
-      }
-    } else {
-      answerText.classList.add(ACTIVE_ANSWER_CLASS);
-    }
-
-    removeActiveAnswers(answers, answerText);
-  });
-
-  const answerInput = document.createElement("input");
-  answerInput.hidden = true;
-  answerInput.type = "text";
-  answerInput.name = `answers-${currentId}`;
-  answerInput.value = answer ? answer : "";
-
-  answerWrapper.appendChild(choosenAnswer);
-  answerWrapper.appendChild(answerText);
-  answerWrapper.appendChild(answerInput);
-
-  return answerWrapper;
-}
-
-function removeActiveAnswers(answers) {
-  Array.from(answers.childNodes).forEach((answer) => {
-    const currentText = answer.childNodes[1];
-    const currentInput = answer.childNodes[0];
-
-    if (currentInput.checked === false) {
-      currentText.classList.remove(ACTIVE_ANSWER_CLASS);
-    }
-  });
-}
-
-function getDoubleInsideChild(nodeElement) {
-  return nodeElement.childNodes?.[0]?.childNodes[0];
 }
