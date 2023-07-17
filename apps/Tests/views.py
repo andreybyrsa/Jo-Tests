@@ -276,9 +276,7 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
         course_test = CourseTest.objects.get(test=test, course__slug=course_slug)
 
         if StudentResult.objects.filter(
-            test=test,
-            student__user=current_user,
-            course__slug=course_slug
+            test=test, student__user=current_user, course__slug=course_slug
         ).exists():
             messages.error(request, "Тест уже пройден")
             return redirect("profile")
@@ -319,36 +317,42 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
         post_questions = get_student_choices(request.POST)
         result = 0
 
-        for post_question in post_questions:
-            question = Question.objects.get(id=int(post_question["question"]))
-            answers = question.answers.all()
-            right_answers = question.answers.filter(is_correct=True).count()
-            wrong_answers = question.answers.filter(is_correct=False).count()
-            question_result = 0
+        try:
+            for post_question in post_questions:
+                question = Question.objects.get(id=int(post_question["question"]))
+                answers = question.answers.all()
+                right_answers = question.answers.filter(is_correct=True).count()
+                wrong_answers = question.answers.filter(is_correct=False).count()
+                question_result = 0
 
-            for answer in answers:
-                choice = Choice.objects.create(
-                    question=question,
-                    student=student,
-                    student_result=test_result,
-                    answer=answer,
-                    is_selected=True
-                    if answer.answer in post_question["choosen"]
-                    else False,
-                )
+                for answer in answers:
+                    choice = Choice.objects.create(
+                        question=question,
+                        student=student,
+                        student_result=test_result,
+                        answer=answer,
+                        is_selected=True
+                        if answer.answer in post_question["choosen"]
+                        else False,
+                    )
 
-                if choice.is_selected:
-                    if choice.answer.is_correct:
-                        question_result += question.max_points / right_answers
-                    else:
-                        question_result -= question.max_points / wrong_answers
-            result += question_result if question_result > 0 else 0
+                    if choice.is_selected:
+                        if choice.answer.is_correct:
+                            question_result += question.max_points / right_answers
+                        else:
+                            question_result -= question.max_points / wrong_answers
+                result += question_result if question_result > 0 else 0
 
-        test_result.result = result
-        test_result.save()
-        student.result_tests.add(test_result)
+            test_result.result = result
+            test_result.save()
+            student.result_tests.add(test_result)
 
-        return redirect("profile")
+            messages.success(request, f'Вы успешно прошли тест "{test.title}"')
+            return redirect("inspect-course", course_slug=course_slug)
+
+        except:
+            messages.error(request, f"Ошибка прохождения теста '{test.title}'")
+            return redirect("inspect-course", course_slug=course_slug)
 
 
 def delete_test(request, test_slug):

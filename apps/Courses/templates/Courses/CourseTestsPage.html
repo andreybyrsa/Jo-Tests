@@ -9,6 +9,10 @@
   <link rel="stylesheet/less" href="{% static 'core/less/blocks/TestResultsSideBar.less' %}" />
 {% endblock %}
 
+{% block modal %}
+  {% include 'core/modals/AlertModal.html' %}
+{% endblock %}
+
 {% block header %}
   {% include 'core/blocks/HeaderBlock.html' with header=header %}
 {% endblock %}
