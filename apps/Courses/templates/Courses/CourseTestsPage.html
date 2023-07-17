@@ -38,6 +38,7 @@
 {% endblock %}
 
 {% block script-files %}
+  {{ json_user|json_script:"data-user" }}
   {{ json_course_tests|json_script:"data-course-tests" }}
   {{ tests_results|json_script:"data-tests-results" }}
   {{ json_groups|json_script:"data-groups" }}

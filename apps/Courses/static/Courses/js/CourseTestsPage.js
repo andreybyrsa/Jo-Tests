@@ -1,5 +1,6 @@
 addPageClassName("course-tests-page");
 
+const dataUser = document.getElementById("data-user").textContent;
 const dataCourseTests =
   document.getElementById("data-course-tests").textContent;
 const dataTestsResults =
@@ -7,6 +8,7 @@ const dataTestsResults =
 const dataGroups = document.getElementById("data-groups").textContent;
 const dataResults = document.getElementById("data-results").textContent;
 
+const JSON_USER = JSON.parse(dataUser);
 const JSON_COURSE_TESTS = JSON.parse(dataCourseTests);
 const JSON_TESTS_RESULTS = JSON.parse(dataTestsResults);
 const JSON_GROUPS = JSON.parse(dataGroups);
@@ -62,12 +64,18 @@ function openTestSideBar(itemId, currentTest) {
   removeActiveTests();
   currentTest.classList.add(ACTIVE_TEST_CLASS);
 
+  const { username } = JSON_USER;
+
   const currentTestInfo = JSON_COURSE_TESTS[itemId];
   const { test, test_time } = currentTestInfo;
   const { title, description, questions_amount, max_result, slug } = test;
 
   const currentTestResult = JSON_TESTS_RESULTS
-    ? Array.from(JSON_TESTS_RESULTS).find((test) => test.test_slug === slug)
+    ? Array.from(JSON_TESTS_RESULTS).find((test) => {
+        const { test_slug, student } = test;
+
+        return test_slug === slug && student.username === username;
+      })
     : null;
 
   let studentResult = null;
@@ -89,7 +97,7 @@ function openTestSideBar(itemId, currentTest) {
   sideBarQuestionsAmount.textContent = questions_amount;
   sideBarTestTime.textContent = `${test_time} минут`;
   sideBarTestResult.textContent = studentResult
-    ? `${studentResult}/${max_result}`
+    ? `${Math.round(studentResult)}/${max_result}`
     : "не начато";
 
   if (studentResult) {

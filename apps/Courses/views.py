@@ -235,16 +235,21 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
             )
 
             course_results = []
+            student = Student.objects.get(user__id=current_user.id)
+
             for course_test in json_course_tests:
                 test = Test.objects.get(slug=course_test["test"]["slug"])
-                if StudentResult.objects.filter(test__id=test.id).exists():
-                    result = StudentResult.objects.get(test__id=test.id)
+                if StudentResult.objects.filter(
+                    student=student, test__id=test.id
+                ).exists():
+                    result = StudentResult.objects.get(student=student, test__id=test.id)
                     course_results.append(result.get_result_info())
 
             return dict(
                 list(header_def.items())
                 + list(
                     {
+                        "json_user": current_user.get_user_info(),
                         "json_course_tests": json_course_tests,
                         "tests_results": course_results,
                     }.items()

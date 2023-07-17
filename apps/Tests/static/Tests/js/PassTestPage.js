@@ -48,6 +48,8 @@ if (JSON_QUESTIONS.length) {
 }
 
 submitButton.addEventListener("click", () => {
+  localStorage.removeItem(slug)
+
   questionsWrapper.submit();
 });
 
