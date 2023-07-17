@@ -81,7 +81,7 @@ function openTestSideBar(itemId, currentTest) {
 
   if (currentTestResult) {
     const { result, result_slug } = currentTestResult;
-    studentResult = result;
+    studentResult = String(result);
     resultSlug = result_slug;
   }
 

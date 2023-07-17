@@ -12,8 +12,9 @@ class Group(models.Model):
     index = models.CharField(max_length=127, blank=True)
 
     def get_group_info(self, test_slug=None, course_slug=None):
-        if not (test_slug and course_slug):
+        if test_slug == None and course_slug == None:
             return {
+                'groupname': self.groupname,
                 "index": self.index,
             }
         students = list(student for student in self.students.all())
