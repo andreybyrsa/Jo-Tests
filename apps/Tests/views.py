@@ -208,7 +208,8 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
         context = dict(
             list(header_def.items())
             + list(
-                {   "course_slug": course_slug,
+                {
+                    "course_slug": course_slug,
                     "json_questions_info": json_questions_info,
                     "json_test": course_test.get_test_in_course_info(),
                 }.items()
@@ -219,50 +220,49 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
 
     def post(self, request, test_slug):
         current_user = request.user
-        student = Student.objects.get(user__id = current_user.id)
-        course_slug = self.request.META.get("HTTP_REFERER").split("/")[-1]
-        course = Course.objects.get(slug = course_slug)
+        student = Student.objects.get(user__id=current_user.id)
+        course_slug = request.POST["course-slug"]
+        course = Course.objects.get(slug=course_slug)
+        test = Test.objects.get(slug=test_slug)
+
         test_result = StudentResult.objects.create(
-            student = student,
-            course = course,
-            test__slug = test_slug,
-            is_passed = True,
-            slug = 'result-' + get_unique_slug(StudentResult, test_slug),
+            student=student,
+            course=course,
+            test=test,
+            is_passed=True,
+            slug="result-" + get_unique_slug(StudentResult, test_slug),
         )
+
         post_questions = get_student_choices(request.POST)
         result = 0
+
         for post_question in post_questions:
-            question = Question.objects.get(id=post_question['question'])
+            question = Question.objects.get(id=int(post_question["question"]))
             answers = question.answers.all()
-            right_answers = question.answers.filter(is_correct = True).count()
-            wrong_answers = question.answers.filter(is_correct = False).count()
+            right_answers = question.answers.filter(is_correct=True).count()
+            wrong_answers = question.answers.filter(is_correct=False).count()
             question_result = 0
+
             for answer in answers:
                 choice = Choice.objects.create(
-                    question = question,
-                    student = student,
-                    student_result = test_result,
-                    answer = answer,
-                    is_selected = True if answer.answer in post_question['choosen'] else False,
+                    question=question,
+                    student=student,
+                    student_result=test_result,
+                    answer=answer,
+                    is_selected=True
+                    if answer.answer in post_question["choosen"]
+                    else False,
                 )
+
                 if choice.is_selected:
                     if choice.answer.is_correct:
-                        question_result += question.max_points/right_answers
+                        question_result += question.max_points / right_answers
                     else:
-                        question_result -= question.max_points/wrong_answers
+                        question_result -= question.max_points / wrong_answers
             result += abs(question_result)
+
         test_result.result = result
         test_result.save()
         student.result_tests.add(test_result)
-        return redirect('profile')
 
-
-
-                
-
-
-
-
-
-#<QueryDict: {'csrfmiddlewaretoken': ['TDK9e5rBGpmK1EUw2rhuAxhz07fYMxCeETN1n7IAKIcWAn5tIjvYBENrU9u2xcfD'], 'question-1': ['1'], 'choosenAnswer-1':
-#  ['ответ 1'], 'answers-1': ['ответ 1', 'ответ 2'], 'question-2': ['2'], 'choosenAnswer-2': ['ответ 1'], 'answers-2': ['ответ 1', 'ответ 2']}>
+        return redirect("profile")

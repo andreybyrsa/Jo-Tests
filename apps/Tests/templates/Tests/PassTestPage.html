@@ -27,6 +27,7 @@
     method="POST"
   >
     {% csrf_token %}
+    <input name="course-slug" value="{{ course_slug }}" hidden />
   </form>
 {% endblock %}
 

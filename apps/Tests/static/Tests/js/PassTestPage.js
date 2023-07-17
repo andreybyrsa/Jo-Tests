@@ -29,10 +29,10 @@ let currentAnswers = [];
 
 if (JSON_QUESTIONS.length) {
   Array.from(JSON_QUESTIONS).forEach((questionInfo) => {
-    const { question, qtype, answers } = questionInfo;
+    const { question, id, qtype, answers } = questionInfo;
     const answersType = qtype == "single" ? "radio" : "checkbox";
 
-    const [newQuestion, answerWrapper] = createQuestion(question);
+    const [newQuestion, answerWrapper] = createQuestion(question, id);
 
     Array.from(answers).forEach((answerInfo) => {
       const { answer } = answerInfo;
@@ -65,6 +65,8 @@ function startTimer(minutes, slug) {
     seconds = minutes * 60 - timeInProcess;
 
     if (seconds <= 0) {
+      localStorage.removeItem(slug);
+
       submitButton.click();
 
       return;
@@ -85,8 +87,10 @@ function startTimer(minutes, slug) {
 
     testTime.textContent = `${currentMinutes}:${currentSeconds}`;
 
-    if (seconds === 0) {
+    if (seconds <= 0) {
       clearInterval(timerId);
+
+      localStorage.removeItem(slug);
 
       submitButton.click();
     }
@@ -109,7 +113,7 @@ function getCurrentTime(seconds) {
   };
 }
 
-function createQuestion(question) {
+function createQuestion(question, id) {
   const currentId = currentQuestions.length + 1;
   const questionId = `question-${currentId}`;
 
@@ -128,7 +132,7 @@ function createQuestion(question) {
   const questionInput = document.createElement("input");
   questionInput.hidden = true;
   questionInput.name = `question-${currentId}`;
-  questionInput.value = currentId;
+  questionInput.value = id;
 
   const answersWrapper = document.createElement("div");
   answersWrapper.className = "pass-test-page__question-answers";
