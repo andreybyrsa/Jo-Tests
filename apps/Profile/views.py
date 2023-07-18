@@ -89,7 +89,7 @@ class UserProfileView(LoginRequiredMixin, HeaderMixin, ProfileCellMixin, View):
                 )
             try:
                 if update_form.is_valid():
-                    update_form.save(user.username)
+                    update_form.save(user.id)
                 messages.success(request, "Данные сохранены")
                 return redirect("profile")
             except:
