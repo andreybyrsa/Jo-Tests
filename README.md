@@ -44,3 +44,14 @@ Server runs project on localhost:3000.
 - Created Django forms for user models (User, Student, Author, Teacher);
 
 - Filled the database and moved out model migrations to the database;
+
+### Kirill Vlasov:
+- Created a design for the application form;
+
+- Made up the ProfilePage.html page;
+
+- Configured modal windows ProfileModal, CreateGroups and EditGroups;
+
+- Retrieved the student's statistics from the database;
+
+- Set up a post request to change user data in the database;
