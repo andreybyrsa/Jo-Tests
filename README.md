@@ -33,3 +33,14 @@ Server runs project on localhost:3000.
 - Files with reuseable JavaScript functions; 
 
 - Backend Django auth app.
+
+### Mamedaga Bayramov:
+- Created a design for the application form;
+
+- Wrote style files for the Tests and Courses application pages;
+
+- Made the set up for the admin panel and its visualization;
+
+- Created Django forms for user models (User, Student, Author, Teacher);
+
+- Filled the database and moved out model migrations to the database;
