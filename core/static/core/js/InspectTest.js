@@ -95,8 +95,12 @@ function createAnswer(
     removeActiveAnswers(answers, activeClassName);
   });
 
-  if (isRightAnswer) {
+  if (isRightAnswer && choice === undefined) {
+    answerText.classList.add(activeClassName);
+    answerWrapper.click();
+  } else if (isRightAnswer && choice !== undefined) {
     answerText.classList.add(successClassName);
+    console.log(1)
   }
 
   if (choice) {

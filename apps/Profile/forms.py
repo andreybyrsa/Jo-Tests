@@ -38,8 +38,8 @@ class UpdateProfileForm(forms.ModelForm):
             ),
         }
 
-    def save(self, username):
-        UserDB = User.objects.get(username=username)
+    def save(self, id):
+        UserDB = User.objects.get(id=id)
         form_data = self.cleaned_data
 
         UserDB.username = form_data["username"]

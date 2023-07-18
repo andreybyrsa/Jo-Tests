@@ -37,7 +37,7 @@ class SignupForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "id": "signup-username",
-                "class": "reg-page__form-input-data",
+                "class": "reg-modal__form-input-data",
                 "placeholder": "Ваш логин",
             }
         ),
@@ -48,7 +48,7 @@ class SignupForm(forms.Form):
         max_length=50,
         widget=forms.TextInput(
             attrs={
-                "class": "reg-page__form-input-data",
+                "class": "reg-modal__form-input-data",
                 "placeholder": "Ваше имя",
             }
         ),
@@ -59,7 +59,7 @@ class SignupForm(forms.Form):
         max_length=50,
         widget=forms.TextInput(
             attrs={
-                "class": "reg-page__form-input-data",
+                "class": "reg-modal__form-input-data",
                 "placeholder": "Ваша фамилия",
             }
         ),
@@ -72,7 +72,7 @@ class SignupForm(forms.Form):
             attrs={
                 "type": "password",
                 "id": "signup-password",
-                "class": "reg-page__form-input-data",
+                "class": "reg-modal__form-input-data",
                 "placeholder": "Ваш пароль",
             }
         ),
@@ -88,7 +88,7 @@ class SignupForm(forms.Form):
         widget=forms.Select(
             attrs={
                 "id": "selection",
-                "class": "reg-page__form-content-links-link",
+                "class": "reg-modal__form-links-link",
             }
         ),
     )

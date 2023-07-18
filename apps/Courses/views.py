@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.db.models import F
 from core.utils.mixins import HeaderMixin, InfoSidebarMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
@@ -23,16 +24,71 @@ class ViewCourses(LoginRequiredMixin, HeaderMixin, InfoSidebarMixin, ListView):
     context_object_name = "courses"
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        current_user = self.request.user
         context = super().get_context_data(**kwargs)
         json_courses = list(course.get_course_info() for course in context["courses"])
         header_def = self.get_user_header()
         sidebar_def = self.get_user_sidebar()
 
+        context["json_courses"] = json_courses
+
+        if current_user.role == "teacher":
+            max_courses_points = {}
+
+            for course in context["courses"]:
+                groups = course.groups.all()
+                tests = course.tests.filter(is_available=True)
+
+                student_counter = 0
+                course_points = 0
+
+                for group in groups:
+                    student_counter += group.students.all().count()
+
+                for test in tests:
+                    course_points += test.get_test_in_course_info()["test"][
+                        "max_result"
+                    ]
+
+                max_courses_points[f"{course.slug}"] = student_counter * course_points
+
+            for course in json_courses:
+                current_slug = course["slug"]
+                course["max_course_progress"] = max_courses_points[current_slug]
+
+        elif current_user.role == "student":
+            # student = Student.objects.get(user__id=current_user.id)
+            max_course_points = {}
+
+            for course in context["courses"]:
+                course_test = course.tests.filter(is_available=True)
+
+                course_points = 0
+                for test in course_test:
+                    course_points += test.get_test_in_course_info()["test"][
+                        "max_result"
+                    ]
+
+                max_course_points[f"{course.slug}"] = course_points
+
+            for course in json_courses:
+                current_slug = course["slug"]
+                course["max_course_progress"] = max_course_points[current_slug]
+
+            #     course_progress[f"{course.slug}"] = list()
+
+            #     results_count = student.result_tests.filter(
+            #         course__slug=course.slug
+            #     ).count()
+            #     course_progress[f"{course.slug}"].append(results_count)
+
+            #     tests_count = course.tests.filter(is_available=True).count()
+            #     course_progress[f"{course.slug}"].append(tests_count)
+
+            # context["course_progress"] = course_progress
+
         return dict(
-            list(context.items())
-            + list(header_def.items())
-            + list(sidebar_def.items())
-            + list({"json_courses": json_courses}.items())
+            list(context.items()) + list(header_def.items()) + list(sidebar_def.items())
         )
 
     def get_queryset(self):
@@ -176,6 +232,7 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
                 for student in group.students.all():
                     student.courses.remove(course)
             course.groups.clear()
+            course.progress = 0
 
             for post_group in post["groups"].split(" "):
                 if post_group == "":
@@ -186,6 +243,7 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
                 for student in students:
                     student.courses.add(course)
 
+            course_progress = 0
             for post_test in post["tests"].split(" "):
                 if post_test == "":
                     continue
@@ -198,6 +256,19 @@ class EditCourse(LoginRequiredMixin, HeaderMixin, View):
                     is_available=True if info_test[1] == "true" else False,
                 )
                 course.tests.add(course_test)
+
+                if course_test.is_available:
+                    current_student_result = StudentResult.objects.filter(
+                        course__slug=course.slug, test=course_test.test
+                    )
+
+                    tests_results = 0
+                    for result in current_student_result:
+                        tests_results += result.get_result_info()["result"]
+
+                    course_progress += tests_results
+                
+            course.progress = course_progress
 
             course.save()
             messages.success(request, "Курс успешно изменён")
@@ -285,7 +356,7 @@ class ViewTestsInCourse(HeaderMixin, InfoSidebarMixin, DetailView):
                 + list(
                     {
                         "json_course_tests": json_course_tests,
-                        'groups': groups,
+                        "groups": groups,
                         "json_groups": json_groups,
                     }.items()
                 )

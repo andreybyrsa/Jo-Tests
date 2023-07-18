@@ -127,6 +127,11 @@
   </form>
 
   <div id='listgroup' class="profile-page__listgroup">
+    {% if not teacher_groups %}
+      <span class="profile-page__groups-placeholder">
+        Созданных групп пока нет
+      </span>
+    {% endif %}
     {% for group in teacher_groups %}
     <div class="profile-page__listgroup-group" onclick="openGroupModal( '{{group.index}}' )">
       {{ group.groupname }}

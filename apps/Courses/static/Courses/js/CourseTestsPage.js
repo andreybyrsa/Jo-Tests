@@ -17,6 +17,8 @@ const sideBarDescription = document.getElementById("side-bar-description");
 
 const sideBarContent = document.getElementById("side-bar-content");
 const sideBarQuestionsAmount = document.getElementById("test-question-amount");
+const sideBarMaxPointsContent = document.getElementById('test-max-points-content')
+const sideBarMaxPoints = document.getElementById('test-max-points')
 const sideBarTestResult = document.getElementById("test-result");
 const sideBarTestTime = document.getElementById("test-time");
 const sidebarButton = document.getElementById("test-button");
@@ -99,11 +101,16 @@ function openTestSideBar(itemId, currentTest) {
     : "не начато";
 
   if (studentResult) {
+    sideBarMaxPointsContent.style.display = 'none'
+
     sidebarButton.classList.add(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Просмотреть";
 
     sidebarButton.href = "/tests/inspect_result/" + resultSlug;
   } else {
+    sideBarMaxPointsContent.style.display = "inline";
+    sideBarMaxPoints.textContent = max_result
+
     sidebarButton.classList.remove(DISABLED_BUTTON_CLASS);
     sidebarButton.textContent = "Начать тест";
 

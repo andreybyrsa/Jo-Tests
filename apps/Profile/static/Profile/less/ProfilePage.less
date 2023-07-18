@@ -42,6 +42,8 @@
 
   &__button {
     padding: 0 20px;
+    width: 100%;
+    max-width: 150px;
     height: 45px;
     background-color: @secondary-color;
     border-radius: 12px;
@@ -51,10 +53,15 @@
 
     .flexible(center, center);
 
-    transition: backgroud-color @default-transition-settings;
+    transition: all @default-transition-settings;
 
     &:active {
       background-color: @primary-color;
+    }
+
+    &:hover {
+      box-shadow: 0px 0px 18px 0px @primary-color inset;
+      transform: scale(1.02);
     }
   }
 
@@ -98,7 +105,7 @@
 
     &-username {
       width: 100%;
-      max-width: 450px;
+      max-width: 400px;
 
       font-size: 35px;
 
@@ -210,6 +217,16 @@
     &-students {
       .flexible(center, flex-start, @gap: 8px);
     }
+  }
+
+  &__groups-placeholder {
+    width: 100%;
+    height: 100%;
+
+    color: @primary-color;
+    font-size: 25px;
+
+    .flexible(center, center);
   }
 
   &__listgroup {

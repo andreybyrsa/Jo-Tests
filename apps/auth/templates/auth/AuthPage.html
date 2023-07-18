@@ -12,29 +12,29 @@
 {% block content %}
 
    <div>
-      <form class="reg-page__form" id='modal' method='POST'>
-         <div class="reg-page__form-content">
+      <form class="reg-modal__form" id='modal' method='POST'>
+         <div class="reg-modal__form-content">
    
-            <div class="reg-page__form-content-header">
-               <h1 class="reg-page__form-content-header-title">Авторизация</h1>
-               <i id='close modal' class="bi bi-x-circle reg-page__form-content-header-icon"></i>
+            <div class="reg-modal__form-header">
+               <h1 class="reg-modal__form-header-title">Регистрация</h1>
+               <i id='close modal' class="bi bi-x-circle reg-modal__form-header-icon"></i>
             </div>
 
             {% csrf_token %}
             {% for input in signup_form %}
                {% if forloop.last %}
-                  <div class="reg-page__form-content-links">
+                  <div class="reg-modal__form-links">
                      <button
                         name="register"
                         type="submit"
-                        class="reg-page__form-content-links-button"
+                        class="reg-modal__form-links-button"
                      >
                         Зарегистрироваться
                      </button>
                      {{ input }}
                   </div>
                {% else %}
-                  <div class="reg-page__form-content-input">
+                  <div class="reg-modal__form-input">
                      {{ input.label }}
                      {{ input }}
                   </div>
@@ -61,7 +61,7 @@
          <button
             name="login"
             type="submit"
-            class="auth-page__form-links-button"
+            class="auth-page__form-button"
          >
             Войти
          </button>
