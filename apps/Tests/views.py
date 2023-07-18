@@ -235,7 +235,7 @@ class IspectResult(LoginRequiredMixin, HeaderMixin, DetailView):
             for answer in json_question_info["answers"]:
                 if answer["is_correct"]:
                     right_answers += 1
-            
+
             wrong_answers = len(json_question_info["answers"]) - right_answers
             for choice in choices:
                 if choice.is_selected:
@@ -352,7 +352,9 @@ class PassTest(HeaderMixin, LoginRequiredMixin, View):
 
             test_result.result = result
             test_result.save()
-            course.progress = F("progress") + result
+            Course.objects.filter(slug=course.slug).update(
+                progress=(F("progress") + result)
+            )
             student.result_tests.add(test_result)
 
             messages.success(request, f'Вы успешно прошли тест "{test.title}"')
