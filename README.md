@@ -55,3 +55,14 @@ Server runs project on localhost:3000.
 - Retrieved the student's statistics from the database;
 
 - Set up a post request to change user data in the database;
+
+### Timur Miniazev:
+- Created a design for the application form;
+
+- Set up models for auth, Courses, Tests and migrated them to the database
+
+- Made up class-based views for Courses, Tests, Profile apps and mixins for them
+
+- Integrated ImageKit for saving users profile pictures
+
+- Created unique slug generator for urls
