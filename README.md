@@ -63,6 +63,6 @@ Server runs project on localhost:3000.
 
 - Made up class-based views for Courses, Tests, Profile apps and mixins for them
 
-- Integrated ImageKit for saving users profile pictures
+- Integrated ImageKit for saving profile pictures
 
 - Created unique slug generator for urls
